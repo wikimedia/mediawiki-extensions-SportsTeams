@@ -27,9 +27,13 @@ class FanHome extends UnlistedSpecialPage {
 	 * @param $par Mixed: parameter passed to the special page or null
 	 */
 	public function execute( $par ) {
-		global $wgUser, $wgOut, $wgRequest, $wgScriptPath, $wgSportsTeamsGoogleAPIKey;
+		global $wgSportsTeamsGoogleAPIKey;
 
-		if ( $wgUser->isLoggedIn() ) {
+		$out = $this->getOutput();
+		$request = $this->getRequest();
+		$user = $this->getUser();
+
+		if ( $user->isLoggedIn() ) {
 			$this->friends = $this->getRelationships( 1 );
 			$this->foes = $this->getRelationships( 2 );
 			$this->relationships = array_merge( $this->friends, $this->foes );
@@ -39,41 +43,41 @@ class FanHome extends UnlistedSpecialPage {
 				$fan_info = '';
 		}
 
-		$sport_id = $wgRequest->getInt( 'sport_id' );
-		$team_id = $wgRequest->getInt( 'team_id' );
+		$sport_id = $request->getInt( 'sport_id' );
+		$team_id = $request->getInt( 'team_id' );
 
 		// If there's neither a sports ID nor a team ID, show an error message.
 		// @todo FIXME: I don't like this; we should be showing a listing of
 		// all networks or something instead of basically telling the user to
 		// go away.
-		if( !$sport_id && !$team_id ) {
-			$wgOut->setPageTitle( wfMsg( 'sportsteams-network-woops-title' ) );
-			$out = '<div class="relationship-request-message">' .
-				wfMsg( 'sportsteams-network-woops-text' ) . '</div>';
-			$out .= '<div class="relationship-request-buttons">';
-			$out .= '<input type="button" class="site-button" value="' .
-				wfMsg( 'sportsteams-network-main-page' ) .
+		if ( !$sport_id && !$team_id ) {
+			$out->setPageTitle( $this->msg( 'sportsteams-network-woops-title' )->plain() );
+			$output = '<div class="relationship-request-message">' .
+				$this->msg( 'sportsteams-network-woops-text' )->plain() . '</div>';
+			$output .= '<div class="relationship-request-buttons">';
+			$output .= '<input type="button" class="site-button" value="' .
+				$this->msg( 'sportsteams-network-main-page' )->plain() .
 				"\" onclick=\"window.location='" .
 				Title::newMainPage()->escapeFullURL() . "'\"/>";
-			if ( $wgUser->isLoggedIn() ) {
-				$out .= ' <input type="button" class="site-button" value="' .
-					wfMsg( 'sportsteams-network-your-profile' ) .
+			if ( $user->isLoggedIn() ) {
+				$output .= ' <input type="button" class="site-button" value="' .
+					$this->msg( 'sportsteams-network-your-profile' )->plain() .
 					"\" onclick=\"window.location='" .
-					Title::makeTitle( NS_USER, $wgUser->getName() )->escapeFullURL() . "'\"/>";
+					Title::makeTitle( NS_USER, $user->getName() )->escapeFullURL() . "'\"/>";
 			}
-			$out .= '</div>';
-			$wgOut->addHTML( $out );
+			$output .= '</div>';
+			$out->addHTML( $output );
 			return true;
 		}
 
 		$this->network_count = SportsTeams::getUserCount( $sport_id, $team_id );
 		$this->friends_network_count = SportsTeams::getFriendsCountInFavorite(
-			$wgUser->getId(),
+			$user->getId(),
 			$sport_id,
 			$team_id
 		);
 
-		if( $team_id ) {
+		if ( $team_id ) {
 			$team = SportsTeams::getTeam( $team_id );
 			$this->network = $team['name'];
 		} else {
@@ -89,41 +93,48 @@ class FanHome extends UnlistedSpecialPage {
 		$leave_fans_title = SpecialPage::getTitleFor( 'RemoveFan' );
 
 		// Set the page title
-		$wgOut->setPageTitle( wfMsg( 'sportsteams-network-fan-network', $this->network ) );
+		$out->setPageTitle( $this->msg( 'sportsteams-network-fan-network', $this->network )->text() );
 
 		// Add CSS & JS
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$wgOut->addModuleStyles( 'ext.sportsTeams' );
-			$wgOut->addModuleScripts( 'ext.sportsTeams.fanHome' );
-		} else {
-			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/SportsTeams/SportsTeams.css' );
-			$wgOut->addScriptFile( $wgScriptPath . '/extensions/SportsTeams/fanhome.js' );
-		}
+		$out->addModules( array( 'ext.sportsTeams', 'ext.sportsTeams.fanHome' ) );
 
 		// Ashish Datta
 		// Add the script for the maps and set the onload() handler
-		// DONT FORGET TO CHANGE KEY WHEN YOU CHANGE DOMAINS
+		// DON'T FORGET TO CHANGE KEY WHEN YOU CHANGE DOMAINS
 		// @note As of 12 August 2011, http://code.google.com/apis/maps/documentation/javascript/v2/
-		// states that the version 2 of Google Maps API has been deprecated
-		$wgOut->addScript( "<script src=\"http://maps.google.com/maps?file=api&amp;v=2.x&amp;key={$wgSportsTeamsGoogleAPIKey}\" type=\"text/javascript\"></script>" );
-		$wgOut->addScript( $this->getMap() );
+		// states that the version 2 of Google Maps API has been deprecated.
+		// Furthermore, as of 26 August 2013, https://developers.google.com/maps/documentation/javascript/v2/
+		// states V2 of the Google Maps API will go away (de facto, anyway)
+		// after 19 November 2013 after which users requesting V2 API will be
+		// served a special, wrapped version of the V3 API
+		$out->addScript( "<script src=\"http://maps.google.com/maps?file=api&amp;v=2.x&amp;key={$wgSportsTeamsGoogleAPIKey}\" type=\"text/javascript\"></script>" );
+		$out->addScript( $this->getMap() );
 		// this originally used setOnloadHandler; addOnloadHook() won't work
-		$wgOut->addScript( '<script>jQuery( document ).ready( function() { loadMap(); } );</script>' );
+		$out->addScript( '<script>jQuery( document ).ready( function() { loadMap(); } );</script>' );
 
-		if( SportsTeams::isFan( $wgUser->getID(), $sport_id, $team_id ) ) {
+		// If the user is a member of this network, visually indicate that and
+		// offer a link for leaving the network; otherwise if they're a logged-in
+		// user who isn't a member of the network, offer them a "join" link
+		if ( SportsTeams::isFan( $user->getId(), $sport_id, $team_id ) ) {
 			$fan_info = '<p><span class="profile-on">' .
-				wfMsg( 'sportsteams-network-you-are-fan' ) . '</span></p>';
-			$fan_info .= '<p><span><a href="' . $leave_fans_title->getFullURL(
-				"sport_id={$sport_id}&team_id={$team_id}"
-			) . '" style="text-decoration:none;">' .
-				wfMsg( 'sportsteams-network-leave-network' ) .
-			'</a></span></p>';
-		} elseif ( $wgUser->isLoggedIn() ) {
-			$fan_info = '<p><span class="profile-on"><a href="' .
-				$join_fans_title->getFullURL(
-					"sport_id={$sport_id}&team_id={$team_id}"
-				) . '" style="text-decoration: none;">' .
-				wfMsg( 'sportsteams-network-join-network' ) . '</a></span></p>';
+				$this->msg( 'sportsteams-network-you-are-fan' )->text() . '</span></p>';
+			$fan_info .= '<p><span>';
+			$fan_info .= Linker::link(
+				$leave_fans_title,
+				$this->msg( 'sportsteams-network-leave-network' )->text(),
+				array( 'style' => 'text-decoration: none;' ),
+				array( 'sport_id' => $sport_id, 'team_id' => $team_id )
+			);
+			$fan_info .= '</span></p>';
+		} elseif ( $user->isLoggedIn() ) {
+			$fan_info = '<p><span class="profile-on">';
+			$fan_info .= Linker::link(
+				$join_fans_title,
+				$this->msg( 'sportsteams-network-join-network' )->text(),
+				array( 'style' => 'text-decoration: none;' ),
+				array( 'sport_id' => $sport_id, 'team_id' => $team_id )
+			);
+			$fan_info .= '</span></p>';
 		}
 
 		$output = '';
@@ -131,21 +142,25 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<div class="fan-top">';
 
 		$output .= '<div class="fan-top-left">';
-		$output .= '<h1>' . wfMsg( 'sportsteams-network-info' ) . '</h1>';
+		$output .= '<h1>' . $this->msg( 'sportsteams-network-info' )->text() . '</h1>';
 		$output .= '<div class="network-info-left">';
 		$output .= $team_image;
-		$output .= '<p>' . wfMsg( 'sportsteams-network-logo' ) . '</p>';
+		$output .= '<p>' . $this->msg( 'sportsteams-network-logo' )->text() . '</p>';
 		$output .= '</div>';
 		$output .= '<div class="network-info-right">';
-		$output .= '<p>' . wfMsg( 'sportsteams-network-fans-col' ) . ' <a href="' .
+		$output .= '<p>' . $this->msg( 'sportsteams-network-fans-col' )->text() . ' <a href="' .
 			$view_fans_title->getFullURL(
 				array(
 					'sport_id' => $sport_id,
 					'team_id' => $team_id
 				)
 			) . "\">{$this->network_count}</a></p>";
-		if( $wgUser->isLoggedIn() ) {
-			$output .= '<p>' . wfMsg( 'sportsteams-network-friends-col' ) ." {$this->friends_network_count}</p>";
+		// For registered users, show the amount of their friends who also
+		// belong to this network
+		if ( $user->isLoggedIn() ) {
+			$output .= '<p>' . $this->msg(
+				'sportsteams-network-friends-col'
+			)->numParams( $this->friends_network_count )->parse() . '</p>';
 		}
 		$output .= $fan_info;
 		$output .= '</div>';
@@ -153,17 +168,16 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '</div>';
 		$this_count = count( SportsTeams::getUsersByFavorite( $sport_id, $team_id, 7, 0 ) );
 		$output .= '<div class="fan-top-right">';
-		$output .= '<h1>' . wfMsg( 'sportsteams-network-fans', $this->network ) . '</h1>';
+		$output .= '<h1>' . $this->msg( 'sportsteams-network-fans', $this->network )->text() . '</h1>';
 		$output .= '<p style="margin:-8px 0px 0px 0px; color:#797979;">' .
-			wfMsgExt(
+			$this->msg(
 				'sportsteams-network-fan-display',
-				'parsemag',
 				$this_count,
 				$view_fans_title->getFullURL( array(
 					'sport_id' => $sport_id, 'team_id' => $team_id
 				) ),
 				$this->network_count
-			) . '</p>';
+			)->text() . '</p>';
 		$output .= $this->getFans();
 		$output .= '</div>';
 
@@ -177,23 +191,23 @@ class FanHome extends UnlistedSpecialPage {
 		$s = new UserStatus();
 		$output .= '<div class="network-updates">';
 		$output .= '<h1 class="network-page-title">' .
-			wfMsg( 'sportsteams-network-latest-thoughts' ) . '</h1>';
+			$this->msg( 'sportsteams-network-latest-thoughts' )->text() . '</h1>';
 		$output .= '<div style="margin-bottom:10px;">
 			<a href="' . SportsTeams::getFanUpdatesURL( $sport_id, $team_id ) . '">' .
-				wfMsg( 'sportsteams-network-all-thoughts' ) . '</a>
+				$this->msg( 'sportsteams-network-all-thoughts' )->text() . '</a>
 		</div>';
 		// Registered users (whether they're members of the network or not) can
 		// post new status updates on the network's page from the network's
 		// page
-		if( $wgUser->isLoggedIn() ) {
+		if ( $user->isLoggedIn() ) {
 			$output .= "\n<script type=\"text/javascript\">
 				var __sport_id__ = {$sport_id};
 				var __team_id__ = {$team_id};
 				var __updates_show__ = {$updates_show};
 				var __user_status_link__ = '" . SpecialPage::getTitleFor( 'UserStatus' )->getFullURL() . "';</script>\n";
 			$output .= "<div class=\"user-status-form\">
-				<span class=\"user-name-top\">{$wgUser->getName()}</span> <input type=\"text\" name=\"user_status_text\" id=\"user_status_text\" size=\"40\" onkeypress=\"detEnter(event)\" maxlength=\"150\" />
-				<input type=\"button\" value=\"" . wfMsg( 'sportsteams-add-button' ) . '" class="site-button" onclick="add_status()" />
+				<span class=\"user-name-top\">{$user->getName()}</span> <input type=\"text\" name=\"user_status_text\" id=\"user_status_text\" size=\"40\" maxlength=\"150\" />
+				<input id=\"add-status-btn\" type=\"button\" value=\"" . $this->msg( 'sportsteams-add-button' )->text() . '" class="site-button" />
 			</div>';
 		}
 		$output .= '<div id="network-updates">';
@@ -209,7 +223,7 @@ class FanHome extends UnlistedSpecialPage {
 		// Network location map
 		$output .= '<div class="fan-map">';
 		$output .= '<h1 class="network-page-title">' .
-			wfMsg( 'sportsteams-network-fan-locations' ) . '</h1>';
+			$this->msg( 'sportsteams-network-fan-locations' )->text() . '</h1>';
 		$output .= '<div class="gMap" id="gMap"></div>
 			<div class="gMapInfo" id="gMapInfo"></div>';
 		$output .= '</div>';
@@ -217,36 +231,59 @@ class FanHome extends UnlistedSpecialPage {
 		// Top network fans
 		$output .= '<div class="top-fans">';
 		$output .= '<h1 class="network-page-title">' .
-			wfMsg( 'sportsteams-network-top-fans' ) . '</h1>';
+			$this->msg( 'sportsteams-network-top-fans' )->text() . '</h1>';
 		$tfr = SpecialPage::getTitleFor( 'TopUsersRecent' );
+		/*
 		$output .= "<p class=\"fan-network-sub-text\">
 				<a href=\"" . $tfr->escapeFullURL( 'period=weekly' ) . '">' .
-					wfMsg( 'sportsteams-network-top-fans-week' ) .
+					$this->msg( 'sportsteams-network-top-fans-week' )->text() .
 				"</a> -
 				<a href=\"{$view_fans_title->getFullURL( array( 'sport_id' => $sport_id, 'team_id' => $team_id ))}\">" .
-					wfMsg( 'sportsteams-network-complete-list' ) . '</a>
+					$this->msg( 'sportsteams-network-complete-list' )->text() . '</a>
 			</p>';
+		*/
+		$output .= '<p class="fan-network-sub-text">';
+		$output .= Linker::link(
+			$tfr,
+			$this->msg( 'sportsteams-network-top-fans-week' )->plain(),
+			array(),
+			array( 'period' => 'weekly' )
+		);
+		$output .= ' - ';
+		$output .= Linker::link(
+			$view_fans_title,
+			$this->msg( 'sportsteams-network-complete-list' )->plain(),
+			array(),
+			array( 'sport_id' => $sport_id, 'team_id' => $team_id )
+		);
+		$output .= '</p>';
 		$output .= $this->getTopFans();
 		$output .= '</div>';
 
 		$output .= '<div class="network-articles">';
 		$output .= '<h1 class="network-page-title">' .
-			wfMsg( 'sportsteams-network-articles', $this->network ) . '</h1>';
+			$this->msg( 'sportsteams-network-articles', $this->network )->text() . '</h1>';
 		$output .= '<p class="fan-network-sub-text">';
 		if ( class_exists( 'BlogPage' ) ) { // @todo CHECKME: is there any point in this check?
 			$createBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' );
-			$output .= '<a href="' . $createBlogPage->escapeFullURL() . '">' .
-				wfMsg( 'sportsteams-network-write-article' ) . '</a> - ';
+			$output .= Linker::link(
+				$createBlogPage,
+				$this->msg( 'sportsteams-network-write-article' )->text()
+			);
+			$output .= ' - ';
 		}
-		$output .= "<a href=\"{$homepage_title->getFullURL()}\">" . wfMsg( 'sportsteams-network-main-page' ) . '</a>
-			</p>';
+		$output .= Linker::link(
+			$homepage_title,
+			$this->msg( 'sportsteams-network-main-page' )->text()
+		);
+		$output .= '</p>';
 		$output .= $this->getArticles();
 		$output .= '</div>';
 
 		$output .= '</div>';
 		$output .= '<div class="cleared"></div>';
 
-		$wgOut->addHTML( $output );
+		$out->addHTML( $output );
 	}
 
 	/**
@@ -259,13 +296,17 @@ class FanHome extends UnlistedSpecialPage {
 	 * ie: New York, California geocodes to somewhere in CA instead of failing.
 	 */
 	function getMap() {
-		global $wgUser, $wgOut, $wgRequest, $wgUploadPath;
+		global $wgUploadPath;
 
-		$sport_id = $wgRequest->getInt( 'sport_id' );
-		$team_id = $wgRequest->getInt( 'team_id' );
+		$out = $this->getOutput();
+		$request = $this->getRequest();
+		$user = $this->getUser();
+
+		$sport_id = $request->getInt( 'sport_id' );
+		$team_id = $request->getInt( 'team_id' );
 
 		// maybe error check this to make sure the file exists...
-		if( $team_id ) {
+		if ( $team_id ) {
 			$team_image = $wgUploadPath . '/teams_logos/' .
 				SportsTeams::getTeamLogo( $team_id, 'l' );
 		} else {
@@ -273,7 +314,10 @@ class FanHome extends UnlistedSpecialPage {
 				SportsTeams::getSportLogo( $sport_id, 'l' );
 		}
 
-		$userIDs = array(); // stores the userIDs for this network
+		// stores the userIDs for this network; needs to have some content to
+		// prevent Database::makeList from chocking up in the DB call a few lines
+		// below...
+		$userIDs = array( 0 );
 		$fanLocations = array(); // stores the locations on the map
 		$fanStates = array(); // stores the states along with the fans from that state
 
@@ -285,26 +329,22 @@ class FanHome extends UnlistedSpecialPage {
 
 		// go through all the fans for this network
 		// grab their userIDs and save HTML for their mini-profiles
-		foreach( $fans as $fan ) {
+		foreach ( $fans as $fan ) {
 			$fanInfo = array();
 
-			$user = Title::makeTitle( NS_USER, $fan['user_name'] );
+			$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 			$avatar = new wAvatar( $fan['user_id'], 'l' );
 
 			$out = "<p class=\"map-avatar-image\">
-				<a href=\"{$user->getFullURL()}\">{$avatar->getAvatarURL()}</a></p>
-				<p class=\"map-avatar-info\"> <a href=\"{$user->getFullURL()}\">{$fan['user_name']}</a>";
+				<a href=\"{$loopUser->getFullURL()}\">{$avatar->getAvatarURL()}</a></p>
+				<p class=\"map-avatar-info\"> <a href=\"{$loopUser->getFullURL()}\">{$fan['user_name']}</a>";
 
 			$fanInfo['divHTML'] = $out;
-			$fanInfo['URL'] = $user->getFullURL();
+			$fanInfo['URL'] = $loopUser->getFullURL();
 			$fanInfo['user_name'] = $fan['user_name'];
 
 			$userIDs[$fan['user_id']] = $fanInfo;
 		}
-
-		// Get the location info about this network's fans
-		$idList = implode( ',', array_keys( $userIDs ) );
-		$idList = '(' . $idList . ')';
 
 		// Get the info about the fans; only select fans that have country info
 		$dbr = wfGetDB( DB_MASTER );
@@ -315,13 +355,13 @@ class FanHome extends UnlistedSpecialPage {
 				'up_location_state'
 			),
 			array(
-				'up_user_id IN ' . $idList,
+				'up_user_id' => array_keys( $userIDs ),
 				'up_location_country IS NOT NULL'
 			),
 			__METHOD__
 		);
 
-		foreach( $res as $row ) {
+		foreach ( $res as $row ) {
 			$topLoc = '';
 			$loc = '';
 
@@ -335,12 +375,12 @@ class FanHome extends UnlistedSpecialPage {
 			$city = ucwords( strtolower( $row->up_location_city ) );
 
 			// if the fan is in the US geocode by city, state
-			if( $country == 'United States' ) {
+			if ( $country == 'United States' ) {
 				// if the user's profile doesn't have a city, only use a state
-				if( strlen( $city ) > 0 && strlen( $state ) > 0 ) {
+				if ( strlen( $city ) > 0 && strlen( $state ) > 0 ) {
 					$loc = $city . ', ' . $state;
 					$topLoc = $state;
-				} elseif( strlen( $state ) > 0 ) {
+				} elseif ( strlen( $state ) > 0 ) {
 					$loc = $state;
 					$topLoc = $state;
 				} else {
@@ -348,7 +388,7 @@ class FanHome extends UnlistedSpecialPage {
 					$topLoc = $country;
 				}
 			} else { // if they are non-US then geocode by city, country
-				if( strlen( $city ) > 0 && strlen( $country ) > 0 ) {
+				if ( strlen( $city ) > 0 && strlen( $country ) > 0 ) {
 					$loc = $city . ', ' . $country;
 					$topLoc = $country;
 				} else {
@@ -357,8 +397,8 @@ class FanHome extends UnlistedSpecialPage {
 				}
 			}
 
-			// build a hashtable using higher locations as keys and arrays of fans as objects
-			if( !array_key_exists( $topLoc, $fanStates ) ) {
+			// build a hash table using higher locations as keys and arrays of fans as objects
+			if ( !array_key_exists( $topLoc, $fanStates ) ) {
 				$fanStates[$topLoc] = array();
 				$fanStates[$topLoc][] = $userInfo;
 			} else {
@@ -376,7 +416,7 @@ class FanHome extends UnlistedSpecialPage {
 										geocoder.getLatLng( '" . $state . "',
 											function( point ) {
 												var nPoint = new GPoint( point.x + ( Math.random() * .12 ), point.y + ( Math.random() * .12 ) );
-												var gMark = createMarker( nPoint, \"" .
+												var gMark = FanHome.createMarker( nPoint, \"" .
 													str_replace( array( "\n", "\t" ), '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
 													'<br />' . $loc . "</p>\", '" .
 													$userIDs[$row->up_user_id]['URL'] . "', map
@@ -388,14 +428,14 @@ class FanHome extends UnlistedSpecialPage {
 							";
 
 			// this is the first fan at $loc
-			if( !in_array( $loc, $fanLocations ) ) {
+			if ( !in_array( $loc, $fanLocations ) ) {
 				$fanLocations[] = $loc;
 			} else {
 				// there is already a placemark at $loc so add some jitter
 				$markerCode .= "var point = new GPoint( point.x + ( Math.random() * .1 ), point.y + ( Math.random() * .1 ) );";
 			}
 
-			$markerCode .= "var gMark = createMarker(point, \"" .
+			$markerCode .= "var gMark = FanHome.createMarker(point, \"" .
 				str_replace( array( "\n", "\t" ), '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
 				'<br />' . $loc . "</p>\", '" .
 				$userIDs[$row->up_user_id]['URL'] . "', map);
@@ -406,7 +446,7 @@ class FanHome extends UnlistedSpecialPage {
 
 		// helper function to compare the $fanStates objects
 		function cmpFanStates( $a, $b ) {
-			if( $a['user_id'] < $b['user_id'] ) {
+			if ( $a['user_id'] < $b['user_id'] ) {
 				return 1;
 			} else {
 				return -1;
@@ -414,26 +454,28 @@ class FanHome extends UnlistedSpecialPage {
 		}
 
 		// at the state level markers include the 5 newest users
-		foreach( $fanStates as $state => $users ) {
+		foreach ( $fanStates as $state => $users ) {
 			usort( $users, 'cmpFanStates' );
 
 			$userList = '';
 
-			for( $i = 0; $i < ( count( $users ) < 5 ? count( $users ) : 5 ); $i++ ) {
+			for ( $i = 0; $i < ( count( $users ) < 5 ? count( $users ) : 5 ); $i++ ) {
 				$userList .= $users[$i]['user_name'] . '<br />';
 			}
 
 			$markerCode .= "geocoder.getLatLng( '" . $state . "' ,
 								function( point ) {
-									if( point )
+									if ( point ) {
 										mgr.addMarker(
 
-									createTopMarker( point, '<div id=\"gMapStateInfo\" class=\"gMapStateInfo\"> <div class=\"fan-location-blurb-title\">" .
-										wfMsg( 'sportsteams-network-newest', $state ) .
+									FanHome.createTopMarker( point, '<div id=\"gMapStateInfo\" class=\"gMapStateInfo\"> <div class=\"fan-location-blurb-title\">" .
+										$this->msg( 'sportsteams-network-newest', $state )->text() .
 										"</div><div class=\"user-list\">" . $userList .
 										"<div><div style=\"font-size:10px; color:#797979;\">" .
-										wfMsg( 'sportsteams-network-clicktozoom' ) . "</div></div>', map ), 1, 5 );
-								}	);";
+										$this->msg( 'sportsteams-network-clicktozoom' )->text() . "</div></div>', map ), 1, 5 );
+									}
+								}
+							);";
 		}
 
 		// script
@@ -467,7 +509,8 @@ function loadMap() {
 	}
 
 	/**
-	 * Get the articles related to this network.
+	 * Get the articles related to this network (articles where at least one
+	 * category matches the name of this network).
 	 *
 	 * @return String: HTML
 	 */
@@ -478,7 +521,7 @@ function loadMap() {
 		$key = wfMemcKey( 'fanhome', 'network-articles', 'six' );
 		$data = $wgMemc->get( $key );
 
-		if( $data != '' ) {
+		if ( $data != '' ) {
 			wfDebugLog( 'FanHome', 'Got network articles from cache' );
 			$articles = $data;
 		} else {
@@ -493,7 +536,7 @@ function loadMap() {
 				),
 				array(
 					'cl_from = page_id',
-					'page_namespace' => NS_BLOG,
+					'page_namespace' => ( defined( 'NS_BLOG' ) ? NS_BLOG : 500 ),
 					'page_is_redirect' => 0,
 					'cl_to ' . $dbr->buildLike(
 						$dbr->anyString(),
@@ -519,9 +562,9 @@ function loadMap() {
 
 		$html = '<div class="listpages-container">';
 		if ( empty( $articles ) ) {
-			$html .= wfMsg( 'sportsteams-no-articles' );
+			$html .= $this->msg( 'sportsteams-no-articles' )->text();
 		} else {
-			foreach( $articles as $article ) {
+			foreach ( $articles as $article ) {
 				$titleObj = Title::makeTitle( NS_BLOG, $article['title'] );
 				$votes = self::getVotesForPage( $article['id'] );
 				$html .= '<div class="listpages-item">
@@ -530,11 +573,10 @@ function loadMap() {
 					$votes .
 				'</div>
 				<div class="listpages-votebox-text">' .
-					wfMsgExt(
+					$this->msg(
 						'sportsteams-articles-votes',
-						'parsemag',
 						$votes
-					) .
+					)->parse() .
 					'</div>
 				</div>
 				<a href="' . $titleObj->escapeFullURL() . '">' .
@@ -565,7 +607,7 @@ function loadMap() {
 		$key = wfMemcKey( 'fanhome', 'vote', 'count' );
 		$data = $wgMemc->get( $key );
 
-		if( $data != '' ) {
+		if ( $data != '' ) {
 			wfDebugLog( 'FanHome', "Got vote count for the page with ID {$id} from cache" );
 			$voteCount = $data;
 		} else {
@@ -585,26 +627,26 @@ function loadMap() {
 	}
 
 	function getRelationships( $rel_type ) {
-		global $wgUser;
-		$rel = new UserRelationship( $wgUser->getName() );
+		$rel = new UserRelationship( $this->getUser()->getName() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}
 
 	function getTopFans() {
-		global $wgRequest, $wgLang;
+		$lang = $this->getLanguage();
+		$request = $this->getRequest();
 
-		$sport_id = $wgRequest->getInt( 'sport_id' );
-		$team_id = $wgRequest->getInt( 'team_id' );
+		$sport_id = $request->getInt( 'sport_id' );
+		$team_id = $request->getInt( 'team_id' );
 
 		$output = '<div class="top-fans">';
 		$fans = SportsTeams::getUsersByPoints( $sport_id, $team_id, 15, 0 );
 		$x = 1;
 
-		foreach( $fans as $fan ) {
+		foreach ( $fans as $fan ) {
 			$user = Title::makeTitle( NS_USER, $fan['user_name'] );
 			$user_name = $fan['user_name'];
-			$user_name_short = $wgLang->truncate( $user_name, 12 );
+			$user_name_short = $lang->truncate( $user_name, 12 );
 			$avatar = new wAvatar( $fan['user_id'], 'm' );
 			$output .= "<div class=\"top-fan-row\">
 				<span class=\"top-fan-num\">{$x}.</span> <span class=\"top-fan\">" .
@@ -613,11 +655,10 @@ function loadMap() {
 					'</a>
 				</span>
 				<span class="top-fan-points"><b>' .
-					wfMsgExt(
+					$this->msg(
 						'sportsteams-network-points',
-						'parsemag',
-						$wgLang->formatNum( $fan['points'] )
-					) . '</b></span>
+						$lang->formatNum( $fan['points'] )
+					)->parse() . '</b></span>
 			</div>';
 			$x++;
 		}
@@ -627,19 +668,26 @@ function loadMap() {
 		return $output;
 	}
 
+	/**
+	 * Display the names and avatars of users who are fans of a given sport or
+	 * team.
+	 *
+	 * @return String: HTML
+	 */
 	function getFans() {
-		global $wgRequest, $wgLang;
+		$lang = $this->getLanguage();
+		$request = $this->getRequest();
 
-		$sport_id = $wgRequest->getInt( 'sport_id' );
-		$team_id = $wgRequest->getInt( 'team_id' );
+		$sport_id = $request->getInt( 'sport_id' );
+		$team_id = $request->getInt( 'team_id' );
 
 		$output = '<div class="fans">';
 		$fans = SportsTeams::getUsersByFavorite( $sport_id, $team_id, 7, 0 );
-		foreach( $fans as $fan ) {
+		foreach ( $fans as $fan ) {
 			$user = Title::makeTitle( NS_USER, $fan['user_name'] );
 			$avatar = new wAvatar( $fan['user_id'], 'l' );
 
-			$fan_name = $wgLang->truncate( $fan['user_name'], 12 );
+			$fan_name = $lang->truncate( $fan['user_name'], 12 );
 
 			$output .= "<p class=\"fan\">
 				<a href=\"{$user->getFullURL()}\">{$avatar->getAvatarURL()}</a><br>

@@ -2,6 +2,9 @@
 
 class ViewFans extends UnlistedSpecialPage {
 
+	/**
+	 * @var String: name of the network (sports team)
+	 */
 	public $network;
 
 	/**
@@ -17,51 +20,51 @@ class ViewFans extends UnlistedSpecialPage {
 	 * @param $par Mixed: parameter passed to the special page or null
 	 */
 	public function execute( $par ) {
-		global $wgUser, $wgOut, $wgRequest, $wgScriptPath, $wgUploadPath;
+		global $wgUploadPath;
+
+		$out = $this->getOutput();
+		$request = $this->getRequest();
+		$user = $this->getUser();
 
 		$output = '';
 
 		/**
 		 * Get query string variables
 		 */
-		$page = $wgRequest->getInt( 'page', 1 );
-		$sport_id = $wgRequest->getVal( 'sport_id' );
-		$team_id = $wgRequest->getVal( 'team_id' );
+		$page = $request->getInt( 'page', 1 );
+		$sport_id = $request->getVal( 'sport_id' );
+		$team_id = $request->getVal( 'team_id' );
 
 		/**
 		 * Error message for teams/sports that do not exist (from URL)
 		 */
-		if( !$team_id && !$sport_id ) {
-			$wgOut->setPageTitle( wfMsg( 'sportsteams-network-woops-title' ) );
-			$out = '<div class="relationship-request-message">' .
-				wfMsg( 'sportsteams-network-woops-text' ) . '</div>';
-			$out .= '<div class="relationship-request-buttons">';
-			$out .= '<input type="button" class="site-button" value="' .
-				wfMsg( 'sportsteams-network-main-page' ) .
+		if ( !$team_id && !$sport_id ) {
+			$out->setPageTitle( $this->msg( 'sportsteams-network-woops-title' )->text() );
+			$output = '<div class="relationship-request-message">' .
+				$this->msg( 'sportsteams-network-woops-text' )->text() . '</div>';
+			$output .= '<div class="relationship-request-buttons">';
+			$output .= '<input type="button" class="site-button" value="' .
+				$this->msg( 'sportsteams-network-main-page' )->text() .
 				"\" onclick=\"window.location='" .
 				Title::newMainPage()->escapeFullURL() . "'\"/>";
-			if ( $wgUser->isLoggedIn() ) {
-				$out .= ' <input type="button" class="site-button" value="' .
-					wfMsg( 'sportsteams-network-your-profile' ) .
+			if ( $user->isLoggedIn() ) {
+				$output .= ' <input type="button" class="site-button" value="' .
+					$this->msg( 'sportsteams-network-your-profile' )->text() .
 					"\" onclick=\"window.location='" .
-					Title::makeTitle( NS_USER, $wgUser->getName() )->escapeFullURL() . "'\"/>";
+					Title::makeTitle( NS_USER, $user->getName() )->escapeFullURL() . "'\"/>";
 			}
-		  	$out .= '</div>';
-			$wgOut->addHTML( $out );
+		  	$output .= '</div>';
+			$out->addHTML( $output );
 			return false;
 		}
 
 		// Add CSS
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$wgOut->addModuleStyles( 'ext.sportsTeams' );
-		} else {
-			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/SportsTeams/SportsTeams.css' );
-		}
+		$out->addModules( 'ext.sportsTeams' );
 
 		$relationships = array();
 		$friends = array();
 		$foes = array();
-		if( $wgUser->isLoggedIn() ) {
+		if ( $user->isLoggedIn() ) {
 			$friends = $this->getRelationships( 1 );
 			$foes = $this->getRelationships( 2 );
 			$relationships = array_merge( $friends, $foes );
@@ -73,18 +76,25 @@ class ViewFans extends UnlistedSpecialPage {
 		$per_page = 50;
 		$per_row = 2;
 
-		if( $team_id ) {
+		if ( $team_id ) {
 			$team = SportsTeams::getTeam( $team_id );
 			$this->network = $team['name'];
+
+			// Different i18n message depending on what we're viewing; for a team,
+			// we need "the", i.e. "The Mets have X fans", but for a sport, the
+			// "the" has to be omitted. Also, have/has distinction.
+			$fanMessageName = 'sportsteams-network-num-fans';
+
 			$team_image = "<img src=\"{$wgUploadPath}/team_logos/" .
 				SportsTeams::getTeamLogo( $team_id, 'l' ) .
-				'" border="0" alt="' . wfMsg( 'sportsteams-network-alt-logo' ) . '" />';
+				'" border="0" alt="' . $this->msg( 'sportsteams-network-alt-logo' )->plain() . '" />';
 		} else {
 			$sport = SportsTeams::getSport( $sport_id );
-			$this->network = $team['name'];
+			$this->network = $sport['name'];
+			$fanMessageName = 'sportsteams-network-num-fans-sport';
 			$team_image = "<img src=\"{$wgUploadPath}/team_logos/" .
 				SportsTeams::getSportLogo( $sport_id, 'l' ) .
-				'" border="0" alt="' . wfMsg( 'sportsteams-network-alt-logo' ) . '" />';
+				'" border="0" alt="' . $this->msg( 'sportsteams-network-alt-logo' )->plain() . '" />';
 		}
 		$homepage_title = SpecialPage::getTitleFor( 'FanHome' );
 
@@ -95,58 +105,77 @@ class ViewFans extends UnlistedSpecialPage {
 			$sport_id, $team_id, $per_page, $page
 		);
 
-		$wgOut->setPageTitle( wfMsg( 'st-network-network-fans', $this->network ) );
+		$out->setPageTitle( $this->msg( 'sportsteams-network-network-fans', $this->network )->text() );
 
 		$output .= '<div class="friend-links">';
-		$output .= "<a href=\"". $homepage_title->getFullURL(
-			"sport_id={$sport_id}&team_id={$team_id}"
-		) . '">' . wfMsg( 'sportsteams-network-back-to-network', $this->network ) . '</a>';
+		$output .= Linker::link(
+			$homepage_title,
+			$this->msg( 'sportsteams-network-back-to-network', $this->network )->text(),
+			array(),
+			array(
+				'sport_id' => $sport_id,
+				'team_id' => $team_id
+			)
+		);
 		$output .= '</div>';
 
 		/* Show total fan count */
 		$output .= '<div class="friend-message">' .
-			wfMsgExt(
-				'sportsteams-network-num-fans',
-				'parsemag',
+			$this->msg(
+				$fanMessageName,
 				$this->network,
-				$total,
-				SpecialPage::getTitleFor( 'InviteContacts' )->escapeFullURL()
-			);
+				$total
+			)->parse();
 		$output .= '</div>';
 
-		if( $fans ) {
+		if ( $fans ) {
 			$x = 1;
 
 			foreach ( $fans as $fan ) {
-				$user = Title::makeTitle( NS_USER, $fan['user_name'] );
+				$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 				$avatar = new wAvatar( $fan['user_id'], 'l' );
 				$avatar_img = $avatar->getAvatarURL();
 
 				$output .= "<div class=\"relationship-item\">
-						<div class=\"relationship-image\"><a href=\"{$user->getFullURL()}\">{$avatar_img}</a></div>
+						<div class=\"relationship-image\"><a href=\"{$loopUser->getFullURL()}\">{$avatar_img}</a></div>
 						<div class=\"relationship-info\">
 						<div class=\"relationship-name\">
-							<a href=\"{$user->getFullURL()}\">{$fan['user_name']}</a>";
+							<a href=\"{$loopUser->getFullURL()}\">{$fan['user_name']}</a>";
 
 				$output .= '</div>
 					<div class="relationship-actions">';
-				if( in_array( $fan['user_id'], $friends ) ) {
-					$output .= '	<span class="profile-on">' . wfMsg( 'sportsteams-your-friend' ) . '</span> ';
+				if ( in_array( $fan['user_id'], $friends ) ) {
+					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-friend' )->text() . '</span> ';
 				}
-				if( in_array( $fan['user_id'], $foes ) ) {
-					$output .= '	<span class="profile-on">' . wfMsg( 'sportsteams-your-foe' ) . '</span> ';
+				if ( in_array( $fan['user_id'], $foes ) ) {
+					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-foe' )->text() . '</span> ';
 				}
-				if( $fan['user_name'] != $wgUser->getName() ) {
-					if( !in_array( $fan['user_id'], $relationships ) ) {
+				if ( $fan['user_name'] != $user->getName() ) {
+					$pipeList = array();
+					if ( !in_array( $fan['user_id'], $relationships ) ) {
 						$ar = SpecialPage::getTitleFor( 'AddRelationship' );
-						$output .= '<a href="' . $ar->escapeFullURL( "user={$fan['user_name']}&rel_type=1" ) . '">' .
-							wfMsg( 'sportsteams-add-as-friend' ) . '</a> | ';
-						$output .= '<a href="' . $ar->escapeFullURL( "user={$fan['user_name']}&rel_type=2" ) . '">' .
-							wfMsg( 'sportsteams-add-as-foe' ) . '</a> | ';
+						$pipeList[] = Linker::link(
+							$ar,
+							$this->msg( 'sportsteams-add-as-friend' )->text(),
+							array(),
+							array( 'user' => $fan['user_name'], 'rel_type' => '1' )
+						);
+						$pipeList[] = Linker::link(
+							$ar,
+							$this->msg( 'sportsteams-add-as-foe' )->text(),
+							array(),
+							array( 'user' => $fan['user_name'], 'rel_type' => '2' )
+						);
 					}
-					$output .= '<a href="' . SpecialPage::getTitleFor( 'GiveGift' )->escapeFullURL( "user={$fan['user_name']}" ) . '">' .
-						wfMsg( 'sportsteams-give_a_gift' ) . '</a> ';
+					$pipeList[] = Linker::link(
+						SpecialPage::getTitleFor( 'GiveGift' ),
+						$this->msg( 'sportsteams-give-a-gift' )->text(),
+						array(),
+						array( 'user' => $fan['user_name'] )
+					);
+					$output .= $this->getLanguage()->pipeList( $pipeList );
 					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
+					$output .= $this->msg( 'word-separator' )->text();
 					$output .= '<div class="cleared"></div>';
 				}
 				$output .= '</div>';
@@ -154,7 +183,7 @@ class ViewFans extends UnlistedSpecialPage {
 				$output .= '<div class="cleared"></div></div>';
 
 				$output .= '</div>';
-				if( $x == count( $fans ) || $x != 1 && $x % $per_row == 0 ) {
+				if ( $x == count( $fans ) || $x != 1 && $x % $per_row == 0 ) {
 					$output .= '<div class="cleared"></div>';
 				}
 				$x++;
@@ -168,43 +197,64 @@ class ViewFans extends UnlistedSpecialPage {
 
 		if ( $numofpages > 1 ) {
 			$output .= '<div class="page-nav">';
-			if( $page > 1 ) {
-				$output .= '<a href="' . $this->getTitle()->escapeFullURL(
-					'page=' . ( $page - 1 ) . "&sport_id={$sport_id}&team_id={$team_id}"
-				) . '">' . wfMsg( 'sportsteams-prev' ) . '</a> ';
+			if ( $page > 1 ) {
+				$output .= Linker::link(
+					$this->getTitle(),
+					$this->msg( 'sportsteams-prev' )->plain(),
+					array(),
+					array(
+						'page' => ( $page - 1 ),
+						'sport_id' => $sport_id,
+						'team_id' => $team_id
+					)
+				) . $this->msg( 'word-separator' )->plain();
 			}
 
-			if( ( $total % $per_page ) != 0 ) {
+			if ( ( $total % $per_page ) != 0 ) {
 				$numofpages++;
 			}
-			if( $numofpages >= 9 ) {
+			if ( $numofpages >= 9 ) {
 				$numofpages = 9 + $page;
 			}
 
-			for( $i = 1; $i <= $numofpages; $i++ ) {
-				if( $i == $page ) {
+			for ( $i = 1; $i <= $numofpages; $i++ ) {
+				if ( $i == $page ) {
 				    $output .= ( $i . ' ' );
 				} else {
-				    $output .= '<a href="' . $this->getTitle()->escapeFullURL(
-						'page=' . ( $i ) . "&sport_id={$sport_id}&team_id={$team_id}"
-					) . "\">$i</a> ";
+				    $output .= Linker::link(
+						$this->getTitle(),
+						$i,
+						array(),
+						array(
+							'page' => ( $i ),
+							'sport_id' => $sport_id,
+							'team_id' => $team_id
+						)
+					) . $this->msg( 'word-separator' )->plain();
 				}
 			}
 
-			if( ( $total - ( $per_page * $page ) ) > 0 ) {
-				$output .= ' <a href="' . $this->getTitle()->escapeFullURL(
-					'page=' . ( $page + 1 ) . "&sport_id={$sport_id}&team_id={$team_id}"
-				) . '">' . wfMsg( 'sportsteams-next' ) . '</a>';
+			if ( ( $total - ( $per_page * $page ) ) > 0 ) {
+				$output .= $this->msg( 'word-separator' )->plain() . Linker::link(
+					$this->getTitle(),
+					$this->msg( 'sportsteams-next' )->plain(),
+					array(),
+					array(
+						'page' => ( $page + 1 ),
+						'sport_id' => $sport_id,
+						'team_id' => $team_id
+					)
+				);
 			}
+
 			$output .= '</div>';
 		}
 
-		$wgOut->addHTML( $output );
+		$out->addHTML( $output );
 	}
 
 	function getRelationships( $rel_type ) {
-		global $wgUser;
-		$rel = new UserRelationship( $wgUser->getName() );
+		$rel = new UserRelationship( $this->getUser()->getName() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}

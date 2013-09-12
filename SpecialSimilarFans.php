@@ -15,34 +15,32 @@ class SimilarFans extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the special page or null
 	 */
 	public function execute( $par ) {
-		global $wgUser, $wgOut, $wgRequest, $wgLang, $wgScriptPath;
+		$lang = $this->getLanguage();
+		$out = $this->getOutput();
+		$user = $this->getUser();
 
 		/**
 		 * Redirect non-logged in users to Login Page
 		 * It will automatically return them to the SimilarFans page
 		 */
-		if( $wgUser->getID() == 0 ) {
-			$wgOut->setPageTitle( wfMsg( 'sportsteams-woops' ) );
+		if ( $user->getID() == 0 ) {
+			$out->setPageTitle( $this->msg( 'sportsteams-woops' )->plain() );
 			$login = SpecialPage::getTitleFor( 'Userlogin' );
-			$wgOut->redirect( $login->getFullURL( 'returnto=Special:SimilarFans' ) );
+			$out->redirect( $login->getFullURL( 'returnto=Special:SimilarFans' ) );
 			return false;
 		}
 
 		// Add CSS
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$wgOut->addModuleStyles( 'ext.sportsTeams' );
-		} else {
-			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/SportsTeams/SportsTeams.css' );
-		}
+		$out->addModules( 'ext.sportsTeams' );
 
 		$output = '';
 
 		/**
 		 * Get query string variables
 		 */
-		$page = $wgRequest->getInt( 'page', 1 );
+		$page = $this->getRequest()->getInt( 'page', 1 );
 
-		if( $wgUser->isLoggedIn() ) {
+		if ( $user->isLoggedIn() ) {
 			$friends = $this->getRelationships( 1 );
 			$foes = $this->getRelationships( 2 );
 			$relationships = array_merge( $friends, $foes );
@@ -54,12 +52,12 @@ class SimilarFans extends SpecialPage {
 		$per_page = 50;
 		$per_row = 2;
 
-		$total = SportsTeams::getSimilarUserCount( $wgUser->getID() );
+		$total = SportsTeams::getSimilarUserCount( $user->getID() );
 
 		/* Get all fans */
-		$fans = SportsTeams::getSimilarUsers( $wgUser->getID(), $per_page, $page );
+		$fans = SportsTeams::getSimilarUsers( $user->getID(), $per_page, $page );
 
-		$wgOut->setPageTitle( wfMsg( 'sportsteams-similar-fans' ) );
+		$out->setPageTitle( $this->msg( 'sportsteams-similar-fans' )->text() );
 
 		//$output .= '<div class="friend-links">';
 		//$output .= "<a href=\"{$homepage_title->getFullURL()}&sport_id={$sport_id}&team_id={$team_id}\">< Back to Network Home</a>";
@@ -67,48 +65,69 @@ class SimilarFans extends SpecialPage {
 
 		/* Show total fan count */
 		$output .= '<div class="relationship-count">' .
-			wfMsgExt( 'sportsteams-num-similar', 'parsemag', $total ) .
-			' <a href="' . SpecialPage::getTitleFor( 'InviteContacts' )->escapeFullURL() . '">' .
-				wfMsg( 'sportsteams-invite-friends' ) . '</a>.';
+			$this->msg( 'sportsteams-num-similar', $total )->parse();
 		$output .= '</div>';
 
-		if( $fans ) {
+		if ( $fans ) {
 			$x = 1;
 
 			foreach ( $fans as $fan ) {
-				$user_name_display = $wgLang->truncate( $fan['user_name'], 30 );
+				$user_name_display = $lang->truncate( $fan['user_name'], 30 );
 
-				$user = Title::makeTitle( NS_USER, $fan['user_name'] );
+				$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 				$avatar = new wAvatar( $fan['user_id'], 'ml' );
 				$avatar_img = $avatar->getAvatarURL();
 
 				$output .= "<div class=\"relationship-item\">
-							<div class=\"relationship-image\"><a href=\"{$user->getFullURL()}\">{$avatar_img}</a></div>
+							<div class=\"relationship-image\"><a href=\"{$loopUser->getFullURL()}\">{$avatar_img}</a></div>
 							<div class=\"relationship-info\">
-								<div class=\"relationship-name\"><a href=\"{$user->getFullURL()}\">{$user_name_display}</a>";
+								<div class=\"relationship-name\"><a href=\"{$loopUser->getFullURL()}\">{$user_name_display}</a>";
 
 				$output .= '</div>
 					<div class="relationship-actions">';
 				$rr = SpecialPage::getTitleFor( 'RemoveRelationship' );
 				$ar = SpecialPage::getTitleFor( 'AddRelationship' );
-				if( in_array( $fan['user_id'], $friends ) ) {
-					$output .= ' <a href="' . $rr->escapeFullURL( "user={$user->getText()}" ) . '">' .
-						wfMsg( 'sportsteams-remove-as-friend' ) . '</a> | ';
+				$pipeList = array();
+				if ( in_array( $fan['user_id'], $friends ) ) {
+					$pipeList[] = Linker::link(
+						$rr,
+						$this->msg( 'sportsteams-remove-as-friend' )->text(),
+						array(),
+						array( 'user' => $loopUser->getText() )
+					);
 				}
-				if( in_array( $fan['user_id'], $foes ) ) {
-					$output .= ' <a href="' . $rr->escapeFullURL( "user={$user->getText()}" ) . '">' .
-						wfMsg( 'sportsteams-remove-as-foe' ) . '</a> | ';
+				if ( in_array( $fan['user_id'], $foes ) ) {
+					$pipeList[] = Linker::link(
+						$rr,
+						$this->msg( 'sportsteams-remove-as-foe' )->text(),
+						array(),
+						array( 'user' => $loopUser->getText() )
+					);
 				}
-				if( $fan['user_name'] != $wgUser->getName() ) {
-					if( !in_array( $fan['user_id'], $relationships ) ) {
-						$output .= '<a href="' . $ar->escapeFullURL( "user={$fan['user_name']}&rel_type=1" ) . '">' .
-							wfMsg( 'sportsteams-add-as-friend' ) . '</a> | ';
-						$output .= '<a href="' . $ar->escapeFullURL( "user={$fan['user_name']}&rel_type=2" ) . '">' .
-							wfMsg( 'sportsteams-add-as-foe' ) . '</a> | ';
+				if ( $fan['user_name'] != $user->getName() ) {
+					if ( !in_array( $fan['user_id'], $relationships ) ) {
+						$pipeList[] = Linker::link(
+							$ar,
+							$this->msg( 'sportsteams-add-as-friend' )->text(),
+							array(),
+							array( 'user' => $fan['user_name'], 'rel_type' => '1' )
+						);
+						$pipeList[] = Linker::link(
+							$ar,
+							$this->msg( 'sportsteams-add-as-foe' )->text(),
+							array(),
+							array( 'user' => $fan['user_name'], 'rel_type' => '2' )
+						);
 					}
-					$output .= '<a href="' . SpecialPage::getTitleFor( 'GiveGift' )->escapeFullURL( "user={$fan['user_name']}" ) . '">' .
-						wfMsg( 'sportsteams-give-a-gift' ) . '</a> ';
+					$pipeList[] = Linker::link(
+						SpecialPage::getTitleFor( 'GiveGift' ),
+						$this->msg( 'sportsteams-give-a-gift' )->text(),
+						array(),
+						array( 'user' => $fan['user_name'] )
+					);
 					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
+					$output .= $lang->pipeList( $pipeList );
+					$output .= $this->msg( 'word-separator' )->plain();
 					$output .= '<div class="cleared"></div>';
 				}
 				$output .= '</div>';
@@ -117,7 +136,7 @@ class SimilarFans extends SpecialPage {
 
 				$output .= '</div>';
 
-				if( $x == count( $fans ) || $x != 1 && $x % $per_row == 0 ) {
+				if ( $x == count( $fans ) || $x != 1 && $x % $per_row == 0 ) {
 					$output .= '<div class="cleared"></div>';
 				}
 
@@ -130,44 +149,54 @@ class SimilarFans extends SpecialPage {
 		 */
 		$numofpages = $total / $per_page;
 
-		if( $numofpages > 1 ) {
+		if ( $numofpages > 1 ) {
 			$output .= '<div class="page-nav">';
-			if( $page > 1 ) {
-				$output .= '<a href="' .
-					$this->getTitle()->getFullURL( 'page=' . ( $page - 1 ) ) .
-					'">' . wfMsg( 'sportsteams-prev' ) . "</a> ";
+			if ( $page > 1 ) {
+				$output .= Linker::link(
+					$this->getTitle(),
+					$this->msg( 'sportsteams-prev' )->plain(),
+					array(),
+					array( 'page' => ( $page - 1 ) )
+				) . $this->msg( 'word-separator' )->plain();
 			}
 
-			if( ( $total % $per_page ) != 0 ) {
+			if ( ( $total % $per_page ) != 0 ) {
 				$numofpages++;
 			}
-			if( $numofpages >= 9 ) {
+			if ( $numofpages >= 9 ) {
 				$numofpages = 9 + $page;
 			}
 
-			for( $i = 1; $i <= $numofpages; $i++ ) {
-				if( $i == $page ) {
+			for ( $i = 1; $i <= $numofpages; $i++ ) {
+				if ( $i == $page ) {
 					$output .= ( $i . ' ');
 				} else {
-					$output .= '<a href="' . $this->getTitle()->getFullURL( "page=$i" ) . "\">$i</a> ";
+					$output .= Linker::link(
+						$this->getTitle(),
+						$i,
+						array(),
+						array( 'page' => $i )
+					) . $this->msg( 'word-separator' )->plain();
 				}
 			}
 
-			if( ( $total - ( $per_page * $page ) ) > 0 ) {
-				$output .= ' <a href="' . 
-					$this->getTitle()->getFullURL( 'page=' . ( $page + 1 ) ) .
-					'">' . wfMsg( 'sportsteams-next' ) . '</a>';
+			if ( ( $total - ( $per_page * $page ) ) > 0 ) {
+				$output .= $this->msg( 'word-separator' )->plain() . Linker::link(
+					$this->getTitle(),
+					$this->msg( 'sportsteams-next' )->plain(),
+					array(),
+					array( 'page' => ( $page + 1 ) )
+				);
 			}
 
 			$output .= '</div>';
 		}
 
-		$wgOut->addHTML( $output );
+		$out->addHTML( $output );
 	}
 
 	function getRelationships( $rel_type ) {
-		global $wgUser;
-		$rel = new UserRelationship( $wgUser->getName() );
+		$rel = new UserRelationship( $this->getUser()->getName() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}

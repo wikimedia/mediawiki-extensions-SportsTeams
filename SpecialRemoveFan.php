@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * A special page for removing yourself from a fan network.
+ *
+ * @file
+ */
 class RemoveFan extends UnlistedSpecialPage {
 
 	/**
@@ -15,52 +19,50 @@ class RemoveFan extends UnlistedSpecialPage {
 	 * @param $par Mixed: parameter passed to the special page or null
 	 */
 	public function execute( $par ) {
-		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgScriptPath;
+		$out = $this->getOutput();
+		$request = $this->getRequest();
+		$user = $this->getUser();
 
 		$output = '';
 
 		/**
 		 * Get query string variables
 		 */
-		$sport_id = $wgRequest->getInt( 'sport_id' );
-		$team_id = $wgRequest->getInt( 'team_id' );
+		$sport_id = $request->getInt( 'sport_id' );
+		$team_id = $request->getInt( 'team_id' );
 
 		// Add CSS
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$wgOut->addModuleStyles( 'ext.sportsTeams' );
-		} else {
-			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/SportsTeams/SportsTeams.css' );
-		}
+		$out->addModules( 'ext.sportsTeams' );
 
 		/**
 		 * Error message for URL with no team and sport specified
 		 */
-		if( !$team_id && !$sport_id ) {
-			$wgOut->setPageTitle( wfMsg( 'sportsteams-network-woops-title' ) );
-			$out = '<div class="relationship-request-message">' .
-				wfMsg( 'sportsteams-network-woops-text' ) . '</div>';
-			$out .= '<div class="relationship-request-buttons">';
-			$out .= '<input type="button" class="site-button" value="' .
-				wfMsg( 'sportsteams-network-main-page' ) . "\" onclick=\"window.location='" .
+		if ( !$team_id && !$sport_id ) {
+			$out->setPageTitle( $this->msg( 'sportsteams-network-woops-title' )->plain() );
+			$output = '<div class="relationship-request-message">' .
+				$this->msg( 'sportsteams-network-woops-text' )->text() . '</div>';
+			$output .= '<div class="relationship-request-buttons">';
+			$output .= '<input type="button" class="site-button" value="' .
+				$this->msg( 'sportsteams-network-main-page' )->text() . "\" onclick=\"window.location='" .
 				Title::newMainPage()->escapeFullURL() . "'\"/>";
-			if ( $wgUser->isLoggedIn() ) {
-				$out .= ' <input type="button" class="site-button" value="' .
-					wfMsg( 'sportsteams-network-your-profile' ) .
+			if ( $user->isLoggedIn() ) {
+				$output .= ' <input type="button" class="site-button" value="' .
+					$this->msg( 'sportsteams-network-your-profile' )->text() .
 					"\" onclick=\"window.location='" .
-					Title::makeTitle( NS_USER, $wgUser->getName() )->escapeFullURL() . "'\"/>";
+					Title::makeTitle( NS_USER, $user->getName() )->escapeFullURL() . "'\"/>";
 			}
-			$out .= '</div>';
-			$wgOut->addHTML( $out );
+			$output .= '</div>';
+			$out->addHTML( $output );
 			return false;
 		}
 
 		// If the database is in read-only mode, bail out
-		if( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+		if ( wfReadOnly() ) {
+			$out->readOnlyPage();
 			return true;
 		}
 
-		if( $team_id ) {
+		if ( $team_id ) {
 			$team = SportsTeams::getTeam( $team_id );
 			$name = $team['name'];
 		} else {
@@ -68,65 +70,65 @@ class RemoveFan extends UnlistedSpecialPage {
 			$name = $sport['name'];
 		}
 
-		if( $wgRequest->wasPosted() ) {
+		if ( $request->wasPosted() ) {
 			$s = new SportsTeams();
 			$s->removeFavorite(
-				$wgUser->getID(),
-				$wgRequest->getVal( 's_id' ),
-				$wgRequest->getVal( 't_id' )
+				$user->getId(),
+				$request->getVal( 's_id' ),
+				$request->getVal( 't_id' )
 			);
 
-			$wgOut->setPageTitle( wfMsg( 'sportsteams-network-no-longer-member', $name ) );
+			$out->setPageTitle( $this->msg( 'sportsteams-network-no-longer-member', $name )->text() );
 			$output .= '<div class="give-gift-message">
 				<input type="button" class="site-button" value="' .
-					wfMsg( 'sportsteams-network-main-page' ) .
+					$this->msg( 'sportsteams-network-main-page' )->text() .
 					"\" onclick=\"window.location='" .
 					Title::newMainPage()->escapeFullURL() . "'\"/>
 				<input type=\"button\" class=\"site-button\" value=\"" .
-					wfMsg( 'sportsteams-network-your-profile' ) .
+					$this->msg( 'sportsteams-network-your-profile' )->text() .
 					"\" onclick=\"window.location='" .
-					Title::makeTitle( NS_USER, $wgUser->getName() )->escapeFullURL() . "'\"/>
+					Title::makeTitle( NS_USER, $user->getName() )->escapeFullURL() . "'\"/>
 			</div>";
 		} else {
 			/**
 			 * Error message if the user is not a fan
 			 */
-			if( !SportsTeams::isFan( $wgUser->getID(), $sport_id, $team_id ) == true ) {
-				$wgOut->setPageTitle( wfMsg( 'sportsteams-network-not-member', $name ) );
-				//out .= '<div class="relationship-request-message">' . wfMsg( 'sportsteams-network-no-need-join' ) . '</div>';
-				$out .= '<div class="relationship-request-buttons">';
-				$out .= '<input type="button" class="site-button" value="' .
-					wfMsg( 'sportsteams-network-main-page' ) .
+			if ( !SportsTeams::isFan( $user->getId(), $sport_id, $team_id ) == true ) {
+				$out->setPageTitle( $this->msg( 'sportsteams-network-not-member', $name )->text() );
+				//$output .= '<div class="relationship-request-message">' . $this->msg( 'sportsteams-network-no-need-join' )->text() . '</div>';
+				$output .= '<div class="relationship-request-buttons">';
+				$output .= '<input type="button" class="site-button" value="' .
+					$this->msg( 'sportsteams-network-main-page' )->text() .
 					"\" onclick=\"window.location='" .
 					Title::newMainPage()->escapeFullURL() . "'\"/>";
-				if ( $wgUser->isLoggedIn() ) {
-					$out .= ' <input type="button" class="site-button" value="' .
-						wfMsg( 'sportsteams-network-your-profile' ) .
+				if ( $user->isLoggedIn() ) {
+					$output .= ' <input type="button" class="site-button" value="' .
+						$this->msg( 'sportsteams-network-your-profile' )->text() .
 						"\" onclick=\"window.location='" .
-						Title::makeTitle( NS_USER, $wgUser->getName() )->escapeFullURL() . "'\"/>";
+						Title::makeTitle( NS_USER, $user->getName() )->escapeFullURL() . "'\"/>";
 				}
-				$out .= '</div>';
-				$wgOut->addHTML( $out );
+				$output .= '</div>';
+				$out->addHTML( $output );
 				return false;
 			}
-			$wgOut->setPageTitle( wfMsg( 'sportsteams-network-leave', $name ) );
+			$out->setPageTitle( $this->msg( 'sportsteams-network-leave', $name )->text() );
 
 			$output .= '<form action="" method="post" enctype="multipart/form-data" name="form1">
 
 				<div class="give-gift-message" style="margin:0px 0px 0px 0px;">' .
-					wfMsg( 'sportsteams-network-leave-are-you-sure', $name ) .
+					$this->msg( 'sportsteams-network-leave-are-you-sure', $name )->text() .
 				"</div>
 
 				<div class=\"cleared\"></div>
 				<div class=\"give-gift-buttons\">
 					<input type=\"hidden\" name=\"s_id\" value=\"{$sport_id}\" />
 					<input type=\"hidden\" name=\"t_id\" value=\"{$team_id}\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . wfMsg( 'sportsteams-network-remove-me' ) . "\" size=\"20\" onclick=\"document.form1.submit()\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . wfMsg( 'cancel' ) . "\" size=\"20\" onclick=\"history.go(-1)\" />
+					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-remove-me' )->text() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
+					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->plain() . "\" size=\"20\" onclick=\"history.go(-1)\" />
 				</div>
 			</form>";
 		}
 
-		$wgOut->addHTML( $output );
+		$out->addHTML( $output );
 	}
 }

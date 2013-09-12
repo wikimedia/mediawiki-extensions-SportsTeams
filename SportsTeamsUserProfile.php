@@ -1,20 +1,28 @@
 <?php
+/**
+ * The hooked functions here are responsible for adding favorite networks and
+ * latest thought to social profile pages.
+ *
+ * @file
+ */
 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
+
+// The order is this so that "Latest Thought" is placed above "Networks" and
+// not the other way around
 $wgHooks['UserProfileBeginLeft'][] = 'wfUserProfileLatestThought';
 $wgHooks['UserProfileBeginLeft'][] = 'wfUserProfileFavoriteTeams';
 
 function wfUserProfileFavoriteTeams( $user_profile ) {
-	global $wgUser, $wgOut, $wgScriptPath, $wgUploadPath;
+	global $wgUser, $wgOut, $wgUploadPath;
 
 	$output = '';
 	$user_id = $user_profile->user_id;
 
 	// Add JS
-	if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-		$wgOut->addModuleScripts( 'ext.sportsTeams.userProfile' );
-	} else {
-		$wgOut->addScriptFile( $wgScriptPath . '/extensions/SportsTeams/SportsTeamsUserProfile.js' );
-	}
+	$wgOut->addModules( 'ext.sportsTeams.userProfile' );
 
 	$add_networks_title = SpecialPage::getTitleFor( 'UpdateFavoriteTeams' );
 
@@ -23,13 +31,15 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 	if ( $favs ) {
 		$output .= '<div class="user-section-heading">
 			<div class="user-section-title">' .
-				wfMsg( 'sportsteams-profile-networks' ) .
+				wfMessage( 'sportsteams-profile-networks' )->text() .
 			'</div>
 			<div class="user-section-actions">
 				<div class="action-right">';
 		if ( $user_profile->isOwner() ) {
-			$output .= '<a href="' . $add_networks_title->escapeFullURL() . '">' .
-				wfMsg( 'sportsteams-profile-add-network' ) . '</a>';
+			$output .= Linker::link(
+				$add_networks_title,
+				wfMessage( 'sportsteams-profile-add-network' )->plain()
+			);
 		}
 		$output .= '</div>
 				<div class="cleared"></div>
@@ -37,15 +47,15 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 		</div>
 		<div class="network-container">';
 
-		foreach( $favs as $fav ) {
+		foreach ( $favs as $fav ) {
 			$homepage_title = SpecialPage::getTitleFor( 'FanHome' );
 
 			$status_link = '';
 			if ( $wgUser->getId() == $user_id ) {
-				$onclick = "SportsTeamsUserProfile.showMessageBox({$fav['order']},{$fav['sport_id']},{$fav['team_id']})";
-				$status_link = ' <span class="status-message-add"> - <a href="javascript:void(0);" onclick="' .
-					$onclick . '" rel="nofollow">' .
-					wfMsg( 'sportsteams-profile-add-thought' ) . '</a></span>';
+				$status_link = ' <span class="status-message-add"> - <a href="javascript:void(0);" data-order="' .
+					$fav['order'] . '" data-sport-id="' . $fav['sport_id'] .
+					'" data-team-id="' . $fav['team_id'] . '" rel="nofollow">' .
+					wfMessage( 'sportsteams-profile-add-thought' )->text() . '</a></span>';
 			}
 
 			$network_update_message = '';
@@ -74,11 +84,18 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 					'" border="0" alt="" />';
 			}
 
+			$homepageLink = Linker::link(
+				$homepage_title,
+				$display_name,
+				array(),
+				array(
+					'sport_id' => $fav['sport_id'],
+					'team_id' => $fav['team_id']
+				)
+			);
 			$output .= "<div class=\"network\">
 				{$logo}
-				<a href=\"" . $homepage_title->escapeFullURL(
-					'sport_id=' . $fav['sport_id'] . '&team_id=' . $fav['team_id']
-				) . "\" rel=\"nofollow\">{$display_name}</a>
+				{$homepageLink}
 				{$status_link}
 			</div>
 
@@ -90,18 +107,18 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 	} elseif ( $user_profile->isOwner() ) {
 		$output .= '<div class="user-section-heading">
 			<div class="user-section-title">' .
-				wfMsg( 'sportsteams-profile-networks' ) .
+				wfMessage( 'sportsteams-profile-networks' )->text() .
 			'</div>
 			<div class="user-section-actions">
 				<div class="action-right">
 					<a href="' . $add_networks_title->escapeFullURL() . '">' .
-						wfMsg( 'sportsteams-profile-add-network' ) . '</a>
+						wfMessage( 'sportsteams-profile-add-network' )->text() . '</a>
 				</div>
 				<div class="cleared"></div>
 			</div>
 		</div>
 		<div class="no-info-container">' .
-			wfMsg( 'sportsteams-profile-no-networks' ) .
+			wfMessage( 'sportsteams-profile-no-networks' )->text() .
 		'</div>';
 	}
 
@@ -125,12 +142,12 @@ function wfUserProfileLatestThought( $user_profile ) {
 	if ( $user_update ) {
 		$output .= '<div class="user-section-heading">
 			<div class="user-section-title">' .
-				wfMsg( 'sportsteams-profile-latest-thought' ) .
+				wfMessage( 'sportsteams-profile-latest-thought' )->plain() .
 			'</div>
 			<div class="user-section-actions">
 				<div class="action-right">
 					<a href="' . $more_thoughts_link->escapeFullURL( 'user=' . $user_profile->user_name ) .
-					'" rel="nofollow">' . wfMsg( 'sportsteams-profile-view-all' ) . '</a>
+					'" rel="nofollow">' . wfMessage( 'sportsteams-profile-view-all' )->plain() . '</a>
 				</div>
 				<div class="cleared"></div>
 			</div>
@@ -140,34 +157,38 @@ function wfUserProfileLatestThought( $user_profile ) {
 		// If someone agrees with the most recent status update, show the count
 		// next to the timestamp to the owner of the status update
 		// After all, there's no point in showing "0 people agree with this"...
-		if(
+		if (
 			$wgUser->getName() == $user_update['user_name'] &&
 			$user_update['plus_count'] > 0
 		)
 		{
-			$vote_count = wfMsgExt(
-				'sportsteams-profile-num-agree',
-				'parsemag',
+			$vote_count = wfMessage(
+				'sportsteams-profile-num-agree'
+			)->numParams(
 				$user_update['plus_count']
-			);
+			)->parse();
 		}
 
-		$view_thought_link = '<a href="' . $thought_link->escapeFullURL( "id={$user_update['id']}" ) .
-			"\" rel=\"nofollow\">{$vote_count}</a>";
+		$view_thought_link = Linker::link(
+			$thought_link,
+			$vote_count,
+			array(),
+			array( 'id' => $user_update['id'] )
+		);
 
 		// Allow registered users who are not owners of this status update to
 		// vote for it unless they've already voted; if they have voted, show
 		// the amount of people who agree with the status update
-		if( $wgUser->isLoggedIn() && $wgUser->getName() != $user_update['user_name'] ) {
-			if( !$user_update['voted'] ) {
-				$vote_link = "<a href=\"javascript:void(0);\" onclick=\"SportsTeamsUserProfile.voteStatus({$user_update['id']},1)\" rel=\"nofollow\">" .
-					wfMsg( 'sportsteams-profile-do-you-agree' ) . '</a>';
+		if ( $wgUser->isLoggedIn() && $wgUser->getName() != $user_update['user_name'] ) {
+			if ( !$user_update['voted'] ) {
+				$vote_link = "<a class=\"profile-vote-status-link\" href=\"javascript:void(0);\" data-status-update-id=\"{$user_update['id']}\" rel=\"nofollow\">" .
+					wfMessage( 'sportsteams-profile-do-you-agree' )->text() . '</a>';
 			} else {
-				$vote_count = wfMsgExt(
-					'sportsteams-profile-num-agree',
-					'parsemag',
+				$vote_count = wfMessage(
+					'sportsteams-profile-num-agree'
+				)->numParams(
 					$user_update['plus_count']
-				);
+				)->parse();
 			}
 		}
 
@@ -178,16 +199,14 @@ function wfUserProfileLatestThought( $user_profile ) {
 			</div>
 			<div class=\"user-status-profile-vote\">
 				<span class=\"user-status-date\">" .
-					wfMsg( 'sportsteams-profile-ago', SportsTeams::getTimeAgo( $user_update['timestamp'] ) ) .
+					wfMessage( 'sportsteams-profile-ago', SportsTeams::getTimeAgo( $user_update['timestamp'] ) )->parse() .
 				"</span>
 				{$vote_link} {$view_thought_link}
 			</div>
 		</div>";
 	} else {
-		$output .= "<script type=\"text/javascript\">var __thoughts_text__ = \"" .
-			wfMsg( 'sportsteams-profile-latest-thought' ) . '";
-		var __view_all__ = "' . wfMsg( 'sportsteams-profile-view-all' ) . '";
-		var __more_thoughts_url__ = "' . $more_thoughts_link->escapeFullURL( 'user=' . $user_profile->user_name ) .
+		$output .= '<script type="text/javascript">var __more_thoughts_url__ = "' .
+			$more_thoughts_link->escapeFullURL( 'user=' . $user_profile->user_name ) .
 		'";</script>';
 	}
 

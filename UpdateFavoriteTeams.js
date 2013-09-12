@@ -11,7 +11,7 @@ var UpdateFavoriteTeams = {
 
 	showNext: function() {
 		jQuery( '#add_more' ).hide();
-		if( jQuery( '#fav_' + ( UpdateFavoriteTeams.fav_count + 1 ) ) ) {
+		if ( jQuery( '#fav_' + ( UpdateFavoriteTeams.fav_count + 1 ) ) ) {
 			if ( document.getElementById( 'fav_' + ( UpdateFavoriteTeams.fav_count + 1 ) ).style.display == 'none' ) {
 				jQuery( '#fav_' + ( UpdateFavoriteTeams.fav_count + 1 ) ).show();
 				UpdateFavoriteTeams.fav_count++;
@@ -28,8 +28,8 @@ var UpdateFavoriteTeams = {
 	saveTeams: function() {
 		var favs = '';
 		var sport_id, team_id;
-		for( var x = 1; x <= UpdateFavoriteTeams.fav_count; x++ ) {
-			if( document.getElementById( 'sport_' + x ).value !== 0 ) {
+		for ( var x = 1; x <= UpdateFavoriteTeams.fav_count; x++ ) {
+			if ( document.getElementById( 'sport_' + x ).value !== 0 ) {
 				sport_id = document.getElementById( 'sport_' + x ).value;
 				team_id = document.getElementById( 'team_' + x ).value;
 
@@ -41,3 +41,26 @@ var UpdateFavoriteTeams = {
 		document.sports.submit();
 	}
 };
+
+jQuery( document ).ready( function() {
+	jQuery( 'a.remove-link' ).on( 'click', function() {
+		UpdateFavoriteTeams.removeFan(
+			jQuery( this ).data( 'selected-sport-id' ),
+			jQuery( this ).data( 'selected-team-id' )
+		);
+	} );
+
+	jQuery( 'p.profile-update-unit select' ).on( 'change', function() {
+		UpdateFavoriteTeams.showNext();
+	} );
+
+	jQuery( 'input#update-favorite-teams-add-more-button' ).on( 'click', function() {
+		UpdateFavoriteTeams.showNext();
+	} );
+
+	jQuery( 'input#update-favorite-teams-save-button' ).on( 'click', function() {
+		UpdateFavoriteTeams.saveTeams();
+	} );
+
+	UpdateFavoriteTeams.fav_count = parseFloat( jQuery( '#fav_count' ).text() );
+} );

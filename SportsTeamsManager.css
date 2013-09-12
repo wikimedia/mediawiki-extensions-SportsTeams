@@ -1,0 +1,19 @@
+.view-form {
+	font-weight: 800;
+	font-size: 12px;
+	font-color: #666666;
+}
+
+.view-status {
+	font-weight: 800;
+	font-size: 12px;
+	background-color: #FFFB9B;
+	color: #666666;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+a.red-edit-link {
+	color: red;
+	font-size: 10px;
+}

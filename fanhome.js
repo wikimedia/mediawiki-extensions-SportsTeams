@@ -1,185 +1,261 @@
-function vote_status( id, vote ) {
-	var elem = document.getElementById( 'user-status-vote-' + id );
-	sajax_request_type = 'POST';
-	sajax_do_call( 'wfVoteUserStatus', [ id, vote ], elem );
-}
+/**
+ * JavaScript support functions for Special:FanHome -- the network page for an
+ * individual network
+ *
+ * Status update stuff is the same that can be found at
+ * /extensions/UserStatus/UserStatus.js, but in addition to that code, there's
+ * also some code for Google Maps integration.
+ *
+ * @file
+ */
+var FanHome = {
+	posted: 0,
 
-function detEnter( e ) {
-	var keycode;
-	if ( window.event ) {
-		keycode = window.event.keyCode;
-	} else if ( e ) {
-		keycode = e.which;
-	} else {
-		return true;
-	}
-	if ( keycode == 13 ) {
-		add_status();
-		return false;
-	} else {
-		return true;
-	}
-}
-
-var posted = 0;
-function add_status() {
-	var statusUpdateText = document.getElementById( 'user_status_text' ).value;
-	if( statusUpdateText && !posted ) {
-		posted = 1;
-
-		sajax_request_type = 'POST';
-		sajax_do_call(
-			'wfAddUserStatusNetwork',
-			[
-				__sport_id__,
-				__team_id__,
-				encodeURIComponent( statusUpdateText ),
-				__updates_show__
-			],
-			function( t ) {
-				document.getElementById( 'network-updates' ).innerHTML = t.responseText;
-				posted = 0;
-				document.getElementById( 'user_status_text' ).value = '';
+	voteStatus: function( id, vote ) {
+		jQuery.post(
+			mw.util.wikiScript( 'api' ), {
+				action: 'userstatus',
+				what: 'votestatus',
+				us_id: id,
+				vote: vote,
+				format: 'json'
+			},
+			function( data ) {
+				jQuery( '#user-status-vote-' + id ).text( data.userstatus.result );
 			}
 		);
-	}
-}
+	},
 
-function delete_message( id ) {
-	if( confirm( 'Are you sure you want to delete this thought?' ) ) {
-		sajax_request_type = 'POST';
-		sajax_do_call( 'wfDeleteUserStatus', [ id ], function( t ) {
-			//window.location = __user_status_link__;
-			// Just remove the DOM node, no need to take the user to
-			// Special:UserStatus, IMO
-			// I wanted to use .remove() here to remove the DOM node too, but
-			// I couldn't figure out how to do the animation to hide the
-			// status message and *after* that remove the node. Oh well, I
-			// suppose it doesn't matter too much because after the call to
-			// wfDeleteUserStatus, the message is gone. (-;
-			jQuery( 'span#user-status-vote-' + id ).parent().parent().parent()
-				.hide( 1000 );
+	/**
+	 * Detect whether the enter key was pressed and if so, submit the status
+	 * update.
+	 *
+	 * @param e Event
+	 * @return Boolean: false if enter was pressed and the status update was
+	 *                  added, true in most other cases
+	 */
+	detEnter: function( e ) {
+		var keycode;
+
+		if ( window.event ) {
+			keycode = window.event.keyCode;
+		} else if ( e ) {
+			keycode = e.which;
+		} else {
+			return true;
+		}
+
+		if ( keycode == 13 ) {
+			FanHome.addStatus();
+			return false;
+		} else {
+			return true;
+		}
+	},
+
+	addStatus: function() {
+		var statusUpdateText = document.getElementById( 'user_status_text' ).value;
+		if ( statusUpdateText && !FanHome.posted ) {
+			FanHome.posted = 1;
+
+			jQuery.post(
+				mw.util.wikiScript( 'api' ), {
+					action: 'userstatus',
+					what: 'addnetworkstatus',
+					sportId: __sport_id__,
+					teamId: __team_id__,
+					text: encodeURIComponent( statusUpdateText ),
+					count: __updates_show__,
+					format: 'json'
+				},
+				function( data ) {
+					document.getElementById( 'network-updates' ).innerHTML = data.userstatus.result;
+					FanHome.posted = 0;
+					document.getElementById( 'user_status_text' ).value = '';
+				}
+			);
+		}
+	},
+
+	deleteMessage: function( id ) {
+		if ( confirm( 'Are you sure you want to delete this thought?' ) ) {
+			jQuery.post(
+				mw.util.wikiScript( 'api' ), {
+					action: 'userstatus',
+					what: 'deletestatus',
+					us_id: id,
+					format: 'json'
+				},
+				function( data ) {
+					//window.location = __user_status_link__;
+					// Just remove the DOM node, no need to take the user to
+					// Special:UserStatus, IMO
+					// I wanted to use .remove() here to remove the DOM node too,
+					// but I couldn't figure out how to do the animation to hide
+					// the status message and *after* that remove the node.
+					// Oh well, I suppose it doesn't matter too much because after
+					// the call to the API module, the message is gone. (-;
+					jQuery( 'span#user-status-vote-' + id ).parent().parent()
+						.parent().hide( 1000 );
+				}
+			);
+		}
+	},
+
+	/**
+	 * Generates markers for the higher zoom levels
+	 */
+	createTopMarker: function( point, caption, map ) {
+		var marker = new GMarker( point );
+		marker.map = map;
+
+		GEvent.addListener( marker, 'mouseover', function() {
+			var bb = this.map.getBounds();
+
+			// if the point isn't visible in the map don't do anything
+			if ( !bb.contains( this.getPoint() ) ) {
+				return;
+			}
+
+			// if the point is visible:
+			// figure out the relative offset for the div and then pop it up
+			var baseMapCoords = this.map.fromContainerPixelToLatLng( new GPoint( 0, 0 ), true );
+			var baseDivPix = this.map.fromLatLngToDivPixel( baseMapCoords );
+			var placemarkDivPix = this.map.fromLatLngToDivPixel( this.getPoint() );
+			var c = new GPoint(
+				placemarkDivPix.x - baseDivPix.x,
+				placemarkDivPix.y-baseDivPix.y
+			);
+
+			var divLeft = c.x - 230 + 'px';
+			var divTop = c.y - 105 + 'px';
+
+			var gMapInfoElem = document.getElementById( 'gMapInfo' );
+			gMapInfoElem.innerHTML = caption;
+
+			gMapInfoElem.style.display = 'block';
+			gMapInfoElem.style.left = divLeft;
+			gMapInfoElem.style.top = divTop;
 		});
-	}
-}
 
-// generates markers for the higher zoom levels
-function createTopMarker( point, caption, map ) {
-	var marker = new GMarker( point );
-	marker.map = map;
+		// hide the div on mouseout
+		GEvent.addListener( marker, 'mouseout', function() {
+			document.getElementById( 'gMapInfo' ).style.display = 'none';
+		});
 
-	jQuery( marker ).bind( 'mouseover', function() {
-		var bb = this.map.getBounds();
+		// onClick - pan+zoom the map onto this marker
+		GEvent.addListener( marker, 'click', function() {
+			document.getElementById( 'gMapInfo' ).style.display = 'none';
+			this.map.setCenter( this.getPoint(), 7 );
+		});
 
-		// if the point isn't visible in the map don't do anything
-		if( !bb.contains( this.getPoint() ) ) {
-			return;
+		return marker;
+	},
+
+	// generates an icon for the current team/network
+	getTeamIcon: function() {
+		var icon = new GIcon();
+		var iconImage = new Image();
+
+		iconImage.src = "'" + __team_image__ + "'";
+
+		// probably should fix this:
+		// there should be an actual error when Image() fails
+		if ( iconImage.height <= 0 ) {
+			return G_DEFAULT_ICON;
 		}
 
-		// if the point is visible:
-		// figure out the relative offset for the div and then pop it up
-		var baseMapCoords = this.map.fromContainerPixelToLatLng( new GPoint( 0, 0 ), true );
-		var baseDivPix = this.map.fromLatLngToDivPixel( baseMapCoords );
-		var placemarkDivPix = this.map.fromLatLngToDivPixel( this.getPoint() );
-		var c = new GPoint(
-			placemarkDivPix.x - baseDivPix.x,
-			placemarkDivPix.y-baseDivPix.y
-		);
+		icon.image = "'" + __team_image__ + "'";
 
-		var divLeft = c.x - 230 + 'px';
-		var divTop = c.y - 105 + 'px';
+		// once we get shadows un-comment this and set the right shadow
+		/* icon.shadow = 'http://www.eecs.tufts.edu/~adatta02/shadow-34_l.png';
+		icon.shadowSize = new GSize( 100, 50 ); */
 
-		var gMapInfoElem = document.getElementById( 'gMapInfo' );
-		gMapInfoElem.innerHTML = caption;
+		icon.iconSize = new GSize( 50, ( 50 * iconImage.height ) / iconImage.width );
+		icon.iconAnchor = new GPoint( 50, ( 50 * iconImage.height ) / iconImage.width >> 1 );
 
-		gMapInfoElem.style.display = 'block';
-		gMapInfoElem.style.left = divLeft;
-		gMapInfoElem.style.top = divTop;
-	});
+		return icon;
+	},
 
-	// hide the div on mouseout
-	jQuery( marker ).bind( 'mouseout', function() {
-		document.getElementById( 'gMapInfo' ).style.display = 'none';
-	});
+	// generates markers for individual users
+	createMarker: function( point, caption, URL, map ) {
+		var marker = new GMarker( point, { icon: FanHome.getTeamIcon() } );
+		marker.map = map;
+		marker.url = URL;
 
-	// onClick - pan+zoom the map onto this marker
-	jQuery( marker ).bind( 'click', function() {
-		document.getElementById( 'gMapInfo' ).style.display = 'none';
-		this.map.setCenter( this.getPoint(), 7 );
-	});
+		// just in case
+		caption = caption.replace( /<script>/i, 'script' );
 
-	return marker;
-}
+		jQuery( marker ).bind( 'mouseover', function() {
+			var bb  = this.map.getBounds();
 
-// generates an icon for the current team/network
-function getTeamIcon() {
-	var icon = new GIcon();
-	var iconImage = new Image();
+			// if the point isn't visible, just exit
+			if ( !bb.contains( this.getPoint() ) ) {
+				return;
+			}
 
-	iconImage.src = "'" + __team_image__ + "'";
+			// figure out where to offset the info-div
+			var baseMapCoords = this.map.fromContainerPixelToLatLng(
+				new GPoint( 0, 0 ),
+				true
+			);
+			var baseDivPix = this.map.fromLatLngToDivPixel( baseMapCoords );
+			var placemarkDivPix = this.map.fromLatLngToDivPixel( this.getPoint() );
+			var c = new GPoint(
+				placemarkDivPix.x - baseDivPix.x,
+				placemarkDivPix.y - baseDivPix.y
+			);
 
-	// probably should fix this:
-	// there should be an actual error when Image() fails
-	if( iconImage.height <= 0 ) {
-		return G_DEFAULT_ICON;
+			var divLeft = c.x - 260 + 'px';
+			var divTop = c.y - 110 + 'px';
+
+			var gMapInfoElem = document.getElementById( 'gMapInfo' );
+			gMapInfoElem.innerHTML = caption;
+
+			gMapInfoElem.style.display = 'block';
+			gMapInfoElem.style.left = divLeft;
+			gMapInfoElem.style.top = divTop;
+		});
+
+		// when the icon is clicked, load the fan's profile page
+		jQuery( marker ).bind( 'click', function() {
+			window.location = this.url;
+		});
+
+		// hide the info-div on mouse-out
+		jQuery( marker ).bind( 'mouseout', function() {
+			document.getElementById( 'gMapInfo' ).style.display = 'none';
+		});
+
+		return marker;
 	}
+};
 
-	icon.image = "'" + __team_image__ + "'";
+jQuery( document ).ready( function() {
+	// Add handlers specific to Special:FanHome
+	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'FanHome' ) {
+		// Handle the case when the user presses the Enter key
+		jQuery( 'input#user_status_text' ).on( 'keypress', function( event ) {
+			FanHome.detEnter( event );
+		} );
 
-	// once we get shadows un-comment this and set the right shadow
-	/* icon.shadow = 'http://www.eecs.tufts.edu/~adatta02/shadow-34_l.png';
-	icon.shadowSize = new GSize( 100, 50 ); */
+		// Handle clicks on the "add status" button
+		jQuery( 'input#add-status-btn' ).on( 'click', function() {
+			FanHome.addStatus();
+		} );
 
-	icon.iconSize = new GSize( 50, ( 50 * iconImage.height ) / iconImage.width );
-	icon.iconAnchor = new GPoint( 50, ( 50 * iconImage.height ) / iconImage.width >> 1 );
+		// Handle status message deletion (clicks on the "x")
+		jQuery( 'span.user-status-delete-link a' ).each( function( index ) {
+			jQuery( this ).on( 'click', function() {
+				FanHome.deleteMessage( jQuery( this ).data( 'message-id' ) );
+			} );
+		} );
 
-	return icon;
-}
-
-// generates markers for individual users
-function createMarker( point, caption, URL, map ) {
-	var marker = new GMarker( point, { icon: getTeamIcon() } );
-	marker.map = map;
-	marker.url = URL;
-
-	// just in case
-	caption = caption.replace( /<script>/i, 'script' );
-
-	jQuery( marker ).bind( 'mouseover', function() {
-		var bb  = this.map.getBounds();
-
-		// if the point isn't visible, just exit
-		if( !bb.contains( this.getPoint() ) ) {
-			return;
-		}
-
-		// figure out where to offset the info-div
-		var baseMapCoords = this.map.fromContainerPixelToLatLng( new GPoint( 0, 0 ), true );
-		var baseDivPix = this.map.fromLatLngToDivPixel( baseMapCoords );
-		var placemarkDivPix = this.map.fromLatLngToDivPixel( this.getPoint() );
-		var c = new GPoint(
-			placemarkDivPix.x - baseDivPix.x,
-			placemarkDivPix.y - baseDivPix.y
-		);
-
-		var divLeft = c.x - 260 + 'px';
-		var divTop = c.y - 110 + 'px';
-
-		var gMapInfoElem = document.getElementById( 'gMapInfo' );
-		gMapInfoElem.innerHTML = caption;
-
-		gMapInfoElem.style.display = 'block';
-		gMapInfoElem.style.left = divLeft;
-		gMapInfoElem.style.top = divTop;
-	});
-
-	// when the icon is clicked, load the fan's profile page
-	jQuery( marker ).bind( 'click', function() { window.location = this.url; } );
-
-	// hide the info-div on mouse-out
-	jQuery( marker ).bind( 'mouseout', function() {
-		document.getElementById( 'gMapInfo' ).style.display = 'none';
-	});
-
-	return marker;
-}
+		// Voting links
+		jQuery( 'a.vote-status-link' ).each( function( index ) {
+			jQuery( this ).on( 'click', function() {
+				FanHome.voteStatus( jQuery( this ).data( 'message-id' ), 1 );
+			} );
+		} );
+	}
+} );

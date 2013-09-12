@@ -22,13 +22,15 @@ class TopNetworks extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the special page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgRequest, $wgScriptPath, $wgUploadPath;
+		global $wgUploadPath;
 
 		// Variables
+		$request = $this->getRequest();
+		$out = $this->getOutput();
 		$output = '';
-		$direction = $wgRequest->getVal( 'direction' );
-		$type = $wgRequest->getVal( 'type' );
-		$sport = $wgRequest->getInt( 'sport' );
+		$direction = $request->getVal( 'direction' );
+		$type = $request->getVal( 'type' );
+		$sport = $request->getInt( 'sport' );
 
 		// Direction
 		if ( $direction == 'worst' ) {
@@ -57,14 +59,10 @@ class TopNetworks extends SpecialPage {
 		// sportsteams-top-network-team-title-least-teams,
 		// sportsteams-top-network-team-title-most-sports,
 		// sportsteams-top-network-team-title-most-teams
-		$wgOut->setPageTitle( wfMsg( 'sportsteams-top-network-team-title-' . $adj . '-' . $type_title ) );
+		$out->setPageTitle( $this->msg( 'sportsteams-top-network-team-title-' . $adj . '-' . $type_title )->text() );
 
 		// Add CSS
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$wgOut->addModuleStyles( 'ext.sportsTeams' );
-		} else {
-			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/SportsTeams/SportsTeams.css' );
-		}
+		$out->addModules( 'ext.sportsTeams' );
 
 		// Database handler
 		$dbr = wfGetDB( DB_MASTER );
@@ -122,49 +120,49 @@ class TopNetworks extends SpecialPage {
 
 		// Navigation
 		$output .= '<div class="top-networks-navigation">
-			<h1>' . wfMsg( 'sportsteams-top-network-most-popular' ) . '</h1>';
+			<h1>' . $this->msg( 'sportsteams-top-network-most-popular' )->text() . '</h1>';
 
 		if ( !( $sport ) && !( $type ) && !( $direction ) ) {
-			$output .= '<p><b>' . wfMsg( 'sportsteams-top-network-teams' ) . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
 		} elseif ( !( $sport ) && !( $type ) && ( $direction == 'best' ) ) {
-			$output .= '<p><b>' . wfMsg( 'sportsteams-top-network-teams' ) . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
 				array( 'direction' => 'best' )
-			) . '">' . wfMsg( 'sportsteams-top-network-teams' ) . '</a></p>';
+			) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
 		}
 
 		if ( !( $sport ) && ( $type == 'sport' ) && ( $direction == 'best' ) ) {
-			$output .= '<p><b>' . wfMsg( 'sportsteams-top-network-sports' ) . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
 				array( 'type' => 'sport', 'direction' => 'best' )
-			) . '">' . wfMsg( 'sportsteams-top-network-sports' ) . '</a></p>';
+			) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</a></p>';
 		}
 
 		$output .= '<h1 style="margin-top:15px !important;">' .
-			wfMsg( 'sportsteams-top-network-least-popular' ) . '</h1>';
+			$this->msg( 'sportsteams-top-network-least-popular' )->text() . '</h1>';
 
 		if ( !( $sport ) && !( $type ) && ( $direction == 'worst' ) ) {
-			$output .= '<p><b>' . wfMsg( 'sportsteams-top-network-teams' ) . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
 				array( 'direction' => 'worst' )
-			) . '">' . wfMsg( 'sportsteams-top-network-teams' ) . '</a></p>';
+			) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
 		}
 
 		if ( !( $sport ) && ( $type == 'sport' ) && ( $direction == 'worst' ) ) {
-			$output .= '<p><b>' . wfMsg( 'sportsteams-top-network-sports' ) . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' ) . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
 				array( 'type' => 'sport', 'direction' => 'worst' )
-			) . '">' . wfMsg( 'sportsteams-top-network-sports' ) . "</a></p>";
+			) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . "</a></p>";
 		}
 
 		// for grep: sportsteams-top-network-most-pop-by-sport,
 		// sportsteams-top-network-least-pop-by-sport
 		$output .= '<h1 style="margin-top:15px !important;">' .
-			wfMsg( 'sportsteams-top-network-' . strtolower( $adj ) . '-pop-by-sport' ) . '</h1>';
+			$this->msg( 'sportsteams-top-network-' . strtolower( $adj ) . '-pop-by-sport' )->text() . '</h1>';
 
 		foreach ( $res_sport_nav as $row_sport_nav ) {
 			$sport_id = $row_sport_nav->sport_id;
@@ -174,9 +172,9 @@ class TopNetworks extends SpecialPage {
 				$output .= "<p><b>{$sport_name}</b></p>";
 				// For grep: sportsteams-top-network-least-team-title,
 				// sportsteams-top-network-most-team-title
-				$wgOut->setPageTitle(
-					wfMsg( 'sportsteams-top-network-' . strtolower( $adj ) . '-team-title',
-						$sport_name )
+				$out->setPageTitle(
+					$this->msg( 'sportsteams-top-network-' . strtolower( $adj ) . '-team-title',
+						$sport_name )->text()
 				);
 			} else {
 				$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
@@ -213,11 +211,10 @@ class TopNetworks extends SpecialPage {
 						<a href=\"" . $fanHome->escapeFullURL( array( 'sport_id' => $sport_id ) ) . "\">{$sport}</a>
 					</span>
 					<span class=\"network-count\">" .
-						wfMsgExt(
+						$this->msg(
 							'sportsteams-count-fans',
-							array( 'parse', 'parsemag' ),
 							$user_count
-						) .
+						)->parse() .
 					'</span>
 					<div class="cleared"></div>
 				</div>';
@@ -247,11 +244,10 @@ class TopNetworks extends SpecialPage {
 						) ) . "\">{$team}</a>
 					</span>
 					<span class=\"network-count\">" .
-						wfMsgExt(
+						$this->msg(
 							'sportsteams-count-fans',
-							array( 'parsemag', 'parse' ),
 							$user_count
-						) .
+						)->parse() .
 					'</span>
 					<div class="cleared"></div>
 				</div>';
@@ -262,7 +258,7 @@ class TopNetworks extends SpecialPage {
 		$output .= '</div>
 		<div class="cleared"></div>';
 
-		$wgOut->addHTML( $output );
+		$out->addHTML( $output );
 	}
 
 }

@@ -22,10 +22,10 @@ $aliases['en'] = array(
 
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
+	'AddFan' => array( 'Lisää fani' ),
+	'FanHome' => array( 'Fanin kotisivu' ),
+	'RemoveFan' => array( 'Poista fani' ),
 	'SimilarFans' => array( 'Samankaltaiset fanit', 'Samankaltaiset käyttäjät' ),
 	'TopNetworks' => array( 'Huippuverkostot' ),
+	'ViewFans' => array( 'Tarkastele faneja' ),
 );
-
-/** Dutch (Nederlands) */
-//$aliases['nl'] = array(
-//);

@@ -13,6 +13,53 @@ class SportsTeams {
 	 */
 	/* private */ function __construct() { }
 
+	/**
+	 * Add a sport to the database.
+	 *
+	 * @param $sport_name String: user-supplied name of the sport
+	 * @param $sport_order
+	 */
+	function addSport( $sport_name, $sport_order = '' ) {
+		$dbw = wfGetDB( DB_MASTER );
+
+		$dbw->insert(
+			'sport',
+			array(
+				'sport_name' => $sport_name,
+				'sport_order' => $sport_order
+			),
+			__METHOD__
+		);
+
+		return $dbw->insertId();
+	}
+
+	/**
+	 * Edit a pre-existing sport.
+	 *
+	 * @param $sport_id Integer: unique identifier of the sport
+	 * @param $sport_name String: user-supplied name of the sport
+	 * @param $sport_order
+	 */
+	function editSport( $sport_id, $sport_name, $sport_order = '' ) {
+		$dbw = wfGetDB( DB_MASTER );
+
+		$dbw->update(
+			'sport',
+			array(
+				'sport_name' => $sport_name,
+				'sport_order' => $sport_order
+			),
+			array( 'sport_id' => intval( $sport_id ) ),
+			__METHOD__
+		);
+	}
+
+	/**
+	 * Get all sports available in the database.
+	 *
+	 * @return Array
+	 */
 	static function getSports() {
 		$dbr = wfGetDB( DB_MASTER );
 
@@ -42,7 +89,7 @@ class SportsTeams {
 	 * @return Array: array containing each team's name and internal ID number
 	 */
 	static function getTeams( $sportId ) {
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$res = $dbr->select(
 			'sport_team',
@@ -112,7 +159,7 @@ class SportsTeams {
 	}
 
 	static function getNetworkName( $sport_id, $team_id ) {
-		if( $team_id ) {
+		if ( $team_id ) {
 			$network = SportsTeams::getTeam( $team_id );
 		} else {
 			$network = SportsTeams::getSport( $sport_id );
@@ -122,11 +169,11 @@ class SportsTeams {
 	}
 
 	public function addFavorite( $user_id, $sport_id, $team_id ) {
-		if( $user_id > 0 ) {
+		if ( $user_id > 0 ) {
 			$user = User::newFromId( $user_id );
 			$user_name = $user->getName();
 
-			if( !$this->isFan( $user_id, $sport_id, $team_id ) ) {
+			if ( !$this->isFan( $user_id, $sport_id, $team_id ) ) {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->insert(
 					'sport_favorite',
@@ -156,8 +203,8 @@ class SportsTeams {
 
 		// Try cache first
 		$key = wfMemcKey( 'user', 'teams', $user_id );
-		$wgMemc->delete( $key ); // @todo FIXME: shouldn't this be, like, commented out...?
 		$data = $wgMemc->get( $key );
+
 		if ( $data ) {
 			wfDebugLog( 'SportsTeams', "Got favorite teams for {$user_id} from cache" );
 			$favs = $data;
@@ -210,7 +257,7 @@ class SportsTeams {
 	static function getLogo( $sport_id, $team_id = 0, $size ) {
 		global $wgUploadPath;
 
-		if( $sport_id > 0 && $team_id == 0 ) {
+		if ( $sport_id > 0 && $team_id == 0 ) {
 			$logoTag = '<img src="' . $wgUploadPath . '/sport_logos/' .
 				SportsTeams::getSportLogo( $sport_id, $size ) .
 				'" border="0" alt="" />';
@@ -239,7 +286,7 @@ class SportsTeams {
 			$wgUploadDirectory . '/team_logos/' . $id . '_' . $size . '*'
 		);
 
-		if( empty( $files[0] ) ) {
+		if ( empty( $files[0] ) ) {
 			$filename = 'default_' . $size . '.gif';
 		} else {
 			$filename = basename( $files[0] );
@@ -264,7 +311,7 @@ class SportsTeams {
 			$wgUploadDirectory . '/sport_logos/' . $id .  '_' . $size . '*'
 		);
 
-		if( empty( $files[0] ) ) {
+		if ( empty( $files[0] ) ) {
 			$filename = 'default_' . $size . '.gif';
 		} else {
 			$filename = basename( $files[0] );
@@ -278,25 +325,25 @@ class SportsTeams {
 
 		// Try cache first
 		//$key = wfMemcKey( 'user', 'teams', $user_id );
-		//$wgMemc->delete( $key );
+		#$wgMemc->delete( $key );
 		//$data = $wgMemc->get( $key );
-		//if( $data ) {
+		//if ( $data ) {
 		//	wfDebugLog( 'SportsTeams', "Got favorite teams for {$user_id} from cache" );
 		//	$favs = $data;
 		//} else {
 			$dbr = wfGetDB( DB_SLAVE );
 			$where = $options = array();
 
-			if( $limit > 0 ) {
+			if ( $limit > 0 ) {
 				$limitvalue = 0;
-				if( $page ) {
+				if ( $page ) {
 					$limitvalue = $page * $limit - ( $limit );
 				}
 				//$limit_sql = " LIMIT {$limitvalue},{$limit} ";
 				$options['OFFSET'] = intval( $limitvalue );
 				$options['LIMIT'] = intval( $limit );
 			}
-			if( !$team_id ) {
+			if ( !$team_id ) {
 				$where['sf_sport_id'] = intval( $sport_id );
 				$where['sf_team_id'] = 0;
 			} else {
@@ -334,9 +381,9 @@ class SportsTeams {
 	static function getSimilarUsers( $user_id, $limit = 0, $page = 0 ) {
 		$dbr = wfGetDB( DB_MASTER );
 
-		if( $limit > 0 ) {
+		if ( $limit > 0 ) {
 			$limitvalue = 0;
-			if( $page ) {
+			if ( $page ) {
 				$limitvalue = $page * $limit - ( $limit );
 			}
 			$limit_sql = " LIMIT {$limitvalue},{$limit} ";
@@ -380,7 +427,7 @@ class SportsTeams {
 		$dbr = wfGetDB( DB_SLAVE );
 		$where = $options = array();
 
-		if( $limit > 0 ) {
+		if ( $limit > 0 ) {
 			$limitvalue = 0;
 			if ( $page ) {
 				$limitvalue = $page * $limit - ( $limit );
@@ -389,7 +436,7 @@ class SportsTeams {
 			$options['LIMIT'] = intval( $limit );
 		}
 
-		if( !$team_id ) {
+		if ( !$team_id ) {
 			$where['sf_sport_id'] = intval( $sport_id );
 			$where['sf_team_id'] = 0;
 		} else {
@@ -426,7 +473,7 @@ class SportsTeams {
 	}
 
 	static function getUserCount( $sport_id, $team_id ) {
-		if( !$team_id ) {
+		if ( !$team_id ) {
 			$where = array(
 				'sf_sport_id' => $sport_id,
 				'sf_team_id' => 0
@@ -434,6 +481,7 @@ class SportsTeams {
 		} else {
 			$where = array( 'sf_team_id' => $team_id );
 		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$count = (int)$dbr->selectField(
 			'sport_favorite',
@@ -441,6 +489,7 @@ class SportsTeams {
 			$where,
 			__METHOD__
 		);
+
 		return $count;
 	}
 
@@ -457,7 +506,7 @@ class SportsTeams {
 
 	static function getFriendsCountInFavorite( $user_id, $sport_id, $team_id ) {
 		$where = array();
-		if( !$team_id ) {
+		if ( !$team_id ) {
 			$where = array(
 				'sf_sport_id' => $sport_id,
 				'sf_team_id' => 0
@@ -542,7 +591,7 @@ class SportsTeams {
 	 */
 	static function isFan( $user_id, $sport_id, $team_id ) {
 		$where = array( 'sf_user_id' => $user_id );
-		if( !$team_id ) {
+		if ( !$team_id ) {
 			$where['sf_sport_id'] = $sport_id;
 			$where['sf_team_id'] = 0;
 		} else {
@@ -558,7 +607,7 @@ class SportsTeams {
 			__METHOD__
 		);
 
-		if( !$row ) {
+		if ( !$row ) {
 			return false;
 		} else {
 			return true;
@@ -566,7 +615,7 @@ class SportsTeams {
 	}
 
 	static function removeFavorite( $user_id, $sport_id, $team_id ) {
-		if( !$team_id ) {
+		if ( !$team_id ) {
 			$where_sql = " sf_sport_id = {$sport_id} AND sf_team_id = 0 ";
 		} else {
 			$where_sql = " sf_team_id = {$team_id} ";
@@ -619,10 +668,10 @@ class SportsTeams {
 
 	static function getTimeOffset( $time, $timeabrv, $timename ) {
 		$timeStr = '';
-		if( $time[$timeabrv] > 0 ) {
-			$timeStr = wfMsgExt( "sportsteams-time-{$timename}", 'parsemag', $time[$timeabrv] );
+		if ( $time[$timeabrv] > 0 ) {
+			$timeStr = wfMessage( "sportsteams-time-{$timename}", $time[$timeabrv] )->parse();
 		}
-		if( $timeStr ) {
+		if ( $timeStr ) {
 			$timeStr .= ' ';
 		}
 		return $timeStr;
@@ -636,15 +685,15 @@ class SportsTeams {
 		$timeStrM = self::getTimeOffset( $timeArray, 'm', 'minutes' );
 		$timeStrS = self::getTimeOffset( $timeArray, 's', 'seconds' );
 		$timeStr = $timeStrD;
-		if( $timeStr < 2 ) {
+		if ( $timeStr < 2 ) {
 			$timeStr .= $timeStrH;
 			$timeStr .= $timeStrM;
-			if( !$timeStr ) {
+			if ( !$timeStr ) {
 				$timeStr .= $timeStrS;
 			}
 		}
-		if( !$timeStr ) {
-			$timeStr = wfMsgExt( 'sportsteams-time-seconds', 'parsemag', 1 );
+		if ( !$timeStr ) {
+			$timeStr = wfMessage( 'sportsteams-time-seconds', 1 )->parse();
 		}
 		return $timeStr;
 	}
