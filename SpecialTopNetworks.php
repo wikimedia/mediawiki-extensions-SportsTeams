@@ -127,7 +127,7 @@ class TopNetworks extends SpecialPage {
 		} elseif ( !( $sport ) && !( $type ) && ( $direction == 'best' ) ) {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
 		} else {
-			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
+			$output .= '<p><a href="' . $this->getPageTitle()->escapeFullURL(
 				array( 'direction' => 'best' )
 			) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
 		}
@@ -135,7 +135,7 @@ class TopNetworks extends SpecialPage {
 		if ( !( $sport ) && ( $type == 'sport' ) && ( $direction == 'best' ) ) {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</b></p>';
 		} else {
-			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
+			$output .= '<p><a href="' . $this->getPageTitle()->escapeFullURL(
 				array( 'type' => 'sport', 'direction' => 'best' )
 			) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</a></p>';
 		}
@@ -146,7 +146,7 @@ class TopNetworks extends SpecialPage {
 		if ( !( $sport ) && !( $type ) && ( $direction == 'worst' ) ) {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
 		} else {
-			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
+			$output .= '<p><a href="' . $this->getPageTitle()->escapeFullURL(
 				array( 'direction' => 'worst' )
 			) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
 		}
@@ -154,7 +154,7 @@ class TopNetworks extends SpecialPage {
 		if ( !( $sport ) && ( $type == 'sport' ) && ( $direction == 'worst' ) ) {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' ) . '</b></p>';
 		} else {
-			$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
+			$output .= '<p><a href="' . $this->getPageTitle()->escapeFullURL(
 				array( 'type' => 'sport', 'direction' => 'worst' )
 			) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . "</a></p>";
 		}
@@ -177,7 +177,7 @@ class TopNetworks extends SpecialPage {
 						$sport_name )->text()
 				);
 			} else {
-				$output .= '<p><a href="' . $this->getTitle()->escapeFullURL(
+				$output .= '<p><a href="' . $this->getPageTitle()->escapeFullURL(
 					array( 'direction' => $direction, 'sport' => $sport_id )
 				) . '">' . $sport_name . '</a></p>';
 			}

@@ -153,7 +153,7 @@ class SimilarFans extends SpecialPage {
 			$output .= '<div class="page-nav">';
 			if ( $page > 1 ) {
 				$output .= Linker::link(
-					$this->getTitle(),
+					$this->getPageTitle(),
 					$this->msg( 'sportsteams-prev' )->plain(),
 					array(),
 					array( 'page' => ( $page - 1 ) )
@@ -172,7 +172,7 @@ class SimilarFans extends SpecialPage {
 					$output .= ( $i . ' ');
 				} else {
 					$output .= Linker::link(
-						$this->getTitle(),
+						$this->getPageTitle(),
 						$i,
 						array(),
 						array( 'page' => $i )
@@ -182,7 +182,7 @@ class SimilarFans extends SpecialPage {
 
 			if ( ( $total - ( $per_page * $page ) ) > 0 ) {
 				$output .= $this->msg( 'word-separator' )->plain() . Linker::link(
-					$this->getTitle(),
+					$this->getPageTitle(),
 					$this->msg( 'sportsteams-next' )->plain(),
 					array(),
 					array( 'page' => ( $page + 1 ) )
