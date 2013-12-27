@@ -76,7 +76,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			 * Check for a newly uploaded file.
 			 */
 			$this->mUploadTempName = $request->getFileTempName( 'wpUploadFile' );
-			$this->mUploadSize     = $request->getFileSize( 'wpUploadFile' );
+			$file = new WebRequestUpload( $request, 'wpUploadFile' );
+			$this->mUploadSize = $file->getSize();
 			$this->mOname          = $request->getFileName( 'wpUploadFile' );
 			$this->mSessionKey     = false;
 			$this->mStashed        = false;
