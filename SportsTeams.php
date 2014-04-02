@@ -4,8 +4,6 @@
  *
  * @file
  * @ingroup Extensions
- * @version 3.0
- * @date 7 July 2013
  * @author Aaron Wright <aaron.wright@gmail.com>
  * @author Ashish Datta <ashish@setfive.com>
  * @author David Pean <david.pean@gmail.com>
@@ -21,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'SportsTeams',
-	'version' => '3.0',
+	'version' => '3.1.0',
 	'author' => array(
 		'Aaron Wright', 'Ashish Datta', 'David Pean', 'Jack Phoenix'
 	),
@@ -35,6 +33,7 @@ $wgSportsTeamsGoogleAPIKey = 'ABQIAAAAnfs7bKE82qgb3Zc2YyS-oBT2yXp_ZAY8_ufC3CFXhH
 
 // Set up i18n stuff
 $dir = dirname( __FILE__ ) . '/';
+$wgMessagesDirs['SportsTeams'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['SportsTeams'] = $dir . 'SportsTeams.i18n.php';
 $wgExtensionMessagesFiles['SportsTeamsAlias'] = $dir . 'SportsTeams.alias.php';
 
