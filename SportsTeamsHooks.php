@@ -42,13 +42,12 @@ class SportsTeamsHooks {
 			{
 				$bodyText = $out->getHTML();
 
-				$output = '<tr>
-			<td class="mw-label"><label for="wpSelectTeamOrSport">' .
+				$output = '<div>
+					<label for="sport_1">' .
 				wfMessage( 'sportsteams-signup-select' )->plain() .
-			'</label></td>
-				<td class="mw-input">
-					<select name="sport_1" id="sport_1">
-						<option value="0">-</option>';
+			'</label>
+				<select name="sport_1" id="sport_1">
+					<option value="0">-</option>';
 
 				// Build sport option HTML
 				$sports = SportsTeams::getSports();
@@ -57,46 +56,35 @@ class SportsTeamsHooks {
 				}
 
 				$output .= '</select>
-				</td>
-			</tr>
-			<tr>
-			<td class="mw-label"><label for="wpTeam">' .
-				wfMessage( 'sportsteams-signup-team' )->plain() .
-			'</label></td>
-				<td class="mw-input">
-					<select name="team_1" id="team_1">
-						<option value="0">-</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td class="mw-label"><label for="wpThought">' .
+			</div>
+			<div>
+				<label for="team_1">' .
+					wfMessage( 'sportsteams-signup-team' )->plain() .
+				'</label>
+				<select name="team_1" id="team_1">
+					<option value="0">-</option>
+				</select>
+			</div>
+			<div>
+				<label for="thought">' .
 					wfMessage( 'sportsteams-signup-thought' )->plain() .
-				'</label></td>
-				<td class="mw-input">
-					<!-- <input tabindex="6" class="lr-input" type="text" id="thought" name="thought" /> -->
-					<!--
-						Standard input looks a tad bit too small, IMO.
-						The maximum length is after all 150 characters, not 50 or so, and thus it should be visually obvious.
-					-->
-					<textarea tabindex="6" class="lr-input" id="thought" name="thought" maxlength="150" style="width: 50%;"></textarea>
-				</td>
-			</tr>';
+				'</label>
+				<!-- <input tabindex="6" class="lr-input" type="text" id="thought" name="thought" /> -->
+				<!--
+					Standard input looks a tad bit too small, IMO.
+					The maximum length is after all 150 characters, not 50 or so, and thus it should be visually obvious.
+				-->
+				<textarea tabindex="6" class="lr-input" id="thought" name="thought" maxlength="150" style="width: 150%; height: 80px;"></textarea>
+			</div>';
 
 				// This is needed to prevent the duplication of the form (:P)
 				// and also for injecting our custom HTML into the right place
 				$out->clearHTML();
 
-				$bodyText = preg_replace(
-					"/<td class=\"mw-submit\">/",
-					'<td class="mw-submit" colspan="2">',
-					$bodyText
-				);
-
 				// Append the sport/team selector to the output
 				$bodyText = preg_replace(
-					"/(?=[^\"]*\"mw-submit)<tr>/",
-					$output . '<tr>',
+					'/<div class=\"mw-submit\">/',
+					$output . '<div class="mw-submit">',
 					$bodyText
 				);
 
