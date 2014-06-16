@@ -135,9 +135,9 @@ class SportsTeamsManager extends SpecialPage {
 				} else {
 					$out->addHTML(
 						'<div><b><a href="' .
-						$this->getTitle()->escapeFullURL() . '">' .
+						$this->getPageTitle()->escapeFullURL() . '">' .
 						$this->msg( 'sportsteams-team-manager-view-sports' )->text() .
-						'</a></b> | <b><a href="' . $this->getTitle()->escapeFullURL(
+						'</a></b> | <b><a href="' . $this->getPageTitle()->escapeFullURL(
 							array( 'sport_id' => $sport_id, 'method' => 'edit' )
 						) . '">' .
 						$this->msg( 'sportsteams-team-manager-add-new-team' )->text() . '</a></b></div><p>'
@@ -228,7 +228,7 @@ class SportsTeamsManager extends SpecialPage {
 		if ( $sports ) {
 			foreach ( $sports as $sport ) {
 				$editLink = $this->msg( 'word-separator' )->plain() . '<a href="' .
-					$this->getTitle()->escapeFullURL( array(
+					$this->getPageTitle()->escapeFullURL( array(
 						'method' => 'editsport',
 						'sport_id' => $sport['id']
 					) ) .
@@ -236,7 +236,7 @@ class SportsTeamsManager extends SpecialPage {
 					$this->msg( 'sportsteams-team-manager-edit-this-sport' )->plain() .
 					'</a>';
 				$output .= '<div class="Item">
-				<a href="' . $this->getTitle()->escapeFullURL( "sport_id={$sport['id']}" ) . "\">{$sport['name']}</a>{$editLink}
+				<a href="' . $this->getPageTitle()->escapeFullURL( "sport_id={$sport['id']}" ) . "\">{$sport['name']}</a>{$editLink}
 			</div>\n";
 			}
 		} else {
@@ -261,7 +261,7 @@ class SportsTeamsManager extends SpecialPage {
 		foreach ( $teams as $team ) {
 			$output .= '<div class="Item">' .
 				Linker::link(
-					$this->getTitle(),
+					$this->getPageTitle(),
 					$team['name'],
 					array(),
 					array(
@@ -281,7 +281,7 @@ class SportsTeamsManager extends SpecialPage {
 
 		$request = $this->getRequest();
 
-		$form = '<div><b><a href="' . $this->getTitle()->escapeFullURL( 'sport_id=' . $request->getInt( 'sport_id' ) ) . '">' .
+		$form = '<div><b><a href="' . $this->getPageTitle()->escapeFullURL( 'sport_id=' . $request->getInt( 'sport_id' ) ) . '">' .
 			$this->msg( 'sportsteams-team-manager-view-teams' )->text() . '</a></b></div><p>';
 
 		if ( $id ) {

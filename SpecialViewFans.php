@@ -199,7 +199,7 @@ class ViewFans extends UnlistedSpecialPage {
 			$output .= '<div class="page-nav">';
 			if ( $page > 1 ) {
 				$output .= Linker::link(
-					$this->getTitle(),
+					$this->getPageTitle(),
 					$this->msg( 'sportsteams-prev' )->plain(),
 					array(),
 					array(
@@ -222,7 +222,7 @@ class ViewFans extends UnlistedSpecialPage {
 				    $output .= ( $i . ' ' );
 				} else {
 				    $output .= Linker::link(
-						$this->getTitle(),
+						$this->getPageTitle(),
 						$i,
 						array(),
 						array(
@@ -236,7 +236,7 @@ class ViewFans extends UnlistedSpecialPage {
 
 			if ( ( $total - ( $per_page * $page ) ) > 0 ) {
 				$output .= $this->msg( 'word-separator' )->plain() . Linker::link(
-					$this->getTitle(),
+					$this->getPageTitle(),
 					$this->msg( 'sportsteams-next' )->plain(),
 					array(),
 					array(
