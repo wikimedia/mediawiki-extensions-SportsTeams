@@ -167,26 +167,26 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// this, I think
 		$output = '<div class="profile-tab-bar">';
 		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . SpecialPage::getTitleFor( 'UpdateProfile', 'basic' )->escapeFullURL() . '">' .
+		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'basic' )->getFullURL() ) . '">' .
 			$this->msg( 'user-profile-section-personal' )->text() . '</a>';
 		$output .= '</div>';
 		$output .= '<div class="profile-tab-on">';
 		$output .= $this->msg( 'user-profile-section-sportsteams' )->text();
 		$output .= '</div>';
 		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . SpecialPage::getTitleFor( 'UpdateProfile', 'custom' )->escapeFullURL() . '">' .
+		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'custom' )->getFullURL() ) . '">' .
 			/*$this->msg( 'user-profile-section-sportstidbits' )->text()*/$this->msg( 'custom-info-title' )->text() . '</a>';
 		$output .= '</div>';
 		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . SpecialPage::getTitleFor( 'UpdateProfile', 'personal' )->escapeFullURL() . '">' .
+		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'personal' )->getFullURL() ) . '">' .
 			$this->msg( 'user-profile-section-interests' )->text() . '</a>';
 		$output .= '</div>';
 		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . SpecialPage::getTitleFor( 'UploadAvatar' )->escapeFullURL() . '">' .
+		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UploadAvatar' )->getFullURL() ) . '">' .
 			$this->msg( 'user-profile-section-picture' )->text() . '</a>';
 		$output .= '</div>';
 		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . SpecialPage::getTitleFor( 'UpdateProfile', 'preferences' )->escapeFullURL() . '">' .
+		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'preferences' )->getFullURL() ) . '">' .
 			$this->msg( 'user-profile-section-preferences' )->text() . '</a>';
 		$output .= '</div>';
 

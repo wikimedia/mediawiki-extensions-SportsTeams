@@ -46,12 +46,12 @@ class ViewFans extends UnlistedSpecialPage {
 			$output .= '<input type="button" class="site-button" value="' .
 				$this->msg( 'sportsteams-network-main-page' )->text() .
 				"\" onclick=\"window.location='" .
-				Title::newMainPage()->escapeFullURL() . "'\"/>";
+				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 			if ( $user->isLoggedIn() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
 					$this->msg( 'sportsteams-network-your-profile' )->text() .
 					"\" onclick=\"window.location='" .
-					Title::makeTitle( NS_USER, $user->getName() )->escapeFullURL() . "'\"/>";
+					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
 		  	$output .= '</div>';
 			$out->addHTML( $output );

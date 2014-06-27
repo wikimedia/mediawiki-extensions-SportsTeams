@@ -58,12 +58,12 @@ class FanHome extends UnlistedSpecialPage {
 			$output .= '<input type="button" class="site-button" value="' .
 				$this->msg( 'sportsteams-network-main-page' )->plain() .
 				"\" onclick=\"window.location='" .
-				Title::newMainPage()->escapeFullURL() . "'\"/>";
+				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 			if ( $user->isLoggedIn() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
 					$this->msg( 'sportsteams-network-your-profile' )->plain() .
 					"\" onclick=\"window.location='" .
-					Title::makeTitle( NS_USER, $user->getName() )->escapeFullURL() . "'\"/>";
+					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
 			$output .= '</div>';
 			$out->addHTML( $output );
@@ -235,7 +235,7 @@ class FanHome extends UnlistedSpecialPage {
 		$tfr = SpecialPage::getTitleFor( 'TopUsersRecent' );
 		/*
 		$output .= "<p class=\"fan-network-sub-text\">
-				<a href=\"" . $tfr->escapeFullURL( 'period=weekly' ) . '">' .
+				<a href=\"" . htmlspecialchars( $tfr->getFullURL( 'period=weekly' )  ). '">' .
 					$this->msg( 'sportsteams-network-top-fans-week' )->text() .
 				"</a> -
 				<a href=\"{$view_fans_title->getFullURL( array( 'sport_id' => $sport_id, 'team_id' => $team_id ))}\">" .
@@ -579,7 +579,7 @@ function loadMap() {
 					)->parse() .
 					'</div>
 				</div>
-				<a href="' . $titleObj->escapeFullURL() . '">' .
+				<a href="' . htmlspecialchars( $titleObj->getFullURL() ) . '">' .
 					$titleObj->getText() .
 				'</a>
 			</div>

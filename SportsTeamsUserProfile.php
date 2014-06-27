@@ -111,7 +111,7 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 			'</div>
 			<div class="user-section-actions">
 				<div class="action-right">
-					<a href="' . $add_networks_title->escapeFullURL() . '">' .
+					<a href="' . htmlspecialchars( $add_networks_title->getFullURL() ) . '">' .
 						wfMessage( 'sportsteams-profile-add-network' )->text() . '</a>
 				</div>
 				<div class="cleared"></div>
@@ -146,7 +146,7 @@ function wfUserProfileLatestThought( $user_profile ) {
 			'</div>
 			<div class="user-section-actions">
 				<div class="action-right">
-					<a href="' . $more_thoughts_link->escapeFullURL( 'user=' . $user_profile->user_name ) .
+					<a href="' . htmlspecialchars( $more_thoughts_link->getFullURL( 'user=' . $user_profile->user_name ) ) .
 					'" rel="nofollow">' . wfMessage( 'sportsteams-profile-view-all' )->plain() . '</a>
 				</div>
 				<div class="cleared"></div>
@@ -206,7 +206,7 @@ function wfUserProfileLatestThought( $user_profile ) {
 		</div>";
 	} else {
 		$output .= '<script type="text/javascript">var __more_thoughts_url__ = "' .
-			$more_thoughts_link->escapeFullURL( 'user=' . $user_profile->user_name ) .
+			htmlspecialchars( $more_thoughts_link->getFullURL( 'user=' . $user_profile->user_name ) ) .
 		'";</script>';
 	}
 

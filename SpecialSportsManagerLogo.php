@@ -497,7 +497,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		$output .= '<tr><td><input type="button" onclick="javascript:history.go(-1)" value="' .
 			$this->msg( 'sportsteams-logo-go-back' )->plain() . '" /></td></tr>';
 
-		$output .= '<tr><td><a href="' . SpecialPage::getTitleFor( 'SportsTeamsManager' )->escapeFullURL() . '">' .
+		$output .= '<tr><td><a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'SportsTeamsManager' )->getFullURL() ) . '">' .
 			$this->msg( 'sportsteams-logo-back-to-list' )->plain() . '</a> |';
 		$output .= '</td></tr>';
 		$output .= '</table>';

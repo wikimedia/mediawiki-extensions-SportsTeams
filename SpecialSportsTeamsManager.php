@@ -135,11 +135,11 @@ class SportsTeamsManager extends SpecialPage {
 				} else {
 					$out->addHTML(
 						'<div><b><a href="' .
-						$this->getPageTitle()->escapeFullURL() . '">' .
+						htmlspecialchars( $this->getPageTitle()->getFullURL() ) . '">' .
 						$this->msg( 'sportsteams-team-manager-view-sports' )->text() .
-						'</a></b> | <b><a href="' . $this->getPageTitle()->escapeFullURL(
+						'</a></b> | <b><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
 							array( 'sport_id' => $sport_id, 'method' => 'edit' )
-						) . '">' .
+						) ) . '">' .
 						$this->msg( 'sportsteams-team-manager-add-new-team' )->text() . '</a></b></div><p>'
 					);
 					$out->addHTML( $this->displayTeamList( $sport_id ) );
@@ -191,7 +191,7 @@ class SportsTeamsManager extends SpecialPage {
 					'</td>
 					<td width="695">' . $sport_image . '
 						<p>
-						<a href="' . SpecialPage::getTitleFor( 'SportsManagerLogo' )->escapeFullURL( "id={$id}" ) . '">' .
+						<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'SportsManagerLogo' )->getFullURL( "id={$id}" ) ) . '">' .
 							$this->msg( 'sportsteams-team-manager-add-replace-logo' )->text() .
 						'</a>
 					</td>
@@ -228,15 +228,15 @@ class SportsTeamsManager extends SpecialPage {
 		if ( $sports ) {
 			foreach ( $sports as $sport ) {
 				$editLink = $this->msg( 'word-separator' )->plain() . '<a href="' .
-					$this->getPageTitle()->escapeFullURL( array(
+					htmlspecialchars( $this->getPageTitle()->getFullURL( array(
 						'method' => 'editsport',
 						'sport_id' => $sport['id']
-					) ) .
+					) ) ) .
 					'" class="red-edit-link">' .
 					$this->msg( 'sportsteams-team-manager-edit-this-sport' )->plain() .
 					'</a>';
 				$output .= '<div class="Item">
-				<a href="' . $this->getPageTitle()->escapeFullURL( "sport_id={$sport['id']}" ) . "\">{$sport['name']}</a>{$editLink}
+				<a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL( "sport_id={$sport['id']}" ) ) . "\">{$sport['name']}</a>{$editLink}
 			</div>\n";
 			}
 		} else {
@@ -281,7 +281,7 @@ class SportsTeamsManager extends SpecialPage {
 
 		$request = $this->getRequest();
 
-		$form = '<div><b><a href="' . $this->getPageTitle()->escapeFullURL( 'sport_id=' . $request->getInt( 'sport_id' ) ) . '">' .
+		$form = '<div><b><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL( 'sport_id=' . $request->getInt( 'sport_id' ) ) ) . '">' .
 			$this->msg( 'sportsteams-team-manager-view-teams' )->text() . '</a></b></div><p>';
 
 		if ( $id ) {
@@ -335,7 +335,7 @@ class SportsTeamsManager extends SpecialPage {
 					'</td>
 					<td width="695">' . $team_image . '
 						<p>
-						<a href="' . SpecialPage::getTitleFor( 'SportsTeamsManagerLogo' )->escapeFullURL( "id={$id}" ) . '">' .
+						<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'SportsTeamsManagerLogo' )->getFullURL( "id={$id}" ) ) . '">' .
 							$this->msg( 'sportsteams-team-manager-add-replace-logo' )->text() .
 						'</a>
 					</td>

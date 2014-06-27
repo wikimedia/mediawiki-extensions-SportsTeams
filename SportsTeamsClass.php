@@ -644,12 +644,12 @@ class SportsTeams {
 
 	static function getNetworkURL( $sport_id, $team_id = 0 ) {
 		$title = SpecialPage::getTitleFor( 'FanHome' );
-		return $title->escapeFullURL( 'sport_id=' . $sport_id . '&team_id=' . $team_id );
+		return htmlspecialchars( $title->getFullURL( 'sport_id=' . $sport_id . '&team_id=' . $team_id ) );
 	}
 
 	static function getFanUpdatesURL( $sport_id, $team_id = 0 ) {
 		$title = SpecialPage::getTitleFor( 'FanUpdates' );
-		return $title->escapeFullURL( 'sport_id=' . $sport_id . '&team_id=' . $team_id );
+		return htmlspecialchars( $title->getFullURL( 'sport_id=' . $sport_id . '&team_id=' . $team_id ) );
 	}
 
 	static function dateDiff( $date1, $date2 ) {

@@ -515,9 +515,9 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		</tr>';
 
 		$stm = SpecialPage::getTitleFor( 'SportsTeamsManager' );
-		$output .= '<tr><td><a href="' . $stm->escapeFullURL() . '">' .
+		$output .= '<tr><td><a href="' . htmlspecialchars( $stm->getFullURL() ) . '">' .
 			$this->msg( 'sportsteams-logo-back-to-list' )->plain() . '</a> |';
-		$output .= ' <a href="' . $stm->escapeFullURL( "id={$this->team_id}" ) . '">' .
+		$output .= ' <a href="' . htmlspecialchars( $stm->getFullURL( "id={$this->team_id}" ) ) . '">' .
 			$this->msg( 'sportsteams-logo-back-to-team' )->plain() . '</a></td></tr>';
 		$output .= '</table>';
 
