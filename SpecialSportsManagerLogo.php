@@ -10,13 +10,13 @@
  * @ingroup Extensions
  */
 class SportsManagerLogo extends UnlistedSpecialPage {
-	var $mUploadFile, $mUploadDescription, $mIgnoreWarning;
-	var $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
-	var $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
-	var $mOname, $mSessionKey, $mStashed, $mDestFile;
-	var $uploadDirectory;
-	var $fileExtensions;
-	var $team_id;
+	public $mUploadFile, $mUploadDescription, $mIgnoreWarning;
+	public $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
+	public $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
+	public $mOname, $mSessionKey, $mStashed, $mDestFile;
+	public $uploadDirectory;
+	public $fileExtensions;
+	public $team_id;
 
 	/**
 	 * Constructor -- set up the new special page

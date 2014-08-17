@@ -10,7 +10,7 @@
  */
 class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
-	var $favorite_counter = 1;
+	public $favorite_counter = 1;
 
 	/**
 	 * Constructor -- set up the new special page
