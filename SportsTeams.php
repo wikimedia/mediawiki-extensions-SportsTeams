@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'SportsTeams',
-	'version' => '3.1.0',
+	'version' => '3.2',
 	'author' => array(
 		'Aaron Wright', 'Ashish Datta', 'David Pean', 'Jack Phoenix'
 	),
@@ -32,14 +32,12 @@ $wgExtensionCredits['other'][] = array(
 $wgSportsTeamsGoogleAPIKey = 'ABQIAAAAnfs7bKE82qgb3Zc2YyS-oBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxSySz_REpPq-4WZA27OwgbtyR3VcA';
 
 // Set up i18n stuff
-$dir = dirname( __FILE__ ) . '/';
 $wgMessagesDirs['SportsTeams'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['SportsTeams'] = $dir . 'SportsTeams.i18n.php';
-$wgExtensionMessagesFiles['SportsTeamsAlias'] = $dir . 'SportsTeams.alias.php';
+$wgExtensionMessagesFiles['SportsTeamsAlias'] = __DIR__ . '/SportsTeams.alias.php';
 
 // ResourceLoader support for MediaWiki 1.17+
 $sportsTeamsResourceTemplate = array(
-	'localBasePath' => dirname( __FILE__ ),
+	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'SportsTeams'
 );
 
@@ -78,36 +76,36 @@ $wgResourceModules['ext.sportsTeams.updateFavoriteTeams'] = $sportsTeamsResource
 );
 
 // Autoload the classes
-$wgAutoloadClasses['SportsTeams'] = $dir . 'SportsTeamsClass.php';
+$wgAutoloadClasses['SportsTeams'] = __DIR__ . '/SportsTeamsClass.php';
 
 // Special pages
-$wgAutoloadClasses['AddFan'] = $dir . 'SpecialAddFan.php';
+$wgAutoloadClasses['AddFan'] = __DIR__ . '/SpecialAddFan.php';
 $wgSpecialPages['AddFan'] = 'AddFan';
-$wgAutoloadClasses['FanHome'] = $dir . 'SpecialFanHome.php';
+$wgAutoloadClasses['FanHome'] = __DIR__ . '/SpecialFanHome.php';
 $wgSpecialPages['FanHome'] = 'FanHome';
-$wgAutoloadClasses['RemoveFan'] = $dir . 'SpecialRemoveFan.php';
+$wgAutoloadClasses['RemoveFan'] = __DIR__ . '/SpecialRemoveFan.php';
 $wgSpecialPages['RemoveFan'] = 'RemoveFan';
-$wgAutoloadClasses['SimilarFans'] = $dir . 'SpecialSimilarFans.php';
+$wgAutoloadClasses['SimilarFans'] = __DIR__ . '/SpecialSimilarFans.php';
 $wgSpecialPages['SimilarFans'] = 'SimilarFans';
-$wgAutoloadClasses['SportsManagerLogo'] = $dir . 'SpecialSportsManagerLogo.php';
+$wgAutoloadClasses['SportsManagerLogo'] = __DIR__ . '/SpecialSportsManagerLogo.php';
 $wgSpecialPages['SportsManagerLogo'] = 'SportsManagerLogo';
-$wgAutoloadClasses['SportsTeamsManager'] = $dir . 'SpecialSportsTeamsManager.php';
+$wgAutoloadClasses['SportsTeamsManager'] = __DIR__ . '/SpecialSportsTeamsManager.php';
 $wgSpecialPages['SportsTeamsManager'] = 'SportsTeamsManager';
-$wgAutoloadClasses['SportsTeamsManagerLogo'] = $dir . 'SpecialSportsTeamsManagerLogo.php';
+$wgAutoloadClasses['SportsTeamsManagerLogo'] = __DIR__ . '/SpecialSportsTeamsManagerLogo.php';
 $wgSpecialPages['SportsTeamsManagerLogo'] = 'SportsTeamsManagerLogo';
-$wgAutoloadClasses['TopNetworks'] = $dir . 'SpecialTopNetworks.php';
+$wgAutoloadClasses['TopNetworks'] = __DIR__ . '/SpecialTopNetworks.php';
 $wgSpecialPages['TopNetworks'] = 'TopNetworks';
 // This special page was originally bundled with UserProfile
-$wgAutoloadClasses['UpdateFavoriteTeams'] = $dir . 'SpecialUpdateFavoriteTeams.php';
+$wgAutoloadClasses['UpdateFavoriteTeams'] = __DIR__ . '/SpecialUpdateFavoriteTeams.php';
 $wgSpecialPages['UpdateFavoriteTeams'] = 'UpdateFavoriteTeams';
-$wgAutoloadClasses['ViewFans'] = $dir . 'SpecialViewFans.php';
+$wgAutoloadClasses['ViewFans'] = __DIR__ . '/SpecialViewFans.php';
 $wgSpecialPages['ViewFans'] = 'ViewFans';
 
 $wgSpecialPageGroups['SimilarFans'] = 'users';
 $wgSpecialPageGroups['TopNetworks'] = 'wiki'; // as per Special:Statistics
 
 // API module used by Special:UpdateFavoriteTeams
-$wgAutoloadClasses['ApiSportsTeams'] = $dir . 'ApiSportsTeams.php';
+$wgAutoloadClasses['ApiSportsTeams'] = __DIR__ . '/ApiSportsTeams.php';
 $wgAPIModules['sportsteams'] = 'ApiSportsTeams';
 
 // New user right, required to edit sports teams via Special:SportsTeamsManager
@@ -121,7 +119,7 @@ $wgGroupPermissions['staff']['sportsteamsmanager'] = true;
 include( 'SportsTeamsUserProfile.php' );
 
 // Database updater, etc.
-$wgAutoloadClasses['SportsTeamsHooks'] = $dir . 'SportsTeamsHooks.php';
+$wgAutoloadClasses['SportsTeamsHooks'] = __DIR__ . '/SportsTeamsHooks.php';
 
 // New stuff on the signup page
 $wgHooks['AddNewAccount'][] = 'SportsTeamsHooks::addFavoriteTeam';
