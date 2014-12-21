@@ -1,0 +1,8 @@
+{
+    "@metadata": {
+        "authors": []
+    },
+    "apihelp-sportsteams-description": "{{doc-apihelp-description|sportsteams}}",
+    "apihelp-sportsteams-param-sportId": "{{doc-apihelp-param|sportsteams|sportId}}",
+    "apihelp-sportsteams-example-1": "{{doc-apihelp-example|sportsteams}}"
+}

@@ -66,6 +66,7 @@ class ApiSportsTeams extends ApiBase {
 	}
 
 	/**
+	 * @deprecated since MediaWiki core 1.25
 	 * @return String: human-readable module description
 	 */
 	public function getDescription() {
@@ -84,17 +85,31 @@ class ApiSportsTeams extends ApiBase {
 		);
 	}
 
-	// Describe the parameter
+	/**
+	 * Describe the parameter
+	 *
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getParamDescription() {
 		return array_merge( parent::getParamDescription(), array(
 			'sportId' => 'Unique identifier (number) of the sport in question'
 		) );
 	}
 
-	// Get examples
+	/**
+	 * Get Examples
+	 *
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getExamples() {
 		return array(
 			'api.php?action=sportsteams&sportId=3' => 'Get the names and teams under sport #3'
+		);
+	}
+
+	public function getExamplesMessages() {
+		return array(
+			'action=sportsteams&sportId=3' => 'apihelp-sportsteams-example-1'
 		);
 	}
 }
