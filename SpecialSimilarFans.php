@@ -201,4 +201,7 @@ class SimilarFans extends SpecialPage {
 		return $relationships;
 	}
 
+	protected function getGroupName() {
+		return 'users';
+	}
 }

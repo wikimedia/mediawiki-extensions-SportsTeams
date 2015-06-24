@@ -101,9 +101,6 @@ $wgSpecialPages['UpdateFavoriteTeams'] = 'UpdateFavoriteTeams';
 $wgAutoloadClasses['ViewFans'] = __DIR__ . '/SpecialViewFans.php';
 $wgSpecialPages['ViewFans'] = 'ViewFans';
 
-$wgSpecialPageGroups['SimilarFans'] = 'users';
-$wgSpecialPageGroups['TopNetworks'] = 'wiki'; // as per Special:Statistics
-
 // API module used by Special:UpdateFavoriteTeams
 $wgAutoloadClasses['ApiSportsTeams'] = __DIR__ . '/ApiSportsTeams.php';
 $wgAPIModules['sportsteams'] = 'ApiSportsTeams';

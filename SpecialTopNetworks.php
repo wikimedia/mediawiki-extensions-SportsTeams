@@ -261,4 +261,7 @@ class TopNetworks extends SpecialPage {
 		$out->addHTML( $output );
 	}
 
+	protected function getGroupName() {
+		return 'wiki';
+	}
 }
