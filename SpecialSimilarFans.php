@@ -128,16 +128,16 @@ class SimilarFans extends SpecialPage {
 					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
 					$output .= $lang->pipeList( $pipeList );
 					$output .= $this->msg( 'word-separator' )->plain();
-					$output .= '<div class="cleared"></div>';
+					$output .= '<div class="visualClear"></div>';
 				}
 				$output .= '</div>';
 
-				$output .= '<div class="cleared"></div></div>';
+				$output .= '<div class="visualClear"></div></div>';
 
 				$output .= '</div>';
 
 				if ( $x == count( $fans ) || $x != 1 && $x % $per_row == 0 ) {
-					$output .= '<div class="cleared"></div>';
+					$output .= '<div class="visualClear"></div>';
 				}
 
 				$x++;

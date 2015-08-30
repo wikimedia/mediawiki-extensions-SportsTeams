@@ -83,7 +83,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		}
 		$output .= '</select>';
 		$output .= '</p>
-			<div class="cleared"></div>';
+			<div class="visualClear"></div>';
 
 		// If loading previously saved teams, we need to build the options for
 		// the associated sport to show the team they already have selected
@@ -107,7 +107,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 					{$team_opts}
 				</select>
 			    </p>
-				<div class=\"cleared\"></div>
+				<div class=\"visualClear\"></div>
 
 			</div>";
 
@@ -190,7 +190,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 			$this->msg( 'user-profile-section-preferences' )->text() . '</a>';
 		$output .= '</div>';
 
-		$output .= '<div class="cleared"></div>';
+		$output .= '<div class="visualClear"></div>';
 		$output .= '</div>';
 
 		$output .= '<div class="profile-info">';

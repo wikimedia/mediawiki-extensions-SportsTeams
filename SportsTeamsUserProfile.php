@@ -42,7 +42,7 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 			);
 		}
 		$output .= '</div>
-				<div class="cleared"></div>
+				<div class="visualClear"></div>
 			</div>
 		</div>
 		<div class="network-container">';
@@ -102,7 +102,7 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 			<div class=\"status-update-box\" id=\"status-update-box-{$fav['order']}\" style=\"display:none\"></div>";
 		}
 
-		$output .= '<div class="cleared"></div>
+		$output .= '<div class="visualClear"></div>
 		</div>';
 	} elseif ( $user_profile->isOwner() ) {
 		$output .= '<div class="user-section-heading">
@@ -114,7 +114,7 @@ function wfUserProfileFavoriteTeams( $user_profile ) {
 					<a href="' . htmlspecialchars( $add_networks_title->getFullURL() ) . '">' .
 						wfMessage( 'sportsteams-profile-add-network' )->text() . '</a>
 				</div>
-				<div class="cleared"></div>
+				<div class="visualClear"></div>
 			</div>
 		</div>
 		<div class="no-info-container">' .
@@ -149,7 +149,7 @@ function wfUserProfileLatestThought( $user_profile ) {
 					<a href="' . htmlspecialchars( $more_thoughts_link->getFullURL( 'user=' . $user_profile->user_name ) ) .
 					'" rel="nofollow">' . wfMessage( 'sportsteams-profile-view-all' )->plain() . '</a>
 				</div>
-				<div class="cleared"></div>
+				<div class="visualClear"></div>
 			</div>
 		</div>';
 

@@ -124,7 +124,7 @@ class AddFan extends UnlistedSpecialPage {
 					$this->msg( 'sportsteams-network-join-are-you-sure', $name )->text() .
 				"</div>
 
-				<div class=\"cleared\"></div>
+				<div class=\"visualClear\"></div>
 				<div class=\"give-gift-buttons\">
 					<input type=\"hidden\" name=\"s_id\" value=\"{$sport_id}\" />
 					<input type=\"hidden\" name=\"t_id\" value=\"{$team_id}\" />

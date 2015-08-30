@@ -164,7 +164,7 @@ class FanHome extends UnlistedSpecialPage {
 		}
 		$output .= $fan_info;
 		$output .= '</div>';
-		$output .= '<div class="cleared"></div>';
+		$output .= '<div class="visualClear"></div>';
 		$output .= '</div>';
 		$this_count = count( SportsTeams::getUsersByFavorite( $sport_id, $team_id, 7, 0 ) );
 		$output .= '<div class="fan-top-right">';
@@ -181,7 +181,7 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= $this->getFans();
 		$output .= '</div>';
 
-		$output .= '<div class="cleared"></div>';
+		$output .= '<div class="visualClear"></div>';
 		$output .= '</div>';
 
 		$output .= '<div class="fan-left">';
@@ -281,7 +281,7 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '</div>';
 
 		$output .= '</div>';
-		$output .= '<div class="cleared"></div>';
+		$output .= '<div class="visualClear"></div>';
 
 		$out->addHTML( $output );
 	}
@@ -583,7 +583,7 @@ function loadMap() {
 					$titleObj->getText() .
 				'</a>
 			</div>
-			<div class="cleared"></div>';
+			<div class="visualClear"></div>';
 			}
 		}
 		$html .= '</div>'; // .listpages-container
@@ -695,7 +695,7 @@ function loadMap() {
 			</p>";
 		}
 
-		$output .= '<div class="cleared"></div></div>';
+		$output .= '<div class="visualClear"></div></div>';
 
 		return $output;
 	}

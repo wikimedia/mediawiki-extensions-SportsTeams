@@ -216,7 +216,7 @@ class TopNetworks extends SpecialPage {
 							$user_count
 						)->parse() .
 					'</span>
-					<div class="cleared"></div>
+					<div class="visualClear"></div>
 				</div>';
 				$x++;
 			}
@@ -249,14 +249,14 @@ class TopNetworks extends SpecialPage {
 							$user_count
 						)->parse() .
 					'</span>
-					<div class="cleared"></div>
+					<div class="visualClear"></div>
 				</div>';
 				$x++;
 			}
 		}
 
 		$output .= '</div>
-		<div class="cleared"></div>';
+		<div class="visualClear"></div>';
 
 		$out->addHTML( $output );
 	}
