@@ -26,8 +26,7 @@ class SportsTeamsManager extends SpecialPage {
 
 		// If the user isn't allowed to access this page, display an error
 		if ( !$user->isAllowed( 'sportsteamsmanager' ) ) {
-			$out->permissionRequired( 'sportsteamsmanager' );
-			return;
+			throw new PermissionsError( 'sportsteamsmanager' );
 		}
 
 		// Show a message if the database is in read-only mode
