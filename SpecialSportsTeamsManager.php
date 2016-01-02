@@ -37,8 +37,7 @@ class SportsTeamsManager extends SpecialPage {
 
 		// If the user is blocked, s/he doesn't need to access this page
 		if ( $user->isBlocked() ) {
-			$out->blockedPage( false );
-			return false;
+			throw new UserBlockedError( $user->getBlock() );
 		}
 
 		// Set the page title
