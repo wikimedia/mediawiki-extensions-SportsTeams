@@ -14,6 +14,10 @@ class SportsTeamsManager extends SpecialPage {
 		parent::__construct( 'SportsTeamsManager', 'sportsteamsmanager' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	/**
 	 * Show the special page
 	 *
