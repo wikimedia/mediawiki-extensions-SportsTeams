@@ -105,7 +105,7 @@
 	"sportsteams-team-manager-db-is-empty": "There are no sports in the database. Create one!",
 	"sportsteams-team-manager-sport-name": "sport name",
 	"sportsteams-team-manager-add-sport-button": "Add sport",
-	"sportsteams-team-manager-sport-created": "The sport was created successfully.",
+	"sportsteams-team-manager-sport-created": "The sport was created.",
 	"sportsteams-team-manager-edit-this-sport": "Edit this sport",
 	"sportsteams-error-no-sports-title": "Error: no sports in the database",
 	"sportsteams-error-no-sports-message": "There are no sports in the database so you cannot update your favorite teams.\nPlease ask an admin or someone else with the 'sportsteamsmanager' user right to [[Special:SportsTeamsManager|add some sports]].",
