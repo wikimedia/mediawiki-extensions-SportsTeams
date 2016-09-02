@@ -14,22 +14,28 @@ class SportsTeamsHooks {
 	 * Based on GPL-licensed code from [[mw:Extension:CCAgreement]] by Josef
 	 * Martiňák.
 	 *
-	 * @param $out OutputPage
-	 * @param $skin Skin
-	 * @return Boolean
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
 	 */
 	public static function addSportsTeamsToSignupPage( &$out, &$skin ) {
 		$context = $out;
 		$title = $context->getTitle();
 		$request = $context->getRequest();
 
-		// Only do our magic if we're on the login page
-		if ( $title->isSpecial( 'Userlogin' ) ) {
-			$kaboom = explode( '/', $title->getText() );
-			$signupParamIsSet = false;
+		$signupParamIsSet = false;
 
-			// Catch [[Special:UserLogin/signup]]
-			if ( isset( $kaboom[1] ) && $kaboom[1] == 'signup' ) {
+		// Only do our magic if we're on the login page
+		if ( $title->isSpecial( 'Userlogin' ) || $title->isSpecial( 'CreateAccount' ) ) {
+			if ( $title->isSpecial( 'Userlogin' ) ) {
+				$kaboom = explode( '/', $title->getText() );
+
+				// Catch [[Special:UserLogin/signup]]
+				if ( isset( $kaboom[1] ) && $kaboom[1] == 'signup' ) {
+					$signupParamIsSet = true;
+				}
+			} else {
+				// We're on Special:CreateAccount (MW 1.27 and newer only)
 				$signupParamIsSet = true;
 			}
 
@@ -76,17 +82,24 @@ class SportsTeamsHooks {
 				-->
 				<textarea tabindex="6" class="lr-input" id="thought" name="thought" maxlength="150" style="width: 150%; height: 80px;"></textarea>
 			</div>';
-
 				// This is needed to prevent the duplication of the form (:P)
 				// and also for injecting our custom HTML into the right place
 				$out->clearHTML();
 
 				// Append the sport/team selector to the output
-				$bodyText = preg_replace(
-					'/<div class=\"mw-submit\">/',
-					$output . '<div class="mw-submit">',
-					$bodyText
-				);
+				if ( $title->isSpecial( 'CreateAccount' ) ) {
+					$bodyText = preg_replace(
+						'/<div class=\"mw-htmlform-field-HTMLSubmitField mw-ui-vform-field\">/',
+						$output . '<div class="mw-htmlform-field-HTMLSubmitField mw-ui-vform-field">',
+						$bodyText
+					);
+				} else {
+					$bodyText = preg_replace(
+						'/<div class=\"mw-submit\">/',
+						$output . '<div class="mw-submit">',
+						$bodyText
+					);
+				}
 
 				// DoubleCombo is needed for populating the team drop-down menu's
 				// contents once the user has picked a team
@@ -105,8 +118,8 @@ class SportsTeamsHooks {
 	 * form, add the user to that network, and if they also supplied a thought
 	 * about a team, post it.
 	 *
-	 * @param $user User object representing the newly created account-to-be
-	 * @return Boolean
+	 * @param User $user User object representing the newly created account-to-be
+	 * @return bool
 	 */
 	public static function addFavoriteTeam( $user ) {
 		if ( isset( $_COOKIE['sports_sid'] ) ) {
@@ -120,7 +133,7 @@ class SportsTeamsHooks {
 
 			if ( $sport_id != 0 ) {
 				$s = new SportsTeams();
-				$s->addFavorite( $user->getID(), $sport_id, $team_id );
+				$s->addFavorite( $user->getId(), $sport_id, $team_id );
 
 				if ( $thought ) {
 					$b = new UserStatus();
@@ -136,11 +149,10 @@ class SportsTeamsHooks {
 	 * Creates SportsTeams's new database tables when the user runs
 	 * /maintenance/update.php, the MediaWiki core updater script.
 	 *
-	 * @param $updater DatabaseUpdater
-	 * @return Boolean
+	 * @param DatabaseUpdater $updater
+	 * @return bool
 	 */
 	public static function onLoadExtensionSchemaUpdates( $updater ) {
-		$dir = dirname( __FILE__ );
 		$dbExt = '';
 
 		/*
@@ -149,9 +161,9 @@ class SportsTeamsHooks {
 		}
 		*/
 
-		$updater->addExtensionUpdate( array( 'addTable', 'sport', "$dir/sportsteams$dbExt.sql", true ) );
-		$updater->addExtensionUpdate( array( 'addTable', 'sport_favorite', "$dir/sportsteams$dbExt.sql", true ) );
-		$updater->addExtensionUpdate( array( 'addTable', 'sport_team', "$dir/sportsteams$dbExt.sql", true ) );
+		$updater->addExtensionUpdate( array( 'addTable', 'sport', __DIR__ . "/sportsteams$dbExt.sql", true ) );
+		$updater->addExtensionUpdate( array( 'addTable', 'sport_favorite', __DIR__ . "/sportsteams$dbExt.sql", true ) );
+		$updater->addExtensionUpdate( array( 'addTable', 'sport_team', __DIR__ . "/sportsteams$dbExt.sql", true ) );
 
 		return true;
 	}
@@ -159,7 +171,7 @@ class SportsTeamsHooks {
 	/**
 	 * For integration with the Renameuser extension.
 	 *
-	 * @param $renameUserSQL RenameuserSQL
+	 * @param RenameuserSQL $renameUserSQL
 	 * @return bool
 	 */
 	public static function onRenameUserSQL( $renameUserSQL ) {

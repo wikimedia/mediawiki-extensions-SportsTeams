@@ -13,7 +13,7 @@ var DoubleCombo = {
 	 * @param {Number} Sport identifier, used when calling the backend API module
 	 */
 	update: function( elementId, sportId ) {
-		jQuery.get(
+		$.get(
 			mw.util.wikiScript( 'api' ), {
 				action: 'sportsteams',
 				'sportId': sportId,
@@ -28,15 +28,15 @@ var DoubleCombo = {
 					document.getElementById( elementId ).options.length = 0;
 					opts = data.sportsteams.result;
 
-					jQuery( '#' + elementId ).append(
-						jQuery( '<option></option>' )
+					$( '#' + elementId ).append(
+						$( '<option></option>' )
 							.attr( 'value', 0 )
 							.text( '-' )
 					);
 
 					for ( var x = 0; x <= opts.options.length - 1; x++ ) {
-						jQuery( '#' + elementId ).append(
-							jQuery( '<option></option>' )
+						$( '#' + elementId ).append(
+							$( '<option></option>' )
 								.attr( 'id', opts.options[x]['id'] )
 								.attr( 'value', opts.options[x]['id'] )
 								.text( opts.options[x]['name'] )
@@ -50,32 +50,37 @@ var DoubleCombo = {
 	}
 };
 
-jQuery( document ).ready( function() {
-	jQuery( 'p.profile-update-unit-right select' ).on( 'change', function() {
-		var counter = jQuery( this ).attr( 'id' ).replace( /sport_/, '' );
+$( document ).ready( function() {
+	$( 'p.profile-update-unit-right select' ).on( 'change', function() {
+		var counter = $( this ).attr( 'id' ).replace( /sport_/, '' );
 		// if the <option>'s value is 0 (i.e. the displayed text is "-"), don't
 		// even try updating things as it'll just die horribly with some obscure
 		// JS error about result being undefined
-		if ( jQuery( this ).val() > 0 ) {
-			DoubleCombo.update( 'team_' + counter, jQuery( this ).val() );
+		if ( $( this ).val() > 0 ) {
+			DoubleCombo.update( 'team_' + counter, $( this ).val() );
 		}
 	} );
 
-	// Signup page stuff (Special:UserLogin/signup)
-	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'Userlogin' ) {
-		jQuery( 'select#sport_1' ).on( 'change', function() {
-			var $val = jQuery( this ).val();
+	// Signup page stuff (Special:UserLogin/signup on MW 1.26 and older,
+	// Special:CreateAccount on MW 1.27+)
+	if (
+		mw.config.get( 'wgCanonicalSpecialPageName' ) === 'Userlogin' ||
+		mw.config.get( 'wgCanonicalSpecialPageName' ) === 'CreateAccount'
+	)
+	{
+		$( 'select#sport_1' ).on( 'change', function() {
+			var $val = $( this ).val();
 			document.cookie = 'sports_sid=' + $val;
 			DoubleCombo.update( 'team_1', $val );
 		} );
 
-		jQuery( 'select#team_1' ).on( 'change', function() {
-			var $val = jQuery( this ).val();
+		$( 'select#team_1' ).on( 'change', function() {
+			var $val = $( this ).val();
 			document.cookie = 'sports_tid=' + $val;
 		} );
 
-		jQuery( '#thought' ).on( 'change', function() {
-			var $val = jQuery( this ).val();
+		$( '#thought' ).on( 'change', function() {
+			var $val = $( this ).val();
 			document.cookie = 'thought=' + $val;
 		} );
 	}

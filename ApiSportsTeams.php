@@ -46,9 +46,11 @@ class ApiSportsTeams extends ApiBase {
 		$output['options'] = array();
 
 		foreach ( $res as $row ) {
+			/*
 			if ( $x != 0 ) {
 				$out .= ',';
 			}
+			*/
 
 			$output['options'][] = array(
 				'id' => $row->team_id,

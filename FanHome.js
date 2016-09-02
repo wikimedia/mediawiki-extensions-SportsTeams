@@ -12,18 +12,15 @@ var FanHome = {
 	posted: 0,
 
 	voteStatus: function( id, vote ) {
-		jQuery.post(
-			mw.util.wikiScript( 'api' ), {
-				action: 'userstatus',
-				what: 'votestatus',
-				us_id: id,
-				vote: vote,
-				format: 'json'
-			},
-			function( data ) {
-				jQuery( '#user-status-vote-' + id ).text( data.userstatus.result );
-			}
-		);
+		( new mw.Api() ).postWithToken( 'edit', {
+			action: 'userstatus',
+			what: 'votestatus',
+			us_id: id,
+			vote: vote,
+			format: 'json'
+		} ).done( function( data ) {
+			$( '#user-status-vote-' + id ).text( data.userstatus.result );
+		} );
 	},
 
 	/**
@@ -58,47 +55,41 @@ var FanHome = {
 		if ( statusUpdateText && !FanHome.posted ) {
 			FanHome.posted = 1;
 
-			jQuery.post(
-				mw.util.wikiScript( 'api' ), {
-					action: 'userstatus',
-					what: 'addnetworkstatus',
-					sportId: __sport_id__,
-					teamId: __team_id__,
-					text: encodeURIComponent( statusUpdateText ),
-					count: __updates_show__,
-					format: 'json'
-				},
-				function( data ) {
-					document.getElementById( 'network-updates' ).innerHTML = data.userstatus.result;
-					FanHome.posted = 0;
-					document.getElementById( 'user_status_text' ).value = '';
-				}
-			);
+			( new mw.Api() ).postWithToken( 'edit', {
+				action: 'userstatus',
+				what: 'addnetworkstatus',
+				sportId: __sport_id__,
+				teamId: __team_id__,
+				text: encodeURIComponent( statusUpdateText ),
+				count: __updates_show__,
+				format: 'json'
+			} ).done( function( data ) {
+				document.getElementById( 'network-updates' ).innerHTML = data.userstatus.result;
+				FanHome.posted = 0;
+				document.getElementById( 'user_status_text' ).value = '';
+			} );
 		}
 	},
 
 	deleteMessage: function( id ) {
 		if ( confirm( 'Are you sure you want to delete this thought?' ) ) {
-			jQuery.post(
-				mw.util.wikiScript( 'api' ), {
-					action: 'userstatus',
-					what: 'deletestatus',
-					us_id: id,
-					format: 'json'
-				},
-				function( data ) {
-					//window.location = __user_status_link__;
-					// Just remove the DOM node, no need to take the user to
-					// Special:UserStatus, IMO
-					// I wanted to use .remove() here to remove the DOM node too,
-					// but I couldn't figure out how to do the animation to hide
-					// the status message and *after* that remove the node.
-					// Oh well, I suppose it doesn't matter too much because after
-					// the call to the API module, the message is gone. (-;
-					jQuery( 'span#user-status-vote-' + id ).parent().parent()
-						.parent().hide( 1000 );
-				}
-			);
+			( new mw.Api() ).postWithToken( 'edit', {
+				action: 'userstatus',
+				what: 'deletestatus',
+				us_id: id,
+				format: 'json'
+			} ).done( function( data ) {
+				//window.location = __user_status_link__;
+				// Just remove the DOM node, no need to take the user to
+				// Special:UserStatus, IMO
+				// I wanted to use .remove() here to remove the DOM node too,
+				// but I couldn't figure out how to do the animation to hide
+				// the status message and *after* that remove the node.
+				// Oh well, I suppose it doesn't matter too much because after
+				// the call to the API module, the message is gone. (-;
+				$( 'span#user-status-vote-' + id ).parent().parent()
+					.parent().hide( 1000 );
+			} );
 		}
 	},
 
@@ -136,18 +127,18 @@ var FanHome = {
 			gMapInfoElem.style.display = 'block';
 			gMapInfoElem.style.left = divLeft;
 			gMapInfoElem.style.top = divTop;
-		});
+		} );
 
 		// hide the div on mouseout
 		GEvent.addListener( marker, 'mouseout', function() {
 			document.getElementById( 'gMapInfo' ).style.display = 'none';
-		});
+		} );
 
 		// onClick - pan+zoom the map onto this marker
 		GEvent.addListener( marker, 'click', function() {
 			document.getElementById( 'gMapInfo' ).style.display = 'none';
 			this.map.setCenter( this.getPoint(), 7 );
-		});
+		} );
 
 		return marker;
 	},
@@ -186,7 +177,7 @@ var FanHome = {
 		// just in case
 		caption = caption.replace( /<script>/i, 'script' );
 
-		jQuery( marker ).bind( 'mouseover', function() {
+		$( marker ).bind( 'mouseover', function() {
 			var bb  = this.map.getBounds();
 
 			// if the point isn't visible, just exit
@@ -215,15 +206,15 @@ var FanHome = {
 			gMapInfoElem.style.display = 'block';
 			gMapInfoElem.style.left = divLeft;
 			gMapInfoElem.style.top = divTop;
-		});
+		} );
 
 		// when the icon is clicked, load the fan's profile page
-		jQuery( marker ).bind( 'click', function() {
+		$( marker ).bind( 'click', function() {
 			window.location = this.url;
 		});
 
 		// hide the info-div on mouse-out
-		jQuery( marker ).bind( 'mouseout', function() {
+		$( marker ).bind( 'mouseout', function() {
 			document.getElementById( 'gMapInfo' ).style.display = 'none';
 		});
 
@@ -231,30 +222,30 @@ var FanHome = {
 	}
 };
 
-jQuery( document ).ready( function() {
+$( document ).ready( function() {
 	// Add handlers specific to Special:FanHome
 	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'FanHome' ) {
 		// Handle the case when the user presses the Enter key
-		jQuery( 'input#user_status_text' ).on( 'keypress', function( event ) {
+		$( 'input#user_status_text' ).on( 'keypress', function( event ) {
 			FanHome.detEnter( event );
 		} );
 
 		// Handle clicks on the "add status" button
-		jQuery( 'input#add-status-btn' ).on( 'click', function() {
+		$( 'input#add-status-btn' ).on( 'click', function() {
 			FanHome.addStatus();
 		} );
 
 		// Handle status message deletion (clicks on the "x")
-		jQuery( 'span.user-status-delete-link a' ).each( function( index ) {
-			jQuery( this ).on( 'click', function() {
-				FanHome.deleteMessage( jQuery( this ).data( 'message-id' ) );
+		$( 'span.user-status-delete-link a' ).each( function( index ) {
+			$( this ).on( 'click', function() {
+				FanHome.deleteMessage( $( this ).data( 'message-id' ) );
 			} );
 		} );
 
 		// Voting links
-		jQuery( 'a.vote-status-link' ).each( function( index ) {
-			jQuery( this ).on( 'click', function() {
-				FanHome.voteStatus( jQuery( this ).data( 'message-id' ), 1 );
+		$( 'a.vote-status-link' ).each( function( index ) {
+			$( this ).on( 'click', function() {
+				FanHome.voteStatus( $( this ).data( 'message-id' ), 1 );
 			} );
 		} );
 	}
