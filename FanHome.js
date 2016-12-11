@@ -226,27 +226,23 @@ $( document ).ready( function() {
 	// Add handlers specific to Special:FanHome
 	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'FanHome' ) {
 		// Handle the case when the user presses the Enter key
-		$( 'input#user_status_text' ).on( 'keypress', function( event ) {
+		$( 'body' ).on( 'keypress', '#user_status_text', function( event ) {
 			FanHome.detEnter( event );
 		} );
 
 		// Handle clicks on the "add status" button
-		$( 'input#add-status-btn' ).on( 'click', function() {
+		$( 'body' ).on( 'click', '#add-status-btn', function() {
 			FanHome.addStatus();
 		} );
 
 		// Handle status message deletion (clicks on the "x")
-		$( 'span.user-status-delete-link a' ).each( function( index ) {
-			$( this ).on( 'click', function() {
-				FanHome.deleteMessage( $( this ).data( 'message-id' ) );
-			} );
+		$( 'body' ).on( 'click', '.user-status-delete-link a', function() {
+			FanHome.deleteMessage( $( this ).data( 'message-id' ) );
 		} );
 
 		// Voting links
-		$( 'a.vote-status-link' ).each( function( index ) {
-			$( this ).on( 'click', function() {
-				FanHome.voteStatus( $( this ).data( 'message-id' ), 1 );
-			} );
+		$( 'body' ).on( 'click', '.vote-status-link', function() {
+			FanHome.voteStatus( $( this ).data( 'message-id' ), 1 );
 		} );
 	}
 } );
