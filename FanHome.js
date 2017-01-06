@@ -222,7 +222,7 @@ var FanHome = {
 	}
 };
 
-$( document ).ready( function() {
+$( function() {
 	// Add handlers specific to Special:FanHome
 	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'FanHome' ) {
 		// Handle the case when the user presses the Enter key

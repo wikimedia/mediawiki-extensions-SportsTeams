@@ -186,7 +186,7 @@ var SportsTeamsUserProfile = {
 	}
 };
 
-$( document ).ready( function() {
+$( function() {
 	// "Add thought" link on your own profile
 	$( 'span.status-message-add a' ).on( 'click', function() {
 		var $that = $( this );

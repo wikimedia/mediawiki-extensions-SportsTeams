@@ -42,7 +42,7 @@ var UpdateFavoriteTeams = {
 	}
 };
 
-$( document ).ready( function() {
+$( function() {
 	$( 'a.remove-link' ).on( 'click', function() {
 		UpdateFavoriteTeams.removeFan(
 			$( this ).data( 'selected-sport-id' ),

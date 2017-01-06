@@ -50,7 +50,7 @@ var DoubleCombo = {
 	}
 };
 
-$( document ).ready( function() {
+$( function() {
 	$( 'p.profile-update-unit-right select' ).on( 'change', function() {
 		var counter = $( this ).attr( 'id' ).replace( /sport_/, '' );
 		// if the <option>'s value is 0 (i.e. the displayed text is "-"), don't
