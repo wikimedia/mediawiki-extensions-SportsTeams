@@ -6,10 +6,10 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'AddFan' => array( 'AddFan' ),
 	'FanHome' => array( 'FanHome' ),
 	'RemoveFan' => array( 'RemoveFan' ),
@@ -21,7 +21,7 @@ $aliases['en'] = array(
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'AddFan' => array( 'Lisää fani' ),
 	'FanHome' => array( 'Fanin kotisivu' ),
 	'RemoveFan' => array( 'Poista fani' ),
