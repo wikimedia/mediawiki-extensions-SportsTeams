@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": []
 	},
+	"sportsteams-desc": "Provides networking functionality",
 	"topnetworks": "Network Statistics",
 	"similarfans": "Similar Fans",
 	"sportsteamsmanager": "Manage Sports Teams",
