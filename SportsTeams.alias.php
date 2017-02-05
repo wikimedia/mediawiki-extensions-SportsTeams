@@ -16,7 +16,9 @@ $specialPageAliases['en'] = array(
 	'SimilarFans' => array( 'SimilarFans' ),
 	'SportsManagerLogo' => array( 'SportsManagerLogo' ),
 	'SportsTeamsManager' => array( 'SportsTeamsManager' ),
+	'SportsTeamsManagerLogo' => array( 'SportsTeamsManagerLogo' ),
 	'TopNetworks' => array( 'TopNetworks' ),
+	'UpdateFavoriteTeams' => array( 'UpdateFavoriteTeams' ),
 	'ViewFans' => array( 'ViewFans' ),
 );
 
