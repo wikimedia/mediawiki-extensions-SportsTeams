@@ -137,10 +137,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		}
 
 		// If the database is in read-only mode, bail out
-		if ( wfReadOnly() ) {
-			$out->readOnlyPage();
-			return true;
-		}
+		$this->checkReadOnly();
 
 		$sports = SportsTeams::getSports();
 		// Error message when there are no sports in the database

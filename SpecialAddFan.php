@@ -58,10 +58,7 @@ class AddFan extends UnlistedSpecialPage {
 		}
 
 		// If the database is in read-only mode, bail out
-		if ( wfReadOnly() ) {
-			$out->readOnlyPage();
-			return true;
-		}
+		$this->checkReadOnly();
 
 		if ( $team_id ) {
 			$team = SportsTeams::getTeam( $team_id );

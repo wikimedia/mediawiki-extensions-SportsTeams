@@ -105,10 +105,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			throw new ErrorPageError( 'uploadnologin', 'uploadnologintext' );
 			return;
 		}
-		if ( wfReadOnly() ) {
-			$out->readOnlyPage();
-			return;
-		}
+		$this->checkReadOnly();
 
 		/** Check if the image directory is writeable, this is a common mistake */
 		if ( !is_writeable( $wgUploadDirectory ) ) {
