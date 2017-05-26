@@ -135,6 +135,7 @@
 	"action-sportsteamsmanager": "add new networks",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Manage networks]]",
 	"apihelp-sportsteams-description": "API for fetching the teams for a given sport from the database.",
+	"apihelp-sportsteams-summary": "API for fetching the teams for a given sport from the database.",
 	"apihelp-sportsteams-param-sportId": "Unique identifier (number) of the sport in question.",
 	"apihelp-sportsteams-example-1": "Get the names and teams under sport #3."
 }

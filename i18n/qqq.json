@@ -4,6 +4,7 @@
 	},
 	"sportsteams-desc": "{{desc|name=SportsTeams|url=https://www.mediawiki.org/wiki/Extension:SportsTeams}}",
 	"apihelp-sportsteams-description": "{{doc-apihelp-description|sportsteams}}",
+	"apihelp-sportsteams-summary": "{{doc-apihelp-summary|sportsteams}}",
 	"apihelp-sportsteams-param-sportId": "{{doc-apihelp-param|sportsteams|sportId}}",
 	"apihelp-sportsteams-example-1": "{{doc-apihelp-example|sportsteams}}"
 }
