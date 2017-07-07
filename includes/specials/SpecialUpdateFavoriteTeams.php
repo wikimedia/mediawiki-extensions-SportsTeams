@@ -57,7 +57,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$remove_link = '';
 		if ( $selected_sport_id || $selected_team_id ) {
 			$remove_link = "<a href=\"javascript:void(0)\" class=\"remove-link\" data-selected-sport-id=\"{$selected_sport_id}\" data-selected-team-id=\"{$selected_team_id}\">
-				<img src=\"{$wgExtensionAssetsPath}/SportsTeams/closeIcon.gif\" border=\"0\"/>
+				<img src=\"{$wgExtensionAssetsPath}/SportsTeams/resources/images/closeIcon.gif\" border=\"0\"/>
 			</a>";
 		}
 

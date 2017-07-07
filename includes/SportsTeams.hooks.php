@@ -161,9 +161,9 @@ class SportsTeamsHooks {
 		}
 		*/
 
-		$updater->addExtensionUpdate( array( 'addTable', 'sport', __DIR__ . "/sportsteams$dbExt.sql", true ) );
-		$updater->addExtensionUpdate( array( 'addTable', 'sport_favorite', __DIR__ . "/sportsteams$dbExt.sql", true ) );
-		$updater->addExtensionUpdate( array( 'addTable', 'sport_team', __DIR__ . "/sportsteams$dbExt.sql", true ) );
+		$updater->addExtensionUpdate( array( 'addTable', 'sport', __DIR__ . "/../sql/sportsteams$dbExt.sql", true ) );
+		$updater->addExtensionUpdate( array( 'addTable', 'sport_favorite', __DIR__ . "/../sql/sportsteams$dbExt.sql", true ) );
+		$updater->addExtensionUpdate( array( 'addTable', 'sport_team', __DIR__ . "/../sql/sportsteams$dbExt.sql", true ) );
 
 		return true;
 	}
