@@ -89,7 +89,7 @@ class SportsTeams {
 	 * @return Array: array containing each team's name and internal ID number
 	 */
 	static function getTeams( $sportId ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$res = $dbr->select(
 			'sport_team',
@@ -331,7 +331,7 @@ class SportsTeams {
 		//	wfDebugLog( 'SportsTeams', "Got favorite teams for {$user_id} from cache" );
 		//	$favs = $data;
 		//} else {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_REPLICA );
 			$where = $options = array();
 
 			if ( $limit > 0 ) {
@@ -424,7 +424,7 @@ class SportsTeams {
 	}
 
 	static function getUsersByPoints( $sport_id, $team_id, $limit, $page ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$where = $options = array();
 
 		if ( $limit > 0 ) {
@@ -482,7 +482,7 @@ class SportsTeams {
 			$where = array( 'sf_team_id' => $team_id );
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$count = (int)$dbr->selectField(
 			'sport_favorite',
 			'COUNT(*) AS the_count',
@@ -494,7 +494,7 @@ class SportsTeams {
 	}
 
 	static function getUserFavoriteTotal( $userId ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$res = (int)$dbr->selectField(
 			'sport_favorite',
 			'COUNT(*) AS the_count',
@@ -515,7 +515,7 @@ class SportsTeams {
 			$where = array( 'sf_team_id' => $team_id );
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$friends = $dbr->select(
 			'user_relationship',
@@ -549,7 +549,7 @@ class SportsTeams {
 	}
 
 	static function getSimilarUserCount( $user_id ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$teamIdQuery = $dbr->select(
 			'sport_favorite',
@@ -598,7 +598,7 @@ class SportsTeams {
 			$where['sf_team_id'] = $team_id;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$row = $dbr->selectField(
 			'sport_favorite',

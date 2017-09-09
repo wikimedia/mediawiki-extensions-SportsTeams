@@ -20,7 +20,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 	}
 
 	function getFavorites() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$res = $dbr->select(
 			'sport_favorite',

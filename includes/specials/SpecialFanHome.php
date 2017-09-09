@@ -526,7 +526,7 @@ function loadMap() {
 			$articles = $data;
 		} else {
 			wfDebugLog( 'FanHome', 'Got network articles from DB' );
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_REPLICA );
 			// Code sporked from Rob Church's NewestPages extension
 			$res = $dbr->select(
 				array( 'page', 'categorylinks' ),
@@ -612,7 +612,7 @@ function loadMap() {
 			$voteCount = $data;
 		} else {
 			wfDebugLog( 'FanHome', "Got vote count for the page with ID {$id} from DB" );
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_REPLICA );
 			$voteCount = (int)$dbr->selectField(
 				'Vote',
 				'COUNT(*) AS count',
