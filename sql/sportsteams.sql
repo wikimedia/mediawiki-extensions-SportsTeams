@@ -1,4 +1,4 @@
--- Author: Jack Phoenix <jack@countervandalism.net>
+-- Author: Jack Phoenix
 -- Date: 3 August 2011
 -- License: public domain to the extent that it is possible
 CREATE TABLE /*_*/sport (
