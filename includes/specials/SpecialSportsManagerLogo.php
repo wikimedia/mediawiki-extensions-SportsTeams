@@ -641,7 +641,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 */
 	function verify( $tmpfile, $extension ) {
 		# magically determine mime type
-		$magic = MimeMagic::singleton();
+		$magic = \MediaWiki\MediaWikiServices::getInstance()->getMimeAnalyzer();
 		$mime = $magic->guessMimeType( $tmpfile, false );
 
 		# check mime type, if desired
