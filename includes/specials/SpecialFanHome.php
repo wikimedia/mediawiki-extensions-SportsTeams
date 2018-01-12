@@ -518,7 +518,7 @@ function loadMap() {
 		global $wgMemc;
 
 		// Try cache first
-		$key = wfMemcKey( 'fanhome', 'network-articles', 'six' );
+		$key = $wgMemc->makeKey( 'fanhome', 'network-articles', 'six' );
 		$data = $wgMemc->get( $key );
 
 		if ( $data != '' ) {
@@ -604,7 +604,7 @@ function loadMap() {
 		global $wgMemc;
 
 		// Try cache first
-		$key = wfMemcKey( 'fanhome', 'vote', 'count' );
+		$key = $wgMemc->makeKey( 'fanhome', 'vote', 'count' );
 		$data = $wgMemc->get( $key );
 
 		if ( $data != '' ) {

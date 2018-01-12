@@ -194,7 +194,7 @@ class SportsTeams {
 
 	static function clearUserCache( $user_id ) {
 		global $wgMemc;
-		$key = wfMemcKey( 'user', 'teams', $user_id );
+		$key = $wgMemc->makeKey( 'user', 'teams', $user_id );
 		$data = $wgMemc->delete( $key );
 	}
 
@@ -202,7 +202,7 @@ class SportsTeams {
 		global $wgMemc;
 
 		// Try cache first
-		$key = wfMemcKey( 'user', 'teams', $user_id );
+		$key = $wgMemc->makeKey( 'user', 'teams', $user_id );
 		$data = $wgMemc->get( $key );
 
 		if ( $data ) {
@@ -324,7 +324,7 @@ class SportsTeams {
 		global $wgMemc;
 
 		// Try cache first
-		//$key = wfMemcKey( 'user', 'teams', $user_id );
+		//$key = $wgMemc->makeKey( 'user', 'teams', $user_id );
 		#$wgMemc->delete( $key );
 		//$data = $wgMemc->get( $key );
 		//if ( $data ) {
