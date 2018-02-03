@@ -63,21 +63,17 @@
 	},
 	"ResourceModules": {
 		"ext.sportsTeams": {
-			"styles": "resources/css/SportsTeams.css",
-			"position": "top"
+			"styles": "resources/css/SportsTeams.css"
 		},
 		"ext.sportsTeams.fanHome": {
 			"scripts": "resources/js/FanHome.js",
-			"dependencies": [ "mediawiki.api" ],
-			"position": "top"
+			"dependencies": [ "mediawiki.api" ]
 		},
 		"ext.sportsTeams.doubleCombo": {
-			"scripts": "resources/js/DoubleCombo.js",
-			"position": "bottom"
+			"scripts": "resources/js/DoubleCombo.js"
 		},
 		"ext.sportsTeams.manager": {
-			"styles": "resources/css/SportsTeamsManager.css",
-			"position": "top"
+			"styles": "resources/css/SportsTeamsManager.css"
 		},
 		"ext.sportsTeams.userProfile": {
 			"scripts": "resources/js/SportsTeamsUserProfile.js",
@@ -89,15 +85,13 @@
 				"sportsteams-profile-characters-remaining",
 				"sportsteams-profile-characters-remaining-hack"
 			],
-			"dependencies": [ "mediawiki.api" ],
-			"position": "bottom"
+			"dependencies": [ "mediawiki.api" ]
 		},
 		"ext.sportsTeams.updateFavoriteTeams": {
 			"scripts": [
 				"resources/js/DoubleCombo.js",
 				"resources/js/UpdateFavoriteTeams.js"
-			],
-			"position": "bottom"
+			]
 		}
 	},
 	"ResourceFileModulePaths": {
