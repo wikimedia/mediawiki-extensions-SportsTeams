@@ -193,7 +193,14 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<h1 class="network-page-title">' .
 			$this->msg( 'sportsteams-network-latest-thoughts' )->text() . '</h1>';
 		$output .= '<div style="margin-bottom:10px;">
-			<a href="' . SportsTeams::getFanUpdatesURL( $sport_id, $team_id ) . '">' .
+			<a href="' .
+				htmlspecialchars(
+					SpecialPage::getTitleFor( 'FanUpdates' )->getFullURL( [
+						'sport_id' => $sport_id,
+						'team_id' => $team_id
+					] ),
+					ENT_QUOTES
+				) . '">' .
 				$this->msg( 'sportsteams-network-all-thoughts' )->text() . '</a>
 		</div>';
 		// Registered users (whether they're members of the network or not) can

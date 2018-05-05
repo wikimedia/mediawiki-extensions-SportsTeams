@@ -642,16 +642,6 @@ class SportsTeams {
 		$res = $dbr->query( $sql, __METHOD__ );
 	}
 
-	static function getNetworkURL( $sport_id, $team_id = 0 ) {
-		$title = SpecialPage::getTitleFor( 'FanHome' );
-		return htmlspecialchars( $title->getFullURL( 'sport_id=' . $sport_id . '&team_id=' . $team_id ) );
-	}
-
-	static function getFanUpdatesURL( $sport_id, $team_id = 0 ) {
-		$title = SpecialPage::getTitleFor( 'FanUpdates' );
-		return htmlspecialchars( $title->getFullURL( 'sport_id=' . $sport_id . '&team_id=' . $team_id ) );
-	}
-
 	static function dateDiff( $date1, $date2 ) {
 		$dtDiff = $date1 - $date2;
 
