@@ -653,7 +653,7 @@ function loadMap() {
 		foreach ( $fans as $fan ) {
 			$user = Title::makeTitle( NS_USER, $fan['user_name'] );
 			$user_name = $fan['user_name'];
-			$user_name_short = $lang->truncate( $user_name, 12 );
+			$user_name_short = $lang->truncateForVisual( $user_name, 12 );
 			$avatar = new wAvatar( $fan['user_id'], 'm' );
 			$output .= "<div class=\"top-fan-row\">
 				<span class=\"top-fan-num\">{$x}.</span> <span class=\"top-fan\">" .
@@ -694,7 +694,7 @@ function loadMap() {
 			$user = Title::makeTitle( NS_USER, $fan['user_name'] );
 			$avatar = new wAvatar( $fan['user_id'], 'l' );
 
-			$fan_name = $lang->truncate( $fan['user_name'], 12 );
+			$fan_name = $lang->truncateForVisual( $fan['user_name'], 12 );
 
 			$output .= "<p class=\"fan\">
 				<a href=\"{$user->getFullURL()}\">{$avatar->getAvatarURL()}</a><br>

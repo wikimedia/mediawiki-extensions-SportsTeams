@@ -72,7 +72,7 @@ class SimilarFans extends SpecialPage {
 			$x = 1;
 
 			foreach ( $fans as $fan ) {
-				$user_name_display = $lang->truncate( $fan['user_name'], 30 );
+				$user_name_display = $lang->truncateForVisual( $fan['user_name'], 30 );
 
 				$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 				$avatar = new wAvatar( $fan['user_id'], 'ml' );
