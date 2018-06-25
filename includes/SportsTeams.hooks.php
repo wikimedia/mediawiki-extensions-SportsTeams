@@ -156,7 +156,7 @@ class SportsTeamsHooks {
 		$dbExt = '';
 
 		/*
-		if ( !in_array( $updater->getDB()->getType(), array( 'mysql', 'sqlite' ) ) ) {
+		if ( !in_array( $updater->getDB()->getType(), [ 'mysql', 'sqlite' ] ) ) {
 			$dbExt = ".{$updater->getDB()->getType()}";
 		}
 		*/
@@ -175,7 +175,7 @@ class SportsTeamsHooks {
 	 * @return bool
 	 */
 	public static function onRenameUserSQL( $renameUserSQL ) {
-		$renameUserSQL->tables['sport_favorite'] = array( 'sf_user_name', 'sf_user_id' );
+		$renameUserSQL->tables['sport_favorite'] = [ 'sf_user_name', 'sf_user_id' ];
 		return true;
 	}
 }

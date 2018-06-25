@@ -96,7 +96,7 @@ class FanHome extends UnlistedSpecialPage {
 		$out->setPageTitle( $this->msg( 'sportsteams-network-fan-network', $this->network )->text() );
 
 		// Add CSS & JS
-		$out->addModules( array( 'ext.sportsTeams', 'ext.sportsTeams.fanHome' ) );
+		$out->addModules( [ 'ext.sportsTeams', 'ext.sportsTeams.fanHome' ] );
 
 		// Ashish Datta
 		// Add the script for the maps and set the onload() handler
@@ -122,8 +122,8 @@ class FanHome extends UnlistedSpecialPage {
 			$fan_info .= Linker::link(
 				$leave_fans_title,
 				$this->msg( 'sportsteams-network-leave-network' )->text(),
-				array( 'style' => 'text-decoration: none;' ),
-				array( 'sport_id' => $sport_id, 'team_id' => $team_id )
+				[ 'style' => 'text-decoration: none;' ],
+				[ 'sport_id' => $sport_id, 'team_id' => $team_id ]
 			);
 			$fan_info .= '</span></p>';
 		} elseif ( $user->isLoggedIn() ) {
@@ -131,8 +131,8 @@ class FanHome extends UnlistedSpecialPage {
 			$fan_info .= Linker::link(
 				$join_fans_title,
 				$this->msg( 'sportsteams-network-join-network' )->text(),
-				array( 'style' => 'text-decoration: none;' ),
-				array( 'sport_id' => $sport_id, 'team_id' => $team_id )
+				[ 'style' => 'text-decoration: none;' ],
+				[ 'sport_id' => $sport_id, 'team_id' => $team_id ]
 			);
 			$fan_info .= '</span></p>';
 		}
@@ -150,10 +150,10 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<div class="network-info-right">';
 		$output .= '<p>' . $this->msg( 'sportsteams-network-fans-col' )->text() . ' <a href="' .
 			$view_fans_title->getFullURL(
-				array(
+				[
 					'sport_id' => $sport_id,
 					'team_id' => $team_id
-				)
+				]
 			) . "\">{$this->network_count}</a></p>";
 		// For registered users, show the amount of their friends who also
 		// belong to this network
@@ -173,9 +173,9 @@ class FanHome extends UnlistedSpecialPage {
 			$this->msg(
 				'sportsteams-network-fan-display',
 				$this_count,
-				$view_fans_title->getFullURL( array(
+				$view_fans_title->getFullURL( [
 					'sport_id' => $sport_id, 'team_id' => $team_id
-				) ),
+				] ),
 				$this->network_count
 			)->text() . '</p>';
 		$output .= $this->getFans();
@@ -245,7 +245,7 @@ class FanHome extends UnlistedSpecialPage {
 				<a href=\"" . htmlspecialchars( $tfr->getFullURL( 'period=weekly' )  ). '">' .
 					$this->msg( 'sportsteams-network-top-fans-week' )->text() .
 				"</a> -
-				<a href=\"{$view_fans_title->getFullURL( array( 'sport_id' => $sport_id, 'team_id' => $team_id ))}\">" .
+				<a href=\"{$view_fans_title->getFullURL( [ 'sport_id' => $sport_id, 'team_id' => $team_id ] )}\">" .
 					$this->msg( 'sportsteams-network-complete-list' )->text() . '</a>
 			</p>';
 		*/
@@ -253,15 +253,15 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= Linker::link(
 			$tfr,
 			$this->msg( 'sportsteams-network-top-fans-week' )->plain(),
-			array(),
-			array( 'period' => 'weekly' )
+			[],
+			[ 'period' => 'weekly' ]
 		);
 		$output .= ' - ';
 		$output .= Linker::link(
 			$view_fans_title,
 			$this->msg( 'sportsteams-network-complete-list' )->plain(),
-			array(),
-			array( 'sport_id' => $sport_id, 'team_id' => $team_id )
+			[],
+			[ 'sport_id' => $sport_id, 'team_id' => $team_id ]
 		);
 		$output .= '</p>';
 		$output .= $this->getTopFans();
@@ -324,9 +324,9 @@ class FanHome extends UnlistedSpecialPage {
 		// stores the userIDs for this network; needs to have some content to
 		// prevent Database::makeList from chocking up in the DB call a few lines
 		// below...
-		$userIDs = array( 0 );
-		$fanLocations = array(); // stores the locations on the map
-		$fanStates = array(); // stores the states along with the fans from that state
+		$userIDs = [ 0 ];
+		$fanLocations = []; // stores the locations on the map
+		$fanStates = []; // stores the states along with the fans from that state
 
 		$markerCode = '';
 
@@ -337,7 +337,7 @@ class FanHome extends UnlistedSpecialPage {
 		// go through all the fans for this network
 		// grab their userIDs and save HTML for their mini-profiles
 		foreach ( $fans as $fan ) {
-			$fanInfo = array();
+			$fanInfo = [];
 
 			$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 			$avatar = new wAvatar( $fan['user_id'], 'l' );
@@ -357,14 +357,14 @@ class FanHome extends UnlistedSpecialPage {
 		$dbr = wfGetDB( DB_MASTER );
 		$res = $dbr->select(
 			'user_profile',
-			array(
+			[
 				'up_user_id', 'up_location_country', 'up_location_city',
 				'up_location_state'
-			),
-			array(
+			],
+			[
 				'up_user_id' => array_keys( $userIDs ),
 				'up_location_country IS NOT NULL'
-			),
+			],
 			__METHOD__
 		);
 
@@ -372,7 +372,7 @@ class FanHome extends UnlistedSpecialPage {
 			$topLoc = '';
 			$loc = '';
 
-			$userInfo = array();
+			$userInfo = [];
 			$userInfo['user_id'] = $row->up_user_id;
 			$userInfo['user_name'] = $userIDs[$row->up_user_id]['user_name'];
 
@@ -406,7 +406,7 @@ class FanHome extends UnlistedSpecialPage {
 
 			// build a hash table using higher locations as keys and arrays of fans as objects
 			if ( !array_key_exists( $topLoc, $fanStates ) ) {
-				$fanStates[$topLoc] = array();
+				$fanStates[$topLoc] = [];
 				$fanStates[$topLoc][] = $userInfo;
 			} else {
 				$fanStates[$topLoc][] = $userInfo;
@@ -424,7 +424,7 @@ class FanHome extends UnlistedSpecialPage {
 											function( point ) {
 												var nPoint = new GPoint( point.x + ( Math.random() * .12 ), point.y + ( Math.random() * .12 ) );
 												var gMark = FanHome.createMarker( nPoint, \"" .
-													str_replace( array( "\n", "\t" ), '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
+													str_replace( [ "\n", "\t" ], '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
 													'<br />' . $loc . "</p>\", '" .
 													$userIDs[$row->up_user_id]['URL'] . "', map
 												);
@@ -443,7 +443,7 @@ class FanHome extends UnlistedSpecialPage {
 			}
 
 			$markerCode .= "var gMark = FanHome.createMarker(point, \"" .
-				str_replace( array( "\n", "\t" ), '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
+				str_replace( [ "\n", "\t" ], '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
 				'<br />' . $loc . "</p>\", '" .
 				$userIDs[$row->up_user_id]['URL'] . "', map);
 							mgr.addMarker( gMark, 6 );
@@ -536,12 +536,12 @@ function loadMap() {
 			$dbr = wfGetDB( DB_REPLICA );
 			// Code sporked from Rob Church's NewestPages extension
 			$res = $dbr->select(
-				array( 'page', 'categorylinks' ),
-				array(
+				[ 'page', 'categorylinks' ],
+				[
 					'page_namespace', 'page_id', 'page_title',
 					'page_is_redirect'
-				),
-				array(
+				],
+				[
 					'cl_from = page_id',
 					'page_namespace' => ( defined( 'NS_BLOG' ) ? NS_BLOG : 500 ),
 					'page_is_redirect' => 0,
@@ -550,17 +550,17 @@ function loadMap() {
 						$this->network,
 						$dbr->anyString()
 					)
-				),
+				],
 				__METHOD__,
-				array( 'ORDER BY' => 'page_id DESC', 'LIMIT' => 6 )
+				[ 'ORDER BY' => 'page_id DESC', 'LIMIT' => 6 ]
 			);
 
-			$articles = array();
+			$articles = [];
 			foreach ( $res as $row ) {
-				$articles[] = array(
+				$articles[] = [
 					'title' => $row->page_title,
 					'id' => $row->page_id
-				);
+				];
 			}
 
 			// Cache in memcached for 15 minutes
@@ -623,7 +623,7 @@ function loadMap() {
 			$voteCount = (int)$dbr->selectField(
 				'Vote',
 				'COUNT(*) AS count',
-				array( 'vote_page_id' => intval( $id ) ),
+				[ 'vote_page_id' => intval( $id ) ],
 				__METHOD__
 			);
 			// Store in memcached for 15 minutes

@@ -35,15 +35,15 @@ class ApiSportsTeams extends ApiBase {
 
 		$res = $dbr->select(
 			'sport_team',
-			array( 'team_id', 'team_name' ),
-			array( 'team_sport_id' => intval( $sportId ) ),
+			[ 'team_id', 'team_name' ],
+			[ 'team_sport_id' => intval( $sportId ) ],
 			__METHOD__,
-			array( 'ORDER BY' => 'team_name' )
+			[ 'ORDER BY' => 'team_name' ]
 		);
 
 		$x = 0;
-		$output = array();
-		$output['options'] = array();
+		$output = [];
+		$output['options'] = [];
 
 		foreach ( $res as $row ) {
 			/*
@@ -52,16 +52,16 @@ class ApiSportsTeams extends ApiBase {
 			}
 			*/
 
-			$output['options'][] = array(
+			$output['options'][] = [
 				'id' => $row->team_id,
 				'name' => $row->team_name
-			);
+			];
 			$x++;
 		}
 
 		// Top level
 		$this->getResult()->addValue( null, $this->getModuleName(),
-			array( 'result' => $output )
+			[ 'result' => $output ]
 		);
 
 		return true;
@@ -69,22 +69,22 @@ class ApiSportsTeams extends ApiBase {
 
 	/**
 	 * @deprecated since MediaWiki core 1.25
-	 * @return String: human-readable module description
+	 * @return string Human-readable module description
 	 */
 	public function getDescription() {
 		return 'API for fetching the teams for a given sport from the database';
 	}
 
 	/**
-	 * @return Array
+	 * @return array
 	 */
 	public function getAllowedParams() {
-		return array(
-			'sportId' => array(
+		return [
+			'sportId' => [
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
-			)
-		);
+			]
+		];
 	}
 
 	/**
@@ -93,25 +93,25 @@ class ApiSportsTeams extends ApiBase {
 	 * @deprecated since MediaWiki core 1.25
 	 */
 	public function getParamDescription() {
-		return array_merge( parent::getParamDescription(), array(
+		return array_merge( parent::getParamDescription(), [
 			'sportId' => 'Unique identifier (number) of the sport in question'
-		) );
+		] );
 	}
 
 	/**
-	 * Get Examples
+	 * Get examples
 	 *
 	 * @deprecated since MediaWiki core 1.25
 	 */
 	public function getExamples() {
-		return array(
+		return [
 			'api.php?action=sportsteams&sportId=3' => 'Get the names and teams under sport #3'
-		);
+		];
 	}
 
 	public function getExamplesMessages() {
-		return array(
+		return [
 			'action=sportsteams&sportId=3' => 'apihelp-sportsteams-example-1'
-		);
+		];
 	}
 }

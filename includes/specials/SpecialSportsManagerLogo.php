@@ -37,7 +37,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	}
 
 	function initLogo() {
-		$this->fileExtensions = array( 'gif', 'jpg', 'jpeg', 'png' );
+		$this->fileExtensions = [ 'gif', 'jpg', 'jpeg', 'png' ];
 
 		$request = $this->getRequest();
 		if ( !$request->wasPosted() ) {
@@ -438,11 +438,11 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		$key = mt_rand( 0, 0x7fffffff );
-		$_SESSION['wsUploadData'][$key] = array(
+		$_SESSION['wsUploadData'][$key] = [
 			'mUploadTempName' => $stash,
 			'mUploadSize'     => $this->mUploadSize,
 			'mOname'          => $this->mOname
-		);
+		];
 
 		return $key;
 	}

@@ -80,11 +80,11 @@ class SportsTeamsUserProfile {
 				$homepageLink = Linker::link(
 					$homepage_title,
 					$display_name,
-					array(),
-					array(
+					[],
+					[
 						'sport_id' => $fav['sport_id'],
 						'team_id' => $fav['team_id']
-					)
+					]
 				);
 				$output .= "<div class=\"network\">
 					{$logo}
@@ -126,7 +126,7 @@ class SportsTeamsUserProfile {
 		$user_id = $user_profile->user_id;
 		$s = new UserStatus();
 		$user_update = $s->getStatusMessages( $user_id, 0, 0, 1, 1 );
-		$user_update = ( !empty( $user_update[0] ) ? $user_update[0] : array() );
+		$user_update = ( !empty( $user_update[0] ) ? $user_update[0] : [] );
 
 		// Safe URLs
 		$more_thoughts_link = SpecialPage::getTitleFor( 'UserStatus' );
@@ -166,8 +166,8 @@ class SportsTeamsUserProfile {
 			$view_thought_link = Linker::link(
 				$thought_link,
 				$vote_count,
-				array(),
-				array( 'id' => $user_update['id'] )
+				[],
+				[ 'id' => $user_update['id'] ]
 			);
 
 			// Allow registered users who are not owners of this status update to

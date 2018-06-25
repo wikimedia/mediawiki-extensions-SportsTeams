@@ -77,10 +77,10 @@ class SportsTeamsManager extends SpecialPage {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->insert(
 					'sport_team',
-					array(
+					[
 						'team_sport_id' => $request->getInt( 's_id' ),
 						'team_name' => $request->getVal( 'team_name' )
-					),
+					],
 					__METHOD__
 				);
 
@@ -95,11 +95,11 @@ class SportsTeamsManager extends SpecialPage {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->update(
 					'sport_team',
-				/* SET */array(
+					[
 						'team_sport_id' => $request->getInt( 's_id' ),
 						'team_name' => $request->getVal( 'team_name' )
-					),
-				/* WHERE */array( 'team_id' => $id ),
+					],
+					[ 'team_id' => $id ],
 					__METHOD__
 				);
 
@@ -137,7 +137,7 @@ class SportsTeamsManager extends SpecialPage {
 						htmlspecialchars( $this->getPageTitle()->getFullURL() ) . '">' .
 						$this->msg( 'sportsteams-team-manager-view-sports' )->text() .
 						'</a></b> | <b><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
-							array( 'sport_id' => $sport_id, 'method' => 'edit' )
+							[ 'sport_id' => $sport_id, 'method' => 'edit' ]
 						) ) . '">' .
 						$this->msg( 'sportsteams-team-manager-add-new-team' )->text() . '</a></b></div><p>'
 					);
@@ -227,10 +227,10 @@ class SportsTeamsManager extends SpecialPage {
 		if ( $sports ) {
 			foreach ( $sports as $sport ) {
 				$editLink = $this->msg( 'word-separator' )->plain() . '<a href="' .
-					htmlspecialchars( $this->getPageTitle()->getFullURL( array(
+					htmlspecialchars( $this->getPageTitle()->getFullURL( [
 						'method' => 'editsport',
 						'sport_id' => $sport['id']
-					) ) ) .
+					] ) ) .
 					'" class="red-edit-link">' .
 					$this->msg( 'sportsteams-team-manager-edit-this-sport' )->plain() .
 					'</a>';
@@ -262,12 +262,12 @@ class SportsTeamsManager extends SpecialPage {
 				Linker::link(
 					$this->getPageTitle(),
 					$team['name'],
-					array(),
-					array(
+					[],
+					[
 						'method' => 'edit',
 						'sport_id' => $sport_id,
 						'id' => $team['id']
-					)
+					]
 				) . "</div>\n";
 		}
 
@@ -286,7 +286,7 @@ class SportsTeamsManager extends SpecialPage {
 		if ( $id ) {
 			$team = SportsTeams::getTeam( $id );
 		} else {
-			$team = array( 'id' => '', 'name' => '' ); // prevent notices
+			$team = [ 'id' => '', 'name' => '' ]; // prevent notices
 		}
 
 		$form .= '<form action="" method="post" enctype="multipart/form-data" name="sportsteamsmanager">';

@@ -6,28 +6,28 @@
  * @ingroup Extensions
  */
 
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /** English */
-$specialPageAliases['en'] = array(
-	'AddFan' => array( 'AddFan' ),
-	'FanHome' => array( 'FanHome' ),
-	'RemoveFan' => array( 'RemoveFan' ),
-	'SimilarFans' => array( 'SimilarFans' ),
-	'SportsManagerLogo' => array( 'SportsManagerLogo' ),
-	'SportsTeamsManager' => array( 'SportsTeamsManager' ),
-	'SportsTeamsManagerLogo' => array( 'SportsTeamsManagerLogo' ),
-	'TopNetworks' => array( 'TopNetworks' ),
-	'UpdateFavoriteTeams' => array( 'UpdateFavoriteTeams' ),
-	'ViewFans' => array( 'ViewFans' ),
-);
+$specialPageAliases['en'] = [
+	'AddFan' => [ 'AddFan' ],
+	'FanHome' => [ 'FanHome' ],
+	'RemoveFan' => [ 'RemoveFan' ],
+	'SimilarFans' => [ 'SimilarFans' ],
+	'SportsManagerLogo' => [ 'SportsManagerLogo' ],
+	'SportsTeamsManager' => [ 'SportsTeamsManager' ],
+	'SportsTeamsManagerLogo' => [ 'SportsTeamsManagerLogo' ],
+	'TopNetworks' => [ 'TopNetworks' ],
+	'UpdateFavoriteTeams' => [ 'UpdateFavoriteTeams' ],
+	'ViewFans' => [ 'ViewFans' ],
+];
 
 /** Finnish (Suomi) */
-$specialPageAliases['fi'] = array(
-	'AddFan' => array( 'Lisää fani' ),
-	'FanHome' => array( 'Fanin kotisivu' ),
-	'RemoveFan' => array( 'Poista fani' ),
-	'SimilarFans' => array( 'Samankaltaiset fanit', 'Samankaltaiset käyttäjät' ),
-	'TopNetworks' => array( 'Huippuverkostot' ),
-	'ViewFans' => array( 'Tarkastele faneja' ),
-);
+$specialPageAliases['fi'] = [
+	'AddFan' => [ 'Lisää fani' ],
+	'FanHome' => [ 'Fanin kotisivu' ],
+	'RemoveFan' => [ 'Poista fani' ],
+	'SimilarFans' => [ 'Samankaltaiset fanit', 'Samankaltaiset käyttäjät' ],
+	'TopNetworks' => [ 'Huippuverkostot' ],
+	'ViewFans' => [ 'Tarkastele faneja' ],
+];

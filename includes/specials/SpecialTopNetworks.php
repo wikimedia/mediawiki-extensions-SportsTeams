@@ -49,7 +49,7 @@ class TopNetworks extends SpecialPage {
 		}
 
 		// Sport
-		$where = array();
+		$where = [];
 		if ( $sport ) {
 			$where['team_sport_id'] = $sport;
 		}
@@ -69,53 +69,53 @@ class TopNetworks extends SpecialPage {
 
 		// Teams
 		$res = $dbr->select(
-			array( 'sport_favorite', 'sport_team' ),
-			array(
+			[ 'sport_favorite', 'sport_team' ],
+			[
 				'COUNT(sf_team_id) AS network_user_count',
 				'sf_team_id', 'team_name', 'team_sport_id'
-			),
+			],
 			$where,
 			__METHOD__,
-			array(
+			[
 				'GROUP BY' => 'team_id',
 				'ORDER BY' => "network_user_count {$order}",
 				'LIMIT' => 50
-			),
-			array(
-				'sport_team' => array( 'INNER JOIN', 'sf_team_id = team_id' )
-			)
+			],
+			[
+				'sport_team' => [ 'INNER JOIN', 'sf_team_id = team_id' ]
+			]
 		);
 
 		// Sports
 		$res_sport = $dbr->select(
-			array( 'sport_favorite', 'sport' ),
-			array(
+			[ 'sport_favorite', 'sport' ],
+			[
 				'COUNT(sf_sport_id) AS sport_count', 'sf_sport_id',
 				'sport_name'
-			),
-			array(),
+			],
+			[],
 			__METHOD__,
-			array(
+			[
 				'GROUP BY' => 'sf_sport_id',
 				'ORDER BY' => "sport_count {$order}",
 				'LIMIT' => 50
-			),
-			array( 'sport' => array( 'INNER JOIN', 'sf_sport_id = sport_id' ) )
+			],
+			[ 'sport' => [ 'INNER JOIN', 'sf_sport_id = sport_id' ] ]
 		);
 
 		// Navigation
 		$res_sport_nav = $dbr->select(
-			array( 'sport', 'sport_team' ),
-			array( 'sport_id', 'sport_name', 'team_sport_id' ),
-			array(),
+			[ 'sport', 'sport_team' ],
+			[ 'sport_id', 'sport_name', 'team_sport_id' ],
+			[],
 			__METHOD__,
-			array(
+			[
 				'GROUP BY' => 'sport_name',
 				'ORDER BY' => 'sport_id'
-			),
-			array(
-				'sport_team' => array( 'INNER JOIN', 'sport_id = team_sport_id' )
-			)
+			],
+			[
+				'sport_team' => [ 'INNER JOIN', 'sport_id = team_sport_id' ]
+			]
 		);
 
 		// Navigation
@@ -128,7 +128,7 @@ class TopNetworks extends SpecialPage {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
-				array( 'direction' => 'best' )
+				[ 'direction' => 'best' ]
 			) ) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
 		}
 
@@ -136,7 +136,7 @@ class TopNetworks extends SpecialPage {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
-				array( 'type' => 'sport', 'direction' => 'best' )
+				[ 'type' => 'sport', 'direction' => 'best' ]
 			) ) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</a></p>';
 		}
 
@@ -147,7 +147,7 @@ class TopNetworks extends SpecialPage {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
-				array( 'direction' => 'worst' )
+				[ 'direction' => 'worst' ]
 			) ) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
 		}
 
@@ -155,7 +155,7 @@ class TopNetworks extends SpecialPage {
 			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' ) . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
-				array( 'type' => 'sport', 'direction' => 'worst' )
+				[ 'type' => 'sport', 'direction' => 'worst' ]
 			) ) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . "</a></p>";
 		}
 
@@ -178,7 +178,7 @@ class TopNetworks extends SpecialPage {
 				);
 			} else {
 				$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
-					array( 'direction' => $direction, 'sport' => $sport_id )
+					[ 'direction' => $direction, 'sport' => $sport_id ]
 				) ) . '">' . $sport_name . '</a></p>';
 			}
 		}
@@ -208,7 +208,7 @@ class TopNetworks extends SpecialPage {
 					<span class=\"network-number\">{$x}.</span>
 					<span class=\"network-team\">
 						{$sport_image}
-						<a href=\"" . htmlspecialchars( $fanHome->getFullURL( array( 'sport_id' => $sport_id ) ) ) . "\">{$sport}</a>
+						<a href=\"" . htmlspecialchars( $fanHome->getFullURL( [ 'sport_id' => $sport_id ] ) ) . "\">{$sport}</a>
 					</span>
 					<span class=\"network-count\">" .
 						$this->msg(
@@ -238,10 +238,10 @@ class TopNetworks extends SpecialPage {
 					<span class=\"network-number\">{$x}.</span>
 					<span class=\"network-team\">
 						{$team_image}
-						<a href=\"" . htmlspecialchars( $fanHome->getFullURL( array(
+						<a href=\"" . htmlspecialchars( $fanHome->getFullURL( [
 							'sport_id' => $sport_id,
 							'team_id' => $team_id
-						) ) ) . "\">{$team}</a>
+						] ) ) . "\">{$team}</a>
 					</span>
 					<span class=\"network-count\">" .
 						$this->msg(

@@ -87,21 +87,21 @@ class SimilarFans extends SpecialPage {
 					<div class="relationship-actions">';
 				$rr = SpecialPage::getTitleFor( 'RemoveRelationship' );
 				$ar = SpecialPage::getTitleFor( 'AddRelationship' );
-				$pipeList = array();
+				$pipeList = [];
 				if ( in_array( $fan['user_id'], $friends ) ) {
 					$pipeList[] = Linker::link(
 						$rr,
 						$this->msg( 'sportsteams-remove-as-friend' )->text(),
-						array(),
-						array( 'user' => $loopUser->getText() )
+						[],
+						[ 'user' => $loopUser->getText() ]
 					);
 				}
 				if ( in_array( $fan['user_id'], $foes ) ) {
 					$pipeList[] = Linker::link(
 						$rr,
 						$this->msg( 'sportsteams-remove-as-foe' )->text(),
-						array(),
-						array( 'user' => $loopUser->getText() )
+						[],
+						[ 'user' => $loopUser->getText() ]
 					);
 				}
 				if ( $fan['user_name'] != $user->getName() ) {
@@ -109,21 +109,21 @@ class SimilarFans extends SpecialPage {
 						$pipeList[] = Linker::link(
 							$ar,
 							$this->msg( 'sportsteams-add-as-friend' )->text(),
-							array(),
-							array( 'user' => $fan['user_name'], 'rel_type' => '1' )
+							[],
+							[ 'user' => $fan['user_name'], 'rel_type' => '1' ]
 						);
 						$pipeList[] = Linker::link(
 							$ar,
 							$this->msg( 'sportsteams-add-as-foe' )->text(),
-							array(),
-							array( 'user' => $fan['user_name'], 'rel_type' => '2' )
+							[],
+							[ 'user' => $fan['user_name'], 'rel_type' => '2' ]
 						);
 					}
 					$pipeList[] = Linker::link(
 						SpecialPage::getTitleFor( 'GiveGift' ),
 						$this->msg( 'sportsteams-give-a-gift' )->text(),
-						array(),
-						array( 'user' => $fan['user_name'] )
+						[],
+						[ 'user' => $fan['user_name'] ]
 					);
 					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
 					$output .= $lang->pipeList( $pipeList );
@@ -155,8 +155,8 @@ class SimilarFans extends SpecialPage {
 				$output .= Linker::link(
 					$this->getPageTitle(),
 					$this->msg( 'sportsteams-prev' )->plain(),
-					array(),
-					array( 'page' => ( $page - 1 ) )
+					[],
+					[ 'page' => ( $page - 1 ) ]
 				) . $this->msg( 'word-separator' )->plain();
 			}
 
@@ -174,8 +174,8 @@ class SimilarFans extends SpecialPage {
 					$output .= Linker::link(
 						$this->getPageTitle(),
 						$i,
-						array(),
-						array( 'page' => $i )
+						[],
+						[ 'page' => $i ]
 					) . $this->msg( 'word-separator' )->plain();
 				}
 			}
@@ -184,8 +184,8 @@ class SimilarFans extends SpecialPage {
 				$output .= $this->msg( 'word-separator' )->plain() . Linker::link(
 					$this->getPageTitle(),
 					$this->msg( 'sportsteams-next' )->plain(),
-					array(),
-					array( 'page' => ( $page + 1 ) )
+					[],
+					[ 'page' => ( $page + 1 ) ]
 				);
 			}
 

@@ -61,9 +61,9 @@ class ViewFans extends UnlistedSpecialPage {
 		// Add CSS
 		$out->addModules( 'ext.sportsTeams' );
 
-		$relationships = array();
-		$friends = array();
-		$foes = array();
+		$relationships = [];
+		$friends = [];
+		$foes = [];
 		if ( $user->isLoggedIn() ) {
 			$friends = $this->getRelationships( 1 );
 			$foes = $this->getRelationships( 2 );
@@ -111,11 +111,11 @@ class ViewFans extends UnlistedSpecialPage {
 		$output .= Linker::link(
 			$homepage_title,
 			$this->msg( 'sportsteams-network-back-to-network', $this->network )->text(),
-			array(),
-			array(
+			[],
+			[
 				'sport_id' => $sport_id,
 				'team_id' => $team_id
-			)
+			]
 		);
 		$output .= '</div>';
 
@@ -151,27 +151,27 @@ class ViewFans extends UnlistedSpecialPage {
 					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-foe' )->text() . '</span> ';
 				}
 				if ( $fan['user_name'] != $user->getName() ) {
-					$pipeList = array();
+					$pipeList = [];
 					if ( !in_array( $fan['user_id'], $relationships ) ) {
 						$ar = SpecialPage::getTitleFor( 'AddRelationship' );
 						$pipeList[] = Linker::link(
 							$ar,
 							$this->msg( 'sportsteams-add-as-friend' )->text(),
-							array(),
-							array( 'user' => $fan['user_name'], 'rel_type' => '1' )
+							[],
+							[ 'user' => $fan['user_name'], 'rel_type' => '1' ]
 						);
 						$pipeList[] = Linker::link(
 							$ar,
 							$this->msg( 'sportsteams-add-as-foe' )->text(),
-							array(),
-							array( 'user' => $fan['user_name'], 'rel_type' => '2' )
+							[],
+							[ 'user' => $fan['user_name'], 'rel_type' => '2' ]
 						);
 					}
 					$pipeList[] = Linker::link(
 						SpecialPage::getTitleFor( 'GiveGift' ),
 						$this->msg( 'sportsteams-give-a-gift' )->text(),
-						array(),
-						array( 'user' => $fan['user_name'] )
+						[],
+						[ 'user' => $fan['user_name'] ]
 					);
 					$output .= $this->getLanguage()->pipeList( $pipeList );
 					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
@@ -201,12 +201,12 @@ class ViewFans extends UnlistedSpecialPage {
 				$output .= Linker::link(
 					$this->getPageTitle(),
 					$this->msg( 'sportsteams-prev' )->plain(),
-					array(),
-					array(
+					[],
+					[
 						'page' => ( $page - 1 ),
 						'sport_id' => $sport_id,
 						'team_id' => $team_id
-					)
+					]
 				) . $this->msg( 'word-separator' )->plain();
 			}
 
@@ -224,12 +224,12 @@ class ViewFans extends UnlistedSpecialPage {
 				    $output .= Linker::link(
 						$this->getPageTitle(),
 						$i,
-						array(),
-						array(
+						[],
+						[
 							'page' => ( $i ),
 							'sport_id' => $sport_id,
 							'team_id' => $team_id
-						)
+						]
 					) . $this->msg( 'word-separator' )->plain();
 				}
 			}
@@ -238,12 +238,12 @@ class ViewFans extends UnlistedSpecialPage {
 				$output .= $this->msg( 'word-separator' )->plain() . Linker::link(
 					$this->getPageTitle(),
 					$this->msg( 'sportsteams-next' )->plain(),
-					array(),
-					array(
+					[],
+					[
 						'page' => ( $page + 1 ),
 						'sport_id' => $sport_id,
 						'team_id' => $team_id
-					)
+					]
 				);
 			}
 

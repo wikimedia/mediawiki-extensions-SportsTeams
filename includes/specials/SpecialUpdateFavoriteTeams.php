@@ -24,19 +24,19 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		$res = $dbr->select(
 			'sport_favorite',
-			array( 'sf_sport_id', 'sf_team_id' ),
-			array( 'sf_user_id' => $this->getUser()->getId() ),
+			[ 'sf_sport_id', 'sf_team_id' ],
+			[ 'sf_user_id' => $this->getUser()->getId() ],
 			__METHOD__,
-			array( 'ORDER BY' => 'sf_order' )
+			[ 'ORDER BY' => 'sf_order' ]
 		);
 
-		$favorites = array();
+		$favorites = [];
 
 		foreach ( $res as $row ) {
-			$favorites[] = array(
+			$favorites[] = [
 				'sport_id' => $row->sf_sport_id,
 				'team_id' => $row->sf_team_id
-			);
+			];
 		}
 
 		return $favorites;
@@ -88,7 +88,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// If loading previously saved teams, we need to build the options for
 		// the associated sport to show the team they already have selected
 		$team_opts = '';
-		$teams = array();
+		$teams = [];
 
 		if ( $selected_team_id > 0 ) {
 			$teams = SportsTeams::getTeams( $selected_sport_id );
@@ -151,10 +151,10 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$out->setPageTitle( $this->msg( 'user-profile-sports-title' )->plain() );
 
 		// Add CSS (from SocialProfile), DoubleCombo.js and UpdateFavoriteTeams.js files to the page output
-		$out->addModules( array(
+		$out->addModules( [
 			'ext.socialprofile.userprofile.css',
 			'ext.sportsTeams.updateFavoriteTeams'
-		) );
+		] );
 
 		// This is annoying so I took it out for now.
 		//$output = '<h1>' . $this->msg( 'user-profile-sports-title' )->text() . '</h1>';
@@ -216,7 +216,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				// Reset old favorites
 				$res = $dbw->delete(
 					'sport_favorite',
-					array( 'sf_user_id' => $user->getId() ),
+					[ 'sf_user_id' => $user->getId() ],
 					__METHOD__
 				);
 

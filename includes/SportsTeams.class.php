@@ -24,10 +24,10 @@ class SportsTeams {
 
 		$dbw->insert(
 			'sport',
-			array(
+			[
 				'sport_name' => $sport_name,
 				'sport_order' => $sport_order
-			),
+			],
 			__METHOD__
 		);
 
@@ -46,11 +46,11 @@ class SportsTeams {
 
 		$dbw->update(
 			'sport',
-			array(
+			[
 				'sport_name' => $sport_name,
 				'sport_order' => $sport_order
-			),
-			array( 'sport_id' => intval( $sport_id ) ),
+			],
+			[ 'sport_id' => intval( $sport_id ) ],
 			__METHOD__
 		);
 	}
@@ -65,18 +65,18 @@ class SportsTeams {
 
 		$res = $dbr->select(
 			'sport',
-			array( 'sport_id', 'sport_name' ),
-			array(),
+			[ 'sport_id', 'sport_name' ],
+			[],
 			__METHOD__,
-			array( 'ORDER BY' => 'sport_order' )
+			[ 'ORDER BY' => 'sport_order' ]
 		);
 
-		$sports = array();
+		$sports = [];
 		foreach ( $res as $row ) {
-			$sports[] = array(
+			$sports[] = [
 				'id' => $row->sport_id,
 				'name' => $row->sport_name
-			);
+			];
 		}
 
 		return $sports;
@@ -93,19 +93,19 @@ class SportsTeams {
 
 		$res = $dbr->select(
 			'sport_team',
-			array( 'team_id', 'team_name', 'team_sport_id' ),
-			array( 'team_sport_id' => intval( $sportId ) ),
+			[ 'team_id', 'team_name', 'team_sport_id' ],
+			[ 'team_sport_id' => intval( $sportId ) ],
 			__METHOD__,
-			array( 'ORDER BY' => 'team_name' )
+			[ 'ORDER BY' => 'team_name' ]
 		);
 
-		$teams = array();
+		$teams = [];
 
 		foreach ( $res as $row ) {
-			$teams[] = array(
+			$teams[] = [
 				'id' => $row->team_id,
 				'name' => $row->team_name
-			);
+			];
 		}
 
 		return $teams;
@@ -116,20 +116,20 @@ class SportsTeams {
 
 		$res = $dbr->select(
 			'sport_team',
-			array( 'team_id', 'team_name', 'team_sport_id' ),
-			array( 'team_id' => intval( $teamId ) ),
+			[ 'team_id', 'team_name', 'team_sport_id' ],
+			[ 'team_id' => intval( $teamId ) ],
 			__METHOD__,
-			array( 'LIMIT' => 1 )
+			[ 'LIMIT' => 1 ]
 		);
 
-		$teams = array();
+		$teams = [];
 
 		foreach ( $res as $row ) {
-			$teams[] = array(
+			$teams[] = [
 				'id' => $row->team_id,
 				'name' => $row->team_name,
 				'sport_id' => $row->team_sport_id
-			);
+			];
 		}
 
 		return $teams[0];
@@ -140,19 +140,19 @@ class SportsTeams {
 
 		$res = $dbr->select(
 			'sport',
-			array( 'sport_id', 'sport_name' ),
-			array( 'sport_id' => intval( $sportId ) ),
+			[ 'sport_id', 'sport_name' ],
+			[ 'sport_id' => intval( $sportId ) ],
 			__METHOD__,
-			array( 'LIMIT' => 1 )
+			[ 'LIMIT' => 1 ]
 		);
 
-		$sports = array();
+		$sports = [];
 
 		foreach ( $res as $row ) {
-			$sports[] = array(
+			$sports[] = [
 				'id' => $row->sport_id,
 				'name' => $row->sport_name
-			);
+			];
 		}
 
 		return $sports[0];
@@ -177,14 +177,14 @@ class SportsTeams {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->insert(
 					'sport_favorite',
-					array(
+					[
 						'sf_sport_id' => $sport_id,
 						'sf_team_id' => $team_id,
 						'sf_user_id' => $user_id,
 						'sf_user_name' => $user_name,
 						'sf_order' => ( $this->getUserFavoriteTotal( $user_id ) + 1 ),
 						'sf_date' => date( 'Y-m-d H:i:s' )
-					),
+					],
 					__METHOD__
 				);
 				$this->clearUserCache( $user_id );
@@ -213,30 +213,30 @@ class SportsTeams {
 			wfDebugLog( 'SportsTeams', "Got favorite teams for {$user_id} from DB" );
 
 			$res = $dbr->select(
-				array( 'sport_favorite', 'sport', 'sport_team' ),
-				array(
+				[ 'sport_favorite', 'sport', 'sport_team' ],
+				[
 					'sport_id', 'sport_name', 'team_id', 'team_name',
 					'sf_user_id', 'sf_user_name', 'sf_order'
-				),
-				array( 'sf_user_id' => intval( $user_id ) ),
+				],
+				[ 'sf_user_id' => intval( $user_id ) ],
 				__METHOD__,
-				array( 'ORDER BY' => 'sf_order' ),
-				array(
-					'sport' => array( 'INNER JOIN', 'sf_sport_id = sport_id' ),
-					'sport_team' => array( 'LEFT JOIN', 'sf_team_id = team_id' )
-				)
+				[ 'ORDER BY' => 'sf_order' ],
+				[
+					'sport' => [ 'INNER JOIN', 'sf_sport_id = sport_id' ],
+					'sport_team' => [ 'LEFT JOIN', 'sf_team_id = team_id' ]
+				]
 			);
 
-			$favs = array();
+			$favs = [];
 
 			foreach ( $res as $row ) {
-				$favs[] = array(
+				$favs[] = [
 					'sport_id' => $row->sport_id,
 					'sport_name' => $row->sport_name,
 					'team_id' => ( ( !$row->team_id ) ? 0 : $row->team_id ),
 					'team_name' => $row->team_name,
 					'order' => $row->sf_order
-				);
+				];
 			}
 
 			$wgMemc->set( $key, $favs );
@@ -332,7 +332,7 @@ class SportsTeams {
 		//	$favs = $data;
 		//} else {
 			$dbr = wfGetDB( DB_REPLICA );
-			$where = $options = array();
+			$where = $options = [];
 
 			if ( $limit > 0 ) {
 				$limitvalue = 0;
@@ -351,27 +351,27 @@ class SportsTeams {
 			}
 
 			$res = $dbr->select(
-				array( 'sport_favorite', 'sport', 'sport_team' ),
-				array(
+				[ 'sport_favorite', 'sport', 'sport_team' ],
+				[
 					'sport_id', 'sport_name', 'team_id', 'team_name',
 					'sf_user_id', 'sf_user_name', 'sf_order'
-				),
+				],
 				$where,
 				__METHOD__,
 				$options,
-				array(
-					'sport' => array( 'INNER JOIN', 'sf_sport_id = sport_id' ),
-					'sport_team' => array( 'LEFT JOIN', 'sf_team_id = team_id' )
-				)
+				[
+					'sport' => [ 'INNER JOIN', 'sf_sport_id = sport_id' ],
+					'sport_team' => [ 'LEFT JOIN', 'sf_team_id = team_id' ]
+				]
 			);
 
-			$fans = array();
+			$fans = [];
 
 			foreach ( $res as $row ) {
-				$fans[] = array(
+				$fans[] = [
 					'user_id' => $row->sf_user_id,
 					'user_name' => $row->sf_user_name
-				);
+				];
 			}
 			//$wgMemc->set( $key, $favs );
 		//}
@@ -393,11 +393,11 @@ class SportsTeams {
 		$teamRes = $dbr->select(
 			'sport_favorite',
 			'sf_team_id',
-			array( 'sf_user_id' => $user_id ),
+			[ 'sf_user_id' => $user_id ],
 			__METHOD__
 		);
 
-		$teamIds = array();
+		$teamIds = [];
 		foreach ( $teamRes as $teamRow ) {
 			$teamIds[] = $teamRow->sf_team_id;
 		}
@@ -411,13 +411,13 @@ class SportsTeams {
 			{$limit_sql}";
 
 		$res = $dbr->query( $sql, __METHOD__ );
-		$fans = array();
+		$fans = [];
 
 		foreach ( $res as $row ) {
-			$fans[] = array(
+			$fans[] = [
 				'user_id' => $row->sf_user_id,
 				'user_name' => $row->sf_user_name
-			);
+			];
 		}
 
 		return $fans;
@@ -425,7 +425,7 @@ class SportsTeams {
 
 	static function getUsersByPoints( $sport_id, $team_id, $limit, $page ) {
 		$dbr = wfGetDB( DB_REPLICA );
-		$where = $options = array();
+		$where = $options = [];
 
 		if ( $limit > 0 ) {
 			$limitvalue = 0;
@@ -444,29 +444,29 @@ class SportsTeams {
 		}
 
 		$res = $dbr->select(
-			array( 'sport_favorite', 'sport', 'sport_team', 'user_stats' ),
-			array(
+			[ 'sport_favorite', 'sport', 'sport_team', 'user_stats' ],
+			[
 				'sport_id', 'sport_name', 'team_id', 'team_name',
 				'sf_user_id', 'sf_user_name', 'sf_order', 'stats_total_points'
-			),
+			],
 			$where,
 			__METHOD__,
 			$options,
-			array(
-				'sport' => array( 'INNER JOIN', 'sf_sport_id = sport_id' ),
-				'sport_team' => array( 'LEFT JOIN', 'sf_team_id = team_id' ),
-				'user_stats' => array( 'LEFT JOIN', 'sf_user_id = stats_user_id' )
-			)
+			[
+				'sport' => [ 'INNER JOIN', 'sf_sport_id = sport_id' ],
+				'sport_team' => [ 'LEFT JOIN', 'sf_team_id = team_id' ],
+				'user_stats' => [ 'LEFT JOIN', 'sf_user_id = stats_user_id' ]
+			]
 		);
 
-		$fans = array();
+		$fans = [];
 
 		foreach ( $res as $row ) {
-			$fans[] = array(
+			$fans[] = [
 				'user_id' => $row->sf_user_id,
 				'user_name' => $row->sf_user_name,
 				'points' => $row->stats_total_points
-			);
+			];
 		}
 
 		return $fans;
@@ -474,12 +474,12 @@ class SportsTeams {
 
 	static function getUserCount( $sport_id, $team_id ) {
 		if ( !$team_id ) {
-			$where = array(
+			$where = [
 				'sf_sport_id' => $sport_id,
 				'sf_team_id' => 0
-			);
+			];
 		} else {
-			$where = array( 'sf_team_id' => $team_id );
+			$where = [ 'sf_team_id' => $team_id ];
 		}
 
 		$dbr = wfGetDB( DB_REPLICA );
@@ -498,21 +498,21 @@ class SportsTeams {
 		$res = (int)$dbr->selectField(
 			'sport_favorite',
 			'COUNT(*) AS the_count',
-			array( 'sf_user_id' => intval( $userId ) ),
+			[ 'sf_user_id' => intval( $userId ) ],
 			__METHOD__
 		);
 		return $res;
 	}
 
 	static function getFriendsCountInFavorite( $user_id, $sport_id, $team_id ) {
-		$where = array();
+		$where = [];
 		if ( !$team_id ) {
-			$where = array(
+			$where = [
 				'sf_sport_id' => $sport_id,
 				'sf_team_id' => 0
-			);
+			];
 		} else {
-			$where = array( 'sf_team_id' => $team_id );
+			$where = [ 'sf_team_id' => $team_id ];
 		}
 
 		$dbr = wfGetDB( DB_REPLICA );
@@ -520,11 +520,11 @@ class SportsTeams {
 		$friends = $dbr->select(
 			'user_relationship',
 			'r_user_id_relation',
-			array( 'r_user_id' => $user_id, 'r_type' => 1 ),
+			[ 'r_user_id' => $user_id, 'r_type' => 1 ],
 			__METHOD__
 		);
 
-		$uids = array();
+		$uids = [];
 		foreach ( $friends as $friend ) {
 			$uids[] = $friend->r_user_id_relation;
 		}
@@ -533,7 +533,7 @@ class SportsTeams {
 			$ourWhere = array_merge(
 				$where,
 				// @see http://www.mediawiki.org/wiki/Special:Code/MediaWiki/92016#c19527
-				array( 'sf_user_id' => $uids )
+				[ 'sf_user_id' => $uids ]
 			);
 			$count = (int)$dbr->selectField(
 				'sport_favorite',
@@ -554,11 +554,11 @@ class SportsTeams {
 		$teamIdQuery = $dbr->select(
 			'sport_favorite',
 			'sf_team_id',
-			array( 'sf_user_id' => $user_id ),
+			[ 'sf_user_id' => $user_id ],
 			__METHOD__
 		);
 
-		$teamIds = array();
+		$teamIds = [];
 		foreach ( $teamIdQuery as $teamId ) {
 			$teamIds[] = $teamId->sf_team_id;
 		}
@@ -567,11 +567,11 @@ class SportsTeams {
 			$count = (int)$dbr->selectField(
 				'sport_favorite',
 				'COUNT(*) AS the_count',
-				array(
+				[
 					'sf_team_id' => $teamIds,
 					'sf_team_id <> 0',
 					"sf_user_id <> {$user_id}"
-				),
+				],
 				__METHOD__
 			);
 		} else {
@@ -590,7 +590,7 @@ class SportsTeams {
 	 * @return Boolean: true if the user is a fan, otherwise false
 	 */
 	static function isFan( $user_id, $sport_id, $team_id ) {
-		$where = array( 'sf_user_id' => $user_id );
+		$where = [ 'sf_user_id' => $user_id ];
 		if ( !$team_id ) {
 			$where['sf_sport_id'] = $sport_id;
 			$where['sf_team_id'] = 0;
@@ -632,8 +632,8 @@ class SportsTeams {
 		// Update orders for those less than one being deleted
 		$res = $dbr->update(
 			'sport_favorite',
-			array( 'sf_order = sf_order - 1' ),
-			array( 'sf_user_id' => $user_id, "sf_order > {$order}" ),
+			[ 'sf_order = sf_order - 1' ],
+			[ 'sf_user_id' => $user_id, "sf_order > {$order}" ],
 			__METHOD__
 		);
 
