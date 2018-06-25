@@ -16,7 +16,6 @@ class SportsTeamsHooks {
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin
-	 * @return bool
 	 */
 	public static function addSportsTeamsToSignupPage( &$out, &$skin ) {
 		$context = $out;
@@ -109,8 +108,6 @@ class SportsTeamsHooks {
 				$out->addHTML( $bodyText );
 			}
 		}
-
-		return true;
 	}
 
 	/**
@@ -119,7 +116,6 @@ class SportsTeamsHooks {
 	 * about a team, post it.
 	 *
 	 * @param User $user User object representing the newly created account-to-be
-	 * @return bool
 	 */
 	public static function addFavoriteTeam( $user ) {
 		if ( isset( $_COOKIE['sports_sid'] ) ) {
@@ -141,8 +137,6 @@ class SportsTeamsHooks {
 				}
 			}
 		}
-
-		return true;
 	}
 
 	/**
@@ -150,7 +144,6 @@ class SportsTeamsHooks {
 	 * /maintenance/update.php, the MediaWiki core updater script.
 	 *
 	 * @param DatabaseUpdater $updater
-	 * @return bool
 	 */
 	public static function onLoadExtensionSchemaUpdates( $updater ) {
 		$dbExt = '';
@@ -164,18 +157,14 @@ class SportsTeamsHooks {
 		$updater->addExtensionTable( 'sport', __DIR__ . "/../sql/sportsteams$dbExt.sql" );
 		$updater->addExtensionTable( 'sport_favorite', __DIR__ . "/../sql/sportsteams$dbExt.sql" );
 		$updater->addExtensionTable( 'sport_team', __DIR__ . "/../sql/sportsteams$dbExt.sql" );
-
-		return true;
 	}
 
 	/**
 	 * For integration with the Renameuser extension.
 	 *
 	 * @param RenameuserSQL $renameUserSQL
-	 * @return bool
 	 */
 	public static function onRenameUserSQL( $renameUserSQL ) {
 		$renameUserSQL->tables['sport_favorite'] = [ 'sf_user_name', 'sf_user_id' ];
-		return true;
 	}
 }

@@ -116,8 +116,6 @@ class SportsTeamsUserProfile {
 		}
 
 		$wgOut->addHTML( $output );
-
-		return true;
 	}
 
 	public static function showLatestThought( $user_profile ) {
@@ -205,8 +203,6 @@ class SportsTeamsUserProfile {
 		}
 
 		$wgOut->addHTML( $output );
-
-		return true;
 	}
 
 }
