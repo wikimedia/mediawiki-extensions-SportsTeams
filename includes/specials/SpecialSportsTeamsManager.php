@@ -225,18 +225,28 @@ class SportsTeamsManager extends SpecialPage {
 		$sports = SportsTeams::getSports();
 
 		if ( $sports ) {
+			$linkRenderer = $this->getLinkRenderer();
+			$pt = $this->getPageTitle();
 			foreach ( $sports as $sport ) {
-				$editLink = $this->msg( 'word-separator' )->plain() . '<a href="' .
-					htmlspecialchars( $this->getPageTitle()->getFullURL( [
-						'method' => 'editsport',
-						'sport_id' => $sport['id']
-					] ) ) .
-					'" class="red-edit-link">' .
-					$this->msg( 'sportsteams-team-manager-edit-this-sport' )->plain() .
-					'</a>';
-				$output .= '<div class="Item">
-				<a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL( "sport_id={$sport['id']}" ) ) . "\">{$sport['name']}</a>{$editLink}
-			</div>\n";
+				$editLink = $this->msg( 'word-separator' )->plain() .
+					$linkRenderer->makeLink(
+						$pt,
+						$this->msg( 'sportsteams-team-manager-edit-this-sport' )->plain(),
+						[ 'class' => 'red-edit-link' ],
+						[
+							'method' => 'editsport',
+							'sport_id' => $sport['id']
+						]
+					);
+				$output .= '<div class="Item">';
+				$output .= $linkRenderer->makeLink(
+					$pt,
+					$sport['name'],
+					[],
+					[ 'sport_id' => $sport['id'] ]
+				);
+				$output .= $editLink;
+				$output .= "</div>\n";
 			}
 		} else {
 			$output .= $this->msg( 'sportsteams-team-manager-db-is-empty' )->parse();
@@ -256,11 +266,13 @@ class SportsTeamsManager extends SpecialPage {
 	function displayTeamList( $sport_id ) {
 		$output = '<div>';
 		$teams = SportsTeams::getTeams( $sport_id );
+		$linkRenderer = $this->getLinkRenderer();
+		$pt = $this->getPageTitle();
 
 		foreach ( $teams as $team ) {
 			$output .= '<div class="Item">' .
-				Linker::link(
-					$this->getPageTitle(),
+				$linkRenderer->makeLink(
+					$pt,
 					$team['name'],
 					[],
 					[

@@ -32,6 +32,7 @@ class FanHome extends UnlistedSpecialPage {
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$user = $this->getUser();
+		$linkRenderer = $this->getLinkRenderer();
 
 		if ( $user->isLoggedIn() ) {
 			$this->friends = $this->getRelationships( 1 );
@@ -119,7 +120,7 @@ class FanHome extends UnlistedSpecialPage {
 			$fan_info = '<p><span class="profile-on">' .
 				$this->msg( 'sportsteams-network-you-are-fan' )->text() . '</span></p>';
 			$fan_info .= '<p><span>';
-			$fan_info .= Linker::link(
+			$fan_info .= $linkRenderer->makeLink(
 				$leave_fans_title,
 				$this->msg( 'sportsteams-network-leave-network' )->text(),
 				[ 'style' => 'text-decoration: none;' ],
@@ -128,7 +129,7 @@ class FanHome extends UnlistedSpecialPage {
 			$fan_info .= '</span></p>';
 		} elseif ( $user->isLoggedIn() ) {
 			$fan_info = '<p><span class="profile-on">';
-			$fan_info .= Linker::link(
+			$fan_info .= $linkRenderer->makeLink(
 				$join_fans_title,
 				$this->msg( 'sportsteams-network-join-network' )->text(),
 				[ 'style' => 'text-decoration: none;' ],
@@ -148,13 +149,16 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<p>' . $this->msg( 'sportsteams-network-logo' )->text() . '</p>';
 		$output .= '</div>';
 		$output .= '<div class="network-info-right">';
-		$output .= '<p>' . $this->msg( 'sportsteams-network-fans-col' )->text() . ' <a href="' .
-			$view_fans_title->getFullURL(
-				[
-					'sport_id' => $sport_id,
-					'team_id' => $team_id
-				]
-			) . "\">{$this->network_count}</a></p>";
+		$output .= '<p>' . $this->msg( 'sportsteams-network-fans-col' )->text() . ' ';
+		$output .= $linkRenderer->makeLink(
+			$view_fans_title,
+			$this->network_count,
+			[],
+			[
+				'sport_id' => $sport_id,
+				'team_id' => $team_id
+			]
+		) . '</p>';
 		// For registered users, show the amount of their friends who also
 		// belong to this network
 		if ( $user->isLoggedIn() ) {
@@ -192,17 +196,15 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<div class="network-updates">';
 		$output .= '<h1 class="network-page-title">' .
 			$this->msg( 'sportsteams-network-latest-thoughts' )->text() . '</h1>';
-		$output .= '<div style="margin-bottom:10px;">
-			<a href="' .
-				htmlspecialchars(
-					SpecialPage::getTitleFor( 'FanUpdates' )->getFullURL( [
-						'sport_id' => $sport_id,
-						'team_id' => $team_id
-					] ),
-					ENT_QUOTES
-				) . '">' .
-				$this->msg( 'sportsteams-network-all-thoughts' )->text() . '</a>
-		</div>';
+		$output .= '<div style="margin-bottom:10px;">';
+		$output .= $linkRenderer->makeLink(
+			SpecialPage::getTitleFor( 'FanUpdates' ),
+			$this->msg( 'sportsteams-network-all-thoughts' )->text(),
+			[],
+			[
+				'sport_id' => $sport_id,
+				'team_id' => $team_id
+			] ) . '</div>';
 		// Registered users (whether they're members of the network or not) can
 		// post new status updates on the network's page from the network's
 		// page
@@ -250,14 +252,14 @@ class FanHome extends UnlistedSpecialPage {
 			</p>';
 		*/
 		$output .= '<p class="fan-network-sub-text">';
-		$output .= Linker::link(
+		$output .= $linkRenderer->makeLink(
 			$tfr,
 			$this->msg( 'sportsteams-network-top-fans-week' )->plain(),
 			[],
 			[ 'period' => 'weekly' ]
 		);
 		$output .= ' - ';
-		$output .= Linker::link(
+		$output .= $linkRenderer->makeLink(
 			$view_fans_title,
 			$this->msg( 'sportsteams-network-complete-list' )->plain(),
 			[],
@@ -273,13 +275,13 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<p class="fan-network-sub-text">';
 		if ( class_exists( 'BlogPage' ) ) { // @todo CHECKME: is there any point in this check?
 			$createBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' );
-			$output .= Linker::link(
+			$output .= $linkRenderer->makeLink(
 				$createBlogPage,
 				$this->msg( 'sportsteams-network-write-article' )->text()
 			);
 			$output .= ' - ';
 		}
-		$output .= Linker::link(
+		$output .= $linkRenderer->makeLink(
 			$homepage_title,
 			$this->msg( 'sportsteams-network-main-page' )->text()
 		);

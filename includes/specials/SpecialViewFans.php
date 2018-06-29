@@ -25,6 +25,7 @@ class ViewFans extends UnlistedSpecialPage {
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$user = $this->getUser();
+		$linkRenderer = $this->getLinkRenderer();
 
 		$output = '';
 
@@ -108,7 +109,7 @@ class ViewFans extends UnlistedSpecialPage {
 		$out->setPageTitle( $this->msg( 'sportsteams-network-network-fans', $this->network )->text() );
 
 		$output .= '<div class="friend-links">';
-		$output .= Linker::link(
+		$output .= $linkRenderer->makeLink(
 			$homepage_title,
 			$this->msg( 'sportsteams-network-back-to-network', $this->network )->text(),
 			[],
@@ -154,20 +155,20 @@ class ViewFans extends UnlistedSpecialPage {
 					$pipeList = [];
 					if ( !in_array( $fan['user_id'], $relationships ) ) {
 						$ar = SpecialPage::getTitleFor( 'AddRelationship' );
-						$pipeList[] = Linker::link(
+						$pipeList[] = $linkRenderer->makeLink(
 							$ar,
 							$this->msg( 'sportsteams-add-as-friend' )->text(),
 							[],
 							[ 'user' => $fan['user_name'], 'rel_type' => '1' ]
 						);
-						$pipeList[] = Linker::link(
+						$pipeList[] = $linkRenderer->makeLink(
 							$ar,
 							$this->msg( 'sportsteams-add-as-foe' )->text(),
 							[],
 							[ 'user' => $fan['user_name'], 'rel_type' => '2' ]
 						);
 					}
-					$pipeList[] = Linker::link(
+					$pipeList[] = $linkRenderer->makeLink(
 						SpecialPage::getTitleFor( 'GiveGift' ),
 						$this->msg( 'sportsteams-give-a-gift' )->text(),
 						[],
@@ -196,10 +197,11 @@ class ViewFans extends UnlistedSpecialPage {
 		$numofpages = $total / $per_page;
 
 		if ( $numofpages > 1 ) {
+			$pt = $this->getPageTitle();
 			$output .= '<div class="page-nav">';
 			if ( $page > 1 ) {
-				$output .= Linker::link(
-					$this->getPageTitle(),
+				$output .= $linkRenderer->makeLink(
+					$pt,
 					$this->msg( 'sportsteams-prev' )->plain(),
 					[],
 					[
@@ -221,8 +223,8 @@ class ViewFans extends UnlistedSpecialPage {
 				if ( $i == $page ) {
 				    $output .= ( $i . ' ' );
 				} else {
-				    $output .= Linker::link(
-						$this->getPageTitle(),
+				    $output .= $linkRenderer->makeLink(
+						$pt,
 						$i,
 						[],
 						[
@@ -235,8 +237,8 @@ class ViewFans extends UnlistedSpecialPage {
 			}
 
 			if ( ( $total - ( $per_page * $page ) ) > 0 ) {
-				$output .= $this->msg( 'word-separator' )->plain() . Linker::link(
-					$this->getPageTitle(),
+				$output .= $this->msg( 'word-separator' )->plain() . $linkRenderer->makeLink(
+					$pt,
 					$this->msg( 'sportsteams-next' )->plain(),
 					[],
 					[
