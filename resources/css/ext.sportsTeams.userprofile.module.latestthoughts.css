@@ -1,0 +1,23 @@
+.status-container {
+	padding: 0 0 20px 0;
+}
+
+.status-message img {
+	vertical-align: middle;
+	margin: 0 5px 0 0;
+}
+
+.user-status-date {
+	color: #999;
+	font-size: 9px;
+	margin: 0 6px 0 0;
+}
+
+.user-status-profile-vote {
+	color: #666;
+}
+
+.user-status-profile-vote a {
+	font-size: 9px;
+	text-decoration: none;
+}

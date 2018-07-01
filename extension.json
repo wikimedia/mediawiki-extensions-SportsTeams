@@ -95,6 +95,12 @@
 				"resources/js/DoubleCombo.js",
 				"resources/js/UpdateFavoriteTeams.js"
 			]
+		},
+		"ext.sportsTeams.userprofile.module.favoriteteams.css": {
+			"styles": "resources/css/ext.sportsTeams.userprofile.module.favoriteteams.css"
+		},
+		"ext.sportsTeams.userprofile.module.latestthoughts.css": {
+			"styles": "resources/css/ext.sportsTeams.userprofile.module.latestthoughts.css"
 		}
 	},
 	"ResourceFileModulePaths": {

@@ -14,7 +14,8 @@ class SportsTeamsUserProfile {
 		$output = '';
 		$user_id = $user_profile->user_id;
 
-		// Add JS
+		// Add CSS and JS
+		$wgOut->addModuleStyles( 'ext.sportsTeams.userprofile.module.favoriteteams.css' );
 		$wgOut->addModules( 'ext.sportsTeams.userProfile' );
 
 		$add_networks_title = SpecialPage::getTitleFor( 'UpdateFavoriteTeams' );
@@ -131,6 +132,10 @@ class SportsTeamsUserProfile {
 		$thought_link = SpecialPage::getTitleFor( 'ViewThought' );
 
 		$output = '';
+
+		// Add CSS
+		$wgOut->addModuleStyles( 'ext.sportsTeams.userprofile.module.latestthought.css' );
+
 		if ( $user_update ) {
 			$output .= '<div class="user-section-heading">
 				<div class="user-section-title">' .
