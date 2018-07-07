@@ -152,7 +152,8 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		// Add CSS (from SocialProfile), DoubleCombo.js and UpdateFavoriteTeams.js files to the page output
 		$out->addModules( [
-			'ext.socialprofile.userprofile.css',
+			'ext.socialprofile.userprofile.tabs.css',
+			'ext.socialprofile.special.updateprofile.css',
 			'ext.sportsTeams.updateFavoriteTeams'
 		] );
 
@@ -160,35 +161,10 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		//$output = '<h1>' . $this->msg( 'user-profile-sports-title' )->text() . '</h1>';
 
 		// Build the top navigation tabs
-		// @todo CHECKME: there should be a UserProfile method for building all
-		// this, I think
-		$output = '<div class="profile-tab-bar">';
-		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'basic' )->getFullURL() ) . '">' .
-			$this->msg( 'user-profile-section-personal' )->text() . '</a>';
-		$output .= '</div>';
-		$output .= '<div class="profile-tab-on">';
-		$output .= $this->msg( 'user-profile-section-sportsteams' )->text();
-		$output .= '</div>';
-		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'custom' )->getFullURL() ) . '">' .
-			/*$this->msg( 'user-profile-section-sportstidbits' )->text()*/$this->msg( 'custom-info-title' )->text() . '</a>';
-		$output .= '</div>';
-		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'personal' )->getFullURL() ) . '">' .
-			$this->msg( 'user-profile-section-interests' )->text() . '</a>';
-		$output .= '</div>';
-		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UploadAvatar' )->getFullURL() ) . '">' .
-			$this->msg( 'user-profile-section-picture' )->text() . '</a>';
-		$output .= '</div>';
-		$output .= '<div class="profile-tab">';
-		$output .= '<a href="' . htmlspecialchars( SpecialPage::getTitleFor( 'UpdateProfile', 'preferences' )->getFullURL() ) . '">' .
-			$this->msg( 'user-profile-section-preferences' )->text() . '</a>';
-		$output .= '</div>';
-
-		$output .= '<div class="visualClear"></div>';
-		$output .= '</div>';
+		// @todo FIXME/CHECKME: This requires site admins to manually edit [[MediaWiki:Update_profile_nav]]
+		// to add something like * Special:UpdateFavoriteTeams|user-profile-section-sportsteams there
+		// and that's not exactly ideal
+		$output = UserProfile::getEditProfileNav( $this->msg( 'user-profile-section-sportsteams' )->text() );
 
 		$output .= '<div class="profile-info">';
 
