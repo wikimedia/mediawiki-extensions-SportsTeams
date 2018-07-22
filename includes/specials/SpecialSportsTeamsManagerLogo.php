@@ -14,7 +14,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	public $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
 	public $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
 	public $mOname, $mSessionKey, $mStashed, $mDestFile;
-	public $avatarUploadDirectory;
+	public $teamLogosUploadDirectory;
 	public $fileExtensions;
 	public $team_id;
 
@@ -92,7 +92,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		$out = $this->getOutput();
 		$user = $this->getUser();
 
-		$this->avatarUploadDirectory = $wgUploadDirectory . '/team_logos';
+		$this->teamLogosUploadDirectory = $wgUploadDirectory . '/team_logos';
 
 		/** Show an error message if file upload is disabled */
 		if ( !$wgEnableUploads ) {
@@ -247,7 +247,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth .
 					'x' . $thumbWidth . ' -resize ' . $thumbWidth .
 					'    -quality 100 ' . $border . ' ' . $imageSrc . ' ' .
-					$this->avatarUploadDirectory . '/' . $imgDest . '.jpg'
+					$this->teamLogosUploadDirectory . '/' . $imgDest . '.jpg'
 				);
 			}
 			if ( $typeCode == 1 ) {
@@ -255,7 +255,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth .
 					'x' . $thumbWidth . ' -resize ' . $thumbWidth . '  ' .
 					$imageSrc . ' ' . $border . ' ' .
-					$this->avatarUploadDirectory . '/' . $imgDest . '.gif'
+					$this->teamLogosUploadDirectory . '/' . $imgDest . '.gif'
 				);
 			}
 			if ( $typeCode == 3 ) {
@@ -263,7 +263,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth .
 					'x' . $thumbWidth . ' -resize ' . $thumbWidth . '   ' .
 					$imageSrc . ' ' .
-					$this->avatarUploadDirectory . '/' . $imgDest . '.png'
+					$this->teamLogosUploadDirectory . '/' . $imgDest . '.png'
 				);
 			}
 		} else { // ImageMagick is not enabled, so fall back to PHP's GD library
@@ -318,7 +318,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			// Copy the thumb
 			copy(
 				$imageSrc,
-				$this->avatarUploadDirectory . '/' . $imgDest . '.' . $ext
+				$this->teamLogosUploadDirectory . '/' . $imgDest . '.' . $ext
 			);
 		}
 	}
@@ -336,54 +336,54 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 *                        is a PHP-managed upload temporary
 	 */
 	function saveUploadedFile( $saveName, $tempName, $ext ) {
-		$dest = $this->avatarUploadDirectory;
+		$dest = $this->teamLogosUploadDirectory;
 
 		$this->mSavedFile = "{$dest}/{$saveName}";
 	 	$this->createThumbnail( $tempName, $ext, $this->team_id . '_l', 100 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_m', 50 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_s', 25 );
 
-		if ( $ext == 'JPG' && is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.jpg' ) ) {
+		if ( $ext == 'JPG' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.jpg' ) ) {
 			$type = 2;
 		}
-		if ( $ext == 'GIF' && is_file( $this->avatarUploadDirectory . '/' . $this->team_id. '_l.gif' ) ) {
+		if ( $ext == 'GIF' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id. '_l.gif' ) ) {
 			$type = 1;
 		}
-		if ( $ext == 'PNG' && is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.png' ) ) {
+		if ( $ext == 'PNG' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.png' ) ) {
 			$type = 3;
 		}
 
 		if ( $ext != 'JPG' ) {
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_s.jpg' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_s.jpg' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_s.jpg' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_s.jpg' );
 			}
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_m.jpg' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_m.jpg' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_m.jpg' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_m.jpg' );
 			}
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.jpg' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.jpg' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.jpg' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.jpg' );
 			}
 		}
 		if ( $ext != 'GIF' ) {
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_s.gif' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_s.gif' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_s.gif' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_s.gif' );
 			}
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_m.gif' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_m.gif' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_m.gif' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_m.gif' );
 			}
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.gif' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.gif' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.gif' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.gif' );
 			}
 		}
 		if ( $ext != 'PNG' ) {
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_s.png' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_s.png' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_s.png' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_s.png' );
 			}
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_m.png' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_m.png' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_m.png' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_m.png' );
 			}
-			if ( is_file( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.png' ) ) {
-				unlink( $this->avatarUploadDirectory . '/' . $this->team_id . '_l.png' );
+			if ( is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.png' ) ) {
+				unlink( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.png' );
 			}
 		}
 
