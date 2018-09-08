@@ -25,14 +25,14 @@ class SportsTeamsUserProfile {
 		if ( $favs ) {
 			$output .= '<div class="user-section-heading">
 			<div class="user-section-title">' .
-				wfMessage( 'sportsteams-profile-networks' )->text() .
+				wfMessage( 'sportsteams-profile-networks' )->escaped() .
 			'</div>
 			<div class="user-section-actions">
 				<div class="action-right">';
 			if ( $user_profile->isOwner() ) {
 				$output .= Linker::link(
 					$add_networks_title,
-					wfMessage( 'sportsteams-profile-add-network' )->plain()
+					wfMessage( 'sportsteams-profile-add-network' )->escaped()
 				);
 			}
 			$output .= '</div>
@@ -49,7 +49,7 @@ class SportsTeamsUserProfile {
 					$status_link = ' <span class="status-message-add"> - <a href="javascript:void(0);" data-order="' .
 						$fav['order'] . '" data-sport-id="' . $fav['sport_id'] .
 						'" data-team-id="' . $fav['team_id'] . '" rel="nofollow">' .
-						wfMessage( 'sportsteams-profile-add-thought' )->text() . '</a></span>';
+						wfMessage( 'sportsteams-profile-add-thought' )->escaped() . '</a></span>';
 				}
 
 				$network_update_message = '';
@@ -101,18 +101,18 @@ class SportsTeamsUserProfile {
 		} elseif ( $user_profile->isOwner() ) {
 			$output .= '<div class="user-section-heading">
 				<div class="user-section-title">' .
-					wfMessage( 'sportsteams-profile-networks' )->text() .
+					wfMessage( 'sportsteams-profile-networks' )->escaped() .
 				'</div>
 				<div class="user-section-actions">
 					<div class="action-right">
 						<a href="' . htmlspecialchars( $add_networks_title->getFullURL() ) . '">' .
-							wfMessage( 'sportsteams-profile-add-network' )->text() . '</a>
+							wfMessage( 'sportsteams-profile-add-network' )->escaped() . '</a>
 					</div>
 					<div class="visualClear"></div>
 				</div>
 			</div>
 			<div class="no-info-container">' .
-				wfMessage( 'sportsteams-profile-no-networks' )->text() .
+				wfMessage( 'sportsteams-profile-no-networks' )->escaped() .
 			'</div>';
 		}
 
@@ -139,12 +139,12 @@ class SportsTeamsUserProfile {
 		if ( $user_update ) {
 			$output .= '<div class="user-section-heading">
 				<div class="user-section-title">' .
-					wfMessage( 'sportsteams-profile-latest-thought' )->plain() .
+					wfMessage( 'sportsteams-profile-latest-thought' )->escaped() .
 				'</div>
 				<div class="user-section-actions">
 					<div class="action-right">
 						<a href="' . htmlspecialchars( $more_thoughts_link->getFullURL( 'user=' . $user_profile->user_name ) ) .
-						'" rel="nofollow">' . wfMessage( 'sportsteams-profile-view-all' )->plain() . '</a>
+						'" rel="nofollow">' . wfMessage( 'sportsteams-profile-view-all' )->escaped() . '</a>
 					</div>
 					<div class="visualClear"></div>
 				</div>
@@ -179,7 +179,7 @@ class SportsTeamsUserProfile {
 			if ( $wgUser->isLoggedIn() && $wgUser->getName() != $user_update['user_name'] ) {
 				if ( !$user_update['voted'] ) {
 					$vote_link = "<a class=\"profile-vote-status-link\" href=\"javascript:void(0);\" data-status-update-id=\"{$user_update['id']}\" rel=\"nofollow\">" .
-						wfMessage( 'sportsteams-profile-do-you-agree' )->text() . '</a>';
+						wfMessage( 'sportsteams-profile-do-you-agree' )->escaped() . '</a>';
 				} else {
 					$vote_count = wfMessage(
 						'sportsteams-profile-num-agree'

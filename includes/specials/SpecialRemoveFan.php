@@ -40,14 +40,14 @@ class RemoveFan extends UnlistedSpecialPage {
 		if ( !$team_id && !$sport_id ) {
 			$out->setPageTitle( $this->msg( 'sportsteams-network-woops-title' )->plain() );
 			$output = '<div class="relationship-request-message">' .
-				$this->msg( 'sportsteams-network-woops-text' )->text() . '</div>';
+				$this->msg( 'sportsteams-network-woops-text' )->escaped() . '</div>';
 			$output .= '<div class="relationship-request-buttons">';
 			$output .= '<input type="button" class="site-button" value="' .
-				$this->msg( 'sportsteams-network-main-page' )->text() . "\" onclick=\"window.location='" .
+				$this->msg( 'sportsteams-network-main-page' )->escaped() . "\" onclick=\"window.location='" .
 				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 			if ( $user->isLoggedIn() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
-					$this->msg( 'sportsteams-network-your-profile' )->text() .
+					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
@@ -78,11 +78,11 @@ class RemoveFan extends UnlistedSpecialPage {
 			$out->setPageTitle( $this->msg( 'sportsteams-network-no-longer-member', $name )->text() );
 			$output .= '<div class="give-gift-message">
 				<input type="button" class="site-button" value="' .
-					$this->msg( 'sportsteams-network-main-page' )->text() .
+					$this->msg( 'sportsteams-network-main-page' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>
 				<input type=\"button\" class=\"site-button\" value=\"" .
-					$this->msg( 'sportsteams-network-your-profile' )->text() .
+					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>
 			</div>";
@@ -92,15 +92,15 @@ class RemoveFan extends UnlistedSpecialPage {
 			 */
 			if ( !SportsTeams::isFan( $user->getId(), $sport_id, $team_id ) == true ) {
 				$out->setPageTitle( $this->msg( 'sportsteams-network-not-member', $name )->text() );
-				//$output .= '<div class="relationship-request-message">' . $this->msg( 'sportsteams-network-no-need-join' )->text() . '</div>';
+				//$output .= '<div class="relationship-request-message">' . $this->msg( 'sportsteams-network-no-need-join' )->escaped() . '</div>';
 				$output .= '<div class="relationship-request-buttons">';
 				$output .= '<input type="button" class="site-button" value="' .
-					$this->msg( 'sportsteams-network-main-page' )->text() .
+					$this->msg( 'sportsteams-network-main-page' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 				if ( $user->isLoggedIn() ) {
 					$output .= ' <input type="button" class="site-button" value="' .
-						$this->msg( 'sportsteams-network-your-profile' )->text() .
+						$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 						"\" onclick=\"window.location='" .
 						htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 				}
@@ -113,15 +113,15 @@ class RemoveFan extends UnlistedSpecialPage {
 			$output .= '<form action="" method="post" enctype="multipart/form-data" name="form1">
 
 				<div class="give-gift-message" style="margin:0px 0px 0px 0px;">' .
-					$this->msg( 'sportsteams-network-leave-are-you-sure', $name )->text() .
+					$this->msg( 'sportsteams-network-leave-are-you-sure', $name )->parse() .
 				"</div>
 
 				<div class=\"visualClear\"></div>
 				<div class=\"give-gift-buttons\">
 					<input type=\"hidden\" name=\"s_id\" value=\"{$sport_id}\" />
 					<input type=\"hidden\" name=\"t_id\" value=\"{$team_id}\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-remove-me' )->text() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->plain() . "\" size=\"20\" onclick=\"history.go(-1)\" />
+					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-remove-me' )->escaped() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
+					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->escaped() . "\" size=\"20\" onclick=\"history.go(-1)\" />
 				</div>
 			</form>";
 		}

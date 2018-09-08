@@ -133,7 +133,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		 * If there was no filename or a zero size given, give up quick.
 		 */
 		if ( trim( $this->mOname ) == '' || empty( $this->mUploadSize ) ) {
-			return $this->mainUploadForm( '<li>' . $this->msg( 'emptyfile' )->plain() . '</li>' );
+			return $this->mainUploadForm( '<li>' . $this->msg( 'emptyfile' )->escaped() . '</li>' );
 		}
 
 		# Chop off any directories in the given filename
@@ -202,7 +202,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			}
 
 			if ( $this->mUploadSize == 0 ) {
-				$warning .= '<li>' . $this->msg( 'emptyfile' )->plain() . '</li>';
+				$warning .= '<li>' . $this->msg( 'emptyfile' )->escaped() . '</li>';
 			}
 
 			if ( $warning != '' ) {
@@ -468,8 +468,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 		$ext = 'jpg';
 
-		$output = '<h2>' . $this->msg( 'sportsteams-logo-upload-success' )->plain() . '</h2>';
-		$output .= '<h5>' . $this->msg( 'sportsteams-logo-images-below' )->plain() . '</h5>';
+		$output = '<h2>' . $this->msg( 'sportsteams-logo-upload-success' )->escaped() . '</h2>';
+		$output .= '<h5>' . $this->msg( 'sportsteams-logo-images-below' )->escaped() . '</h5>';
 		if ( $status == 1 ) {
 			$ext = 'gif';
 		}
@@ -483,14 +483,14 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		$output .= '<table cellspacing="0" cellpadding="5">';
 		$output .= '<tr>
 			<td valign="top" style="color: #666666; font-weight: 800">' .
-			$this->msg( 'sportsteams-logo-size-large' )->plain() . '</td>
+			$this->msg( 'sportsteams-logo-size-large' )->escaped() . '</td>
 			<td>
 				<img src="' . $wgUploadPath . '/team_logos/' . $this->team_id . '_l.' . $ext . '?ts=' . rand() . ' alt="" />
 			</td>
 		</tr>
 		<tr>
 			<td valign="top" style="color: #666666; font-weight: 800">' .
-				$this->msg( 'sportsteams-logo-size-medium' )->plain() .
+				$this->msg( 'sportsteams-logo-size-medium' )->escaped() .
 			'</td>
 			<td>
 				<img src="' . $wgUploadPath . '/team_logos/' . $this->team_id . '_m.' . $ext . '?ts=' . rand() . '" alt="" />
@@ -498,7 +498,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		</tr>
 		<tr>
 			<td valign="top" style="color: #666666; font-weight: 800">' .
-				$this->msg( 'sportsteams-logo-size-small' )->plain() .
+				$this->msg( 'sportsteams-logo-size-small' )->escaped() .
 			'</td>
 			<td>
 				<img src="' . $wgUploadPath . '/team_logos/' . $this->team_id . '_s.' . $ext . '?ts=' . rand() . '" alt="" />
@@ -507,15 +507,15 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		<tr>
 			<td>
 				<input type="button" onclick="javascript:history.go(-1)" value="' .
-					$this->msg( 'sportsteams-logo-go-back' )->plain() . '" />
+					$this->msg( 'sportsteams-logo-go-back' )->escaped() . '" />
 			</td>
 		</tr>';
 
 		$stm = SpecialPage::getTitleFor( 'SportsTeamsManager' );
 		$output .= '<tr><td><a href="' . htmlspecialchars( $stm->getFullURL() ) . '">' .
-			$this->msg( 'sportsteams-logo-back-to-list' )->plain() . '</a> |';
+			$this->msg( 'sportsteams-logo-back-to-list' )->escaped() . '</a> |';
 		$output .= ' <a href="' . htmlspecialchars( $stm->getFullURL( "id={$this->team_id}" ) ) . '">' .
-			$this->msg( 'sportsteams-logo-back-to-team' )->plain() . '</a></td></tr>';
+			$this->msg( 'sportsteams-logo-back-to-team' )->escaped() . '</a></td></tr>';
 		$output .= '</table>';
 
 		$this->getOutput()->addHTML( $output );
@@ -527,12 +527,12 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 */
 	function uploadError( $error ) {
 		$out = $this->getOutput();
-		$sub = $this->msg( 'uploadwarning' )->plain();
+		$sub = $this->msg( 'uploadwarning' )->escaped();
 		$out->addHTML( "<h2>{$sub}</h2>\n" );
 		$out->addHTML( "<h4 class=\"error\">{$error}</h4>\n" );
 		$out->addHTML(
 			'<br /><input type="button" onclick="javascript:history.go(-1)" value="' .
-				$this->msg( 'sportsteams-logo-go-back' )->plain() . '" />'
+				$this->msg( 'sportsteams-logo-go-back' )->escaped() . '" />'
 		);
 	}
 
@@ -555,7 +555,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			return;
 		}
 
-		$sub = $this->msg( 'uploadwarning' )->plain();
+		$sub = $this->msg( 'uploadwarning' )->escaped();
 		$out->addHTML( "<h2>{$sub}</h2>\n" );
 		$out->addHTML( "<ul class=\"warning\">{$warning}</ul><br />\n" );
 
@@ -585,7 +585,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 			<tr>
 				<td align=\"right\">
-					<input tabindex=\"2\" type=\"button\" onclick=\"javascript:history.go(-1)\" value=\"" . $this->msg( 'sportsteams-logo-back' )->plain() . '" />
+					<input tabindex=\"2\" type=\"button\" onclick=\"javascript:history.go(-1)\" value=\"" . $this->msg( 'sportsteams-logo-back' )->escaped() . '" />
 				</td>
 
 			</tr>
@@ -606,22 +606,22 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		$out = $this->getOutput();
 
 		if ( $msg != '' ) {
-			$sub = $this->msg( 'uploaderror' )->plain();
+			$sub = $this->msg( 'uploaderror' )->escaped();
 			$out->addHTML( "<h2>{$sub}</h2>\n" .
 				"<h4 class='error'>{$msg}</h4>\n" );
 		}
 
-		$ulb = $this->msg( 'uploadbtn' )->plain();
+		$ulb = $this->msg( 'uploadbtn' )->escaped();
 
 		$source = null;
 
 		if ( $wgUseCopyrightUpload ) {
 			$source = "
-	<td align='right' nowrap='nowrap'>" . $this->msg( 'filestatus' )->plain() . "</td>
+	<td align='right' nowrap='nowrap'>" . $this->msg( 'filestatus' )->escaped() . "</td>
 	<td><input tabindex='3' type='text' name=\"wpUploadCopyStatus\" value=\"" .
 	htmlspecialchars( $this->mUploadCopyStatus ). "\" size='40' /></td>
 	</tr><tr>
-	<td align='right'>". $this->msg( 'filesource' )->plain() . "</td>
+	<td align='right'>". $this->msg( 'filesource' )->escaped() . "</td>
 	<td><input tabindex='4' type='text' name='wpUploadSource' value=\"" .
 	htmlspecialchars( $this->mUploadSource ). "\" style='width:100px' /></td>
 	";
@@ -649,7 +649,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	<form id='upload' method='post' enctype='multipart/form-data' action=\"\">
 	<table border='0'><tr>
 
-	<td style='color:#666666;font-weight:800'>" . $this->msg( 'sportsteams-logo-image-instructions' )->text() . "<br />
+	<td style='color:#666666;font-weight:800'>" . $this->msg( 'sportsteams-logo-image-instructions' )->parseAsBlock() . "<br />
 	<input tabindex='1' type='file' name='wpUploadFile' id='wpUploadFile' style='width:100px' />
 	</td></tr><tr>
 	{$source}

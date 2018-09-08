@@ -128,7 +128,7 @@ class SimilarFans extends SpecialPage {
 					);
 					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
 					$output .= $lang->pipeList( $pipeList );
-					$output .= $this->msg( 'word-separator' )->plain();
+					$output .= $this->msg( 'word-separator' )->escaped();
 					$output .= '<div class="visualClear"></div>';
 				}
 				$output .= '</div>';
@@ -158,7 +158,7 @@ class SimilarFans extends SpecialPage {
 					$this->msg( 'sportsteams-prev' )->plain(),
 					[],
 					[ 'page' => ( $page - 1 ) ]
-				) . $this->msg( 'word-separator' )->plain();
+				) . $this->msg( 'word-separator' )->escaped();
 			}
 
 			if ( ( $total % $per_page ) != 0 ) {
@@ -177,12 +177,12 @@ class SimilarFans extends SpecialPage {
 						$i,
 						[],
 						[ 'page' => $i ]
-					) . $this->msg( 'word-separator' )->plain();
+					) . $this->msg( 'word-separator' )->escaped();
 				}
 			}
 
 			if ( ( $total - ( $per_page * $page ) ) > 0 ) {
-				$output .= $this->msg( 'word-separator' )->plain() . $linkRenderer->makeLink(
+				$output .= $this->msg( 'word-separator' )->escaped() . $linkRenderer->makeLink(
 					$this->getPageTitle(),
 					$this->msg( 'sportsteams-next' )->plain(),
 					[],

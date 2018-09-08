@@ -120,35 +120,35 @@ class TopNetworks extends SpecialPage {
 
 		// Navigation
 		$output .= '<div class="top-networks-navigation">
-			<h1>' . $this->msg( 'sportsteams-top-network-most-popular' )->text() . '</h1>';
+			<h1>' . $this->msg( 'sportsteams-top-network-most-popular' )->escaped() . '</h1>';
 
 		if ( !( $sport ) && !( $type ) && !( $direction ) ) {
-			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->escaped() . '</b></p>';
 		} elseif ( !( $sport ) && !( $type ) && ( $direction == 'best' ) ) {
-			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->escaped() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
 				[ 'direction' => 'best' ]
-			) ) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
+			) ) . '">' . $this->msg( 'sportsteams-top-network-teams' )->escaped() . '</a></p>';
 		}
 
 		if ( !( $sport ) && ( $type == 'sport' ) && ( $direction == 'best' ) ) {
-			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-sports' )->escaped() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
 				[ 'type' => 'sport', 'direction' => 'best' ]
-			) ) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . '</a></p>';
+			) ) . '">' . $this->msg( 'sportsteams-top-network-sports' )->escaped() . '</a></p>';
 		}
 
 		$output .= '<h1 style="margin-top:15px !important;">' .
-			$this->msg( 'sportsteams-top-network-least-popular' )->text() . '</h1>';
+			$this->msg( 'sportsteams-top-network-least-popular' )->escaped() . '</h1>';
 
 		if ( !( $sport ) && !( $type ) && ( $direction == 'worst' ) ) {
-			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</b></p>';
+			$output .= '<p><b>' . $this->msg( 'sportsteams-top-network-teams' )->escaped() . '</b></p>';
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
 				[ 'direction' => 'worst' ]
-			) ) . '">' . $this->msg( 'sportsteams-top-network-teams' )->text() . '</a></p>';
+			) ) . '">' . $this->msg( 'sportsteams-top-network-teams' )->escaped() . '</a></p>';
 		}
 
 		if ( !( $sport ) && ( $type == 'sport' ) && ( $direction == 'worst' ) ) {
@@ -156,17 +156,17 @@ class TopNetworks extends SpecialPage {
 		} else {
 			$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
 				[ 'type' => 'sport', 'direction' => 'worst' ]
-			) ) . '">' . $this->msg( 'sportsteams-top-network-sports' )->text() . "</a></p>";
+			) ) . '">' . $this->msg( 'sportsteams-top-network-sports' )->escaped() . "</a></p>";
 		}
 
 		// for grep: sportsteams-top-network-most-pop-by-sport,
 		// sportsteams-top-network-least-pop-by-sport
 		$output .= '<h1 style="margin-top:15px !important;">' .
-			$this->msg( 'sportsteams-top-network-' . strtolower( $adj ) . '-pop-by-sport' )->text() . '</h1>';
+			$this->msg( 'sportsteams-top-network-' . strtolower( $adj ) . '-pop-by-sport' )->escaped() . '</h1>';
 
 		foreach ( $res_sport_nav as $row_sport_nav ) {
 			$sport_id = $row_sport_nav->sport_id;
-			$sport_name = $row_sport_nav->sport_name;
+			$sport_name = htmlspecialchars( $row_sport_nav->sport_name );
 
 			if ( $sport_id == $sport ) {
 				$output .= "<p><b>{$sport_name}</b></p>";
@@ -174,7 +174,7 @@ class TopNetworks extends SpecialPage {
 				// sportsteams-top-network-most-team-title
 				$out->setPageTitle(
 					$this->msg( 'sportsteams-top-network-' . strtolower( $adj ) . '-team-title',
-						$sport_name )->text()
+						$row_sports_nav->sport_name )->escaped()
 				);
 			} else {
 				$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
@@ -196,7 +196,7 @@ class TopNetworks extends SpecialPage {
 			foreach ( $res_sport as $row_sport ) {
 				// More variables
 				$user_count = $row_sport->sport_count;
-				$sport = $row_sport->sport_name;
+				$sport = htmlspecialchars( $row_sport->sport_name );
 				$sport_id = $row_sport->sf_sport_id;
 
 				// Get team logo
@@ -224,7 +224,7 @@ class TopNetworks extends SpecialPage {
 			foreach ( $res as $row ) {
 				// More variables
 				$user_count = $row->network_user_count;
-				$team = $row->team_name;
+				$team = htmlspecialchars( $row->team_name );
 				$team_id = $row->sf_team_id;
 				$sport_id = $row->team_sport_id;
 

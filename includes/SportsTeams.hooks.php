@@ -49,7 +49,7 @@ class SportsTeamsHooks {
 
 				$output = '<div>
 					<label for="sport_1">' .
-				wfMessage( 'sportsteams-signup-select' )->plain() .
+				wfMessage( 'sportsteams-signup-select' )->escaped() .
 			'</label>
 				<select name="sport_1" id="sport_1">
 					<option value="0">-</option>';
@@ -64,7 +64,7 @@ class SportsTeamsHooks {
 			</div>
 			<div>
 				<label for="team_1">' .
-					wfMessage( 'sportsteams-signup-team' )->plain() .
+					wfMessage( 'sportsteams-signup-team' )->escaped() .
 				'</label>
 				<select name="team_1" id="team_1">
 					<option value="0">-</option>
@@ -72,7 +72,7 @@ class SportsTeamsHooks {
 			</div>
 			<div>
 				<label for="thought">' .
-					wfMessage( 'sportsteams-signup-thought' )->plain() .
+					wfMessage( 'sportsteams-signup-thought' )->escaped() .
 				'</label>
 				<!-- <input tabindex="6" class="lr-input" type="text" id="thought" name="thought" /> -->
 				<!--

@@ -40,15 +40,15 @@ class AddFan extends UnlistedSpecialPage {
 		if ( !$team_id && !$sport_id ) {
 			$out->setPageTitle( $this->msg( 'sportsteams-network-woops-title' )->text() );
 			$output .= '<div class="relationship-request-message">' .
-				$this->msg( 'sportsteams-network-woops-text' )->text() . '</div>';
+				$this->msg( 'sportsteams-network-woops-text' )->escaped() . '</div>';
 			$output .= '<div class="relationship-request-buttons">';
 			$output .= '<input type="button" class="site-button" value="' .
-				$this->msg( 'sportsteams-network-main-page' )->text() .
+				$this->msg( 'sportsteams-network-main-page' )->escaped() .
 				"\" onclick=\"window.location='" .
 				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 			if ( $user->isLoggedIn() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
-					$this->msg( 'sportsteams-network-your-profile' )->text() .
+					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
@@ -82,10 +82,10 @@ class AddFan extends UnlistedSpecialPage {
 			$out->setPageTitle( $this->msg( 'sportsteams-network-now-member', $name )->text() );
 			$output .= '<div class="give-gift-message">
 				<input type="button" class="site-button" value="' .
-					$this->msg( 'sportsteams-network-invite-more', $name )->text() .
+					$this->msg( 'sportsteams-network-invite-more', $name )->escaped() .
 					" \" onclick=\"window.location='{$invite_title->getFullURL()}'\"/>
 				<input type=\"button\" class=\"site-button\" value=\"" .
-					$this->msg( 'sportsteams-network-find-other', $name )->text() .
+					$this->msg( 'sportsteams-network-find-other', $name )->escaped() .
 					" \" onclick=\"window.location='" .
 					$view_fans_title->getFullURL( "sport_id={$sport_id}&team_id={$team_id}" ) . "'\"/>
 			</div>";
@@ -96,10 +96,10 @@ class AddFan extends UnlistedSpecialPage {
 			if ( SportsTeams::isFan( $user->getId(), $sport_id, $team_id ) == true ) {
 				$out->setPageTitle( $this->msg( 'sportsteams-network-already-member', $name )->text() );
 				$output .= '<div class="relationship-request-message">' .
-					$this->msg( 'sportsteams-network-no-need-join' )->text() . '</div>';
+					$this->msg( 'sportsteams-network-no-need-join' )->escaped() . '</div>';
 				$output .= "<div class=\"relationship-request-buttons\">";
 				$output .= "<input type=\"button\" class=\"site-button\" value=\"" .
-					$this->msg( 'sportsteams-network-main-page' )->text() .
+					$this->msg( 'sportsteams-network-main-page' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 				if ( $user->isLoggedIn() ) {
@@ -118,14 +118,14 @@ class AddFan extends UnlistedSpecialPage {
 			$output .= '<form action="" method="post" enctype="multipart/form-data" name="form1">
 
 				<div class="give-gift-message" style="margin:0px 0px 0px 0px;">' .
-					$this->msg( 'sportsteams-network-join-are-you-sure', $name )->text() .
+					$this->msg( 'sportsteams-network-join-are-you-sure', $name )->parse() .
 				"</div>
 
 				<div class=\"visualClear\"></div>
 				<div class=\"give-gift-buttons\">
 					<input type=\"hidden\" name=\"s_id\" value=\"{$sport_id}\" />
 					<input type=\"hidden\" name=\"t_id\" value=\"{$team_id}\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-join-network' )->text() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
+					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-join-network' )->escaped() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
 					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->plain() . "\" size=\"20\" onclick=\"history.go(-1)\" />
 				</div>
 			</form>";

@@ -42,15 +42,15 @@ class ViewFans extends UnlistedSpecialPage {
 		if ( !$team_id && !$sport_id ) {
 			$out->setPageTitle( $this->msg( 'sportsteams-network-woops-title' )->text() );
 			$output = '<div class="relationship-request-message">' .
-				$this->msg( 'sportsteams-network-woops-text' )->text() . '</div>';
+				$this->msg( 'sportsteams-network-woops-text' )->escaped() . '</div>';
 			$output .= '<div class="relationship-request-buttons">';
 			$output .= '<input type="button" class="site-button" value="' .
-				$this->msg( 'sportsteams-network-main-page' )->text() .
+				$this->msg( 'sportsteams-network-main-page' )->escaped() .
 				"\" onclick=\"window.location='" .
 				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 			if ( $user->isLoggedIn() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
-					$this->msg( 'sportsteams-network-your-profile' )->text() .
+					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
@@ -88,14 +88,14 @@ class ViewFans extends UnlistedSpecialPage {
 
 			$team_image = "<img src=\"{$wgUploadPath}/team_logos/" .
 				SportsTeams::getTeamLogo( $team_id, 'l' ) .
-				'" border="0" alt="' . $this->msg( 'sportsteams-network-alt-logo' )->plain() . '" />';
+				'" border="0" alt="' . $this->msg( 'sportsteams-network-alt-logo' )->escaped() . '" />';
 		} else {
 			$sport = SportsTeams::getSport( $sport_id );
 			$this->network = $sport['name'];
 			$fanMessageName = 'sportsteams-network-num-fans-sport';
 			$team_image = "<img src=\"{$wgUploadPath}/team_logos/" .
 				SportsTeams::getSportLogo( $sport_id, 'l' ) .
-				'" border="0" alt="' . $this->msg( 'sportsteams-network-alt-logo' )->plain() . '" />';
+				'" border="0" alt="' . $this->msg( 'sportsteams-network-alt-logo' )->escaped() . '" />';
 		}
 		$homepage_title = SpecialPage::getTitleFor( 'FanHome' );
 
@@ -136,20 +136,21 @@ class ViewFans extends UnlistedSpecialPage {
 				$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 				$avatar = new wAvatar( $fan['user_id'], 'l' );
 				$avatar_img = $avatar->getAvatarURL();
+				$escapedUserName = htmlspecialchars( $fan['user_name'] );
 
 				$output .= "<div class=\"relationship-item\">
 						<div class=\"relationship-image\"><a href=\"{$loopUser->getFullURL()}\">{$avatar_img}</a></div>
 						<div class=\"relationship-info\">
 						<div class=\"relationship-name\">
-							<a href=\"{$loopUser->getFullURL()}\">{$fan['user_name']}</a>";
+							<a href=\"{$loopUser->getFullURL()}\">{$escapedUserName}</a>";
 
 				$output .= '</div>
 					<div class="relationship-actions">';
 				if ( in_array( $fan['user_id'], $friends ) ) {
-					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-friend' )->text() . '</span> ';
+					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-friend' )->escaped() . '</span> ';
 				}
 				if ( in_array( $fan['user_id'], $foes ) ) {
-					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-foe' )->text() . '</span> ';
+					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-foe' )->escaped() . '</span> ';
 				}
 				if ( $fan['user_name'] != $user->getName() ) {
 					$pipeList = [];
@@ -176,7 +177,7 @@ class ViewFans extends UnlistedSpecialPage {
 					);
 					$output .= $this->getLanguage()->pipeList( $pipeList );
 					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
-					$output .= $this->msg( 'word-separator' )->text();
+					$output .= $this->msg( 'word-separator' )->escaped();
 					$output .= '<div class="visualClear"></div>';
 				}
 				$output .= '</div>';
@@ -209,7 +210,7 @@ class ViewFans extends UnlistedSpecialPage {
 						'sport_id' => $sport_id,
 						'team_id' => $team_id
 					]
-				) . $this->msg( 'word-separator' )->plain();
+				) . $this->msg( 'word-separator' )->escaped();
 			}
 
 			if ( ( $total % $per_page ) != 0 ) {
@@ -232,12 +233,12 @@ class ViewFans extends UnlistedSpecialPage {
 							'sport_id' => $sport_id,
 							'team_id' => $team_id
 						]
-					) . $this->msg( 'word-separator' )->plain();
+					) . $this->msg( 'word-separator' )->escaped();
 				}
 			}
 
 			if ( ( $total - ( $per_page * $page ) ) > 0 ) {
-				$output .= $this->msg( 'word-separator' )->plain() . $linkRenderer->makeLink(
+				$output .= $this->msg( 'word-separator' )->escaped() . $linkRenderer->makeLink(
 					$pt,
 					$this->msg( 'sportsteams-next' )->plain(),
 					[],

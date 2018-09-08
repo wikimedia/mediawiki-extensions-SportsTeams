@@ -54,15 +54,15 @@ class FanHome extends UnlistedSpecialPage {
 		if ( !$sport_id && !$team_id ) {
 			$out->setPageTitle( $this->msg( 'sportsteams-network-woops-title' )->plain() );
 			$output = '<div class="relationship-request-message">' .
-				$this->msg( 'sportsteams-network-woops-text' )->plain() . '</div>';
+				$this->msg( 'sportsteams-network-woops-text' )->escaped() . '</div>';
 			$output .= '<div class="relationship-request-buttons">';
 			$output .= '<input type="button" class="site-button" value="' .
-				$this->msg( 'sportsteams-network-main-page' )->plain() .
+				$this->msg( 'sportsteams-network-main-page' )->escaped() .
 				"\" onclick=\"window.location='" .
 				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
 			if ( $user->isLoggedIn() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
-					$this->msg( 'sportsteams-network-your-profile' )->plain() .
+					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
@@ -118,7 +118,7 @@ class FanHome extends UnlistedSpecialPage {
 		// user who isn't a member of the network, offer them a "join" link
 		if ( SportsTeams::isFan( $user->getId(), $sport_id, $team_id ) ) {
 			$fan_info = '<p><span class="profile-on">' .
-				$this->msg( 'sportsteams-network-you-are-fan' )->text() . '</span></p>';
+				$this->msg( 'sportsteams-network-you-are-fan' )->escaped() . '</span></p>';
 			$fan_info .= '<p><span>';
 			$fan_info .= $linkRenderer->makeLink(
 				$leave_fans_title,
@@ -143,13 +143,13 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<div class="fan-top">';
 
 		$output .= '<div class="fan-top-left">';
-		$output .= '<h1>' . $this->msg( 'sportsteams-network-info' )->text() . '</h1>';
+		$output .= '<h1>' . $this->msg( 'sportsteams-network-info' )->escaped() . '</h1>';
 		$output .= '<div class="network-info-left">';
 		$output .= $team_image;
-		$output .= '<p>' . $this->msg( 'sportsteams-network-logo' )->text() . '</p>';
+		$output .= '<p>' . $this->msg( 'sportsteams-network-logo' )->escaped() . '</p>';
 		$output .= '</div>';
 		$output .= '<div class="network-info-right">';
-		$output .= '<p>' . $this->msg( 'sportsteams-network-fans-col' )->text() . ' ';
+		$output .= '<p>' . $this->msg( 'sportsteams-network-fans-col' )->escaped() . ' ';
 		$output .= $linkRenderer->makeLink(
 			$view_fans_title,
 			$this->network_count,

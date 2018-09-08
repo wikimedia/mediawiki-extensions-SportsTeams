@@ -68,7 +68,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 					$this->favorite_counter
 				)->parse() . " {$remove_link}</p>
 				<p class=\"profile-update-unit-left\"> " .
-					$this->msg( 'user-profile-sports-sport' )->text() .
+					$this->msg( 'user-profile-sports-sport' )->escaped() .
 				" </p>
 				<p class=\"profile-update-unit-right\">
 				<select name=\"sport_{$this->favorite_counter}\" id=\"sport_{$this->favorite_counter}\">
@@ -101,7 +101,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		}
 
 		$output .= '<p class="profile-update-unit-left">' .
-			$this->msg( 'sportsteams-updatefavoriteteams-team' )->text() . "</p>
+			$this->msg( 'sportsteams-updatefavoriteteams-team' )->escaped() . "</p>
 				<p class=\"profile-update-unit\">
 				<select name=\"team_{$this->favorite_counter}\" id=\"team_{$this->favorite_counter}\">
 					{$team_opts}
@@ -132,7 +132,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// to use this special page
 		if ( !$user->isLoggedIn() ) {
 			$out->setPageTitle( $this->msg( 'user-profile-sports-notloggedintitle' )->text() );
-			$out->addHTML( $this->msg( 'user-profile-sports-notloggedintitle' )->text() );
+			$out->addHTML( $this->msg( 'user-profile-sports-notloggedintext' )->escaped() );
 			return;
 		}
 
@@ -158,7 +158,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		] );
 
 		// This is annoying so I took it out for now.
-		//$output = '<h1>' . $this->msg( 'user-profile-sports-title' )->text() . '</h1>';
+		//$output = '<h1>' . $this->msg( 'user-profile-sports-title' )->escaped() . '</h1>';
 
 		// Build the top navigation tabs
 		// @todo FIXME/CHECKME: This requires site admins to manually edit [[MediaWiki:Update_profile_nav]]
@@ -179,7 +179,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				SportsTeams::clearUserCache( $user->getId() );
 				$out->addHTML(
 					'<br /><br /><span class="profile-on">' .
-						$this->msg( 'user-profile-sports-teamremoved' )->text() .
+						$this->msg( 'user-profile-sports-teamremoved' )->escaped() .
 					'</span><br /><br />'
 				);
 			}
@@ -212,7 +212,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				}
 				$out->addHTML(
 					'<br /><br /><span class="profile-on">' .
-						$this->msg( 'user-profile-sports-teamsaved' )->text() .
+						$this->msg( 'user-profile-sports-teamsaved' )->escaped() .
 					'</span><br /><br />'
 				);
 			}
@@ -241,11 +241,11 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		if ( count( $favorites ) > 0 ) {
 			$output .= '<input type="button" class="profile-update-button" id="update-favorite-teams-add-more-button" value="' .
-				$this->msg( 'user-profile-sports-addmore' )->plain() . '" />';
+				$this->msg( 'user-profile-sports-addmore' )->escaped() . '" />';
 		}
 
 		$output .= '<input type="button" class="profile-update-button" value="' .
-			$this->msg( 'user-profile-update-button' )->plain() . '" id="update-favorite-teams-save-button" />
+			$this->msg( 'user-profile-update-button' )->escaped() . '" id="update-favorite-teams-save-button" />
 			</form>
 			<form action="" name="sports_remove" method="post">
 				<input type="hidden" value="delete" name="action" />
