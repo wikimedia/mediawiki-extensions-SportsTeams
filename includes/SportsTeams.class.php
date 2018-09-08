@@ -615,22 +615,25 @@ class SportsTeams {
 	}
 
 	static function removeFavorite( $user_id, $sport_id, $team_id ) {
+		$user_id = (int)$user_id;
+		$sport_id = (int)$sport_id;
+		$team_id = (int)$team_id;
 		if ( !$team_id ) {
 			$where_sql = " sf_sport_id = {$sport_id} AND sf_team_id = 0 ";
 		} else {
 			$where_sql = " sf_team_id = {$team_id} ";
 		}
 
-		$dbr = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 
 		// Get the order of team being deleted;
-		$sql = "SELECT sf_order FROM {$dbr->tableName( 'sport_favorite' )} WHERE sf_user_id={$user_id} AND {$where_sql}";
-		$res = $dbr->query( $sql, __METHOD__ );
-		$row = $dbr->fetchObject( $res );
-		$order = $row->sf_order;
+		$sql = "SELECT sf_order FROM {$dbw->tableName( 'sport_favorite' )} WHERE sf_user_id={$user_id} AND {$where_sql}";
+		$res = $dbw->query( $sql, __METHOD__ );
+		$row = $dbw->fetchObject( $res );
+		$order = (int)$row->sf_order;
 
 		// Update orders for those less than one being deleted
-		$res = $dbr->update(
+		$res = $dbw->update(
 			'sport_favorite',
 			[ 'sf_order = sf_order - 1' ],
 			[ 'sf_user_id' => $user_id, "sf_order > {$order}" ],
@@ -638,8 +641,8 @@ class SportsTeams {
 		);
 
 		// Finally we can remove the fav
-		$sql = "DELETE FROM sport_favorite WHERE sf_user_id={$user_id} AND {$where_sql}";
-		$res = $dbr->query( $sql, __METHOD__ );
+		$sql = "DELETE FROM {$dbw->tableName( 'sport_favorite' )} WHERE sf_user_id={$user_id} AND {$where_sql}";
+		$res = $dbw->query( $sql, __METHOD__ );
 	}
 
 	static function dateDiff( $date1, $date2 ) {
