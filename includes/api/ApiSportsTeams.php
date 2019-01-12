@@ -4,8 +4,7 @@
  *
  * @file
  * @ingroup API
- * @date 11 July 2013
- * @see http://www.mediawiki.org/wiki/API:Extensions#ApiSampleApiExtension.php
+ * @see https://www.mediawiki.org/wiki/API:Extensions#ApiSampleApiExtension.php
  */
 class ApiSportsTeams extends ApiBase {
 
@@ -28,7 +27,7 @@ class ApiSportsTeams extends ApiBase {
 
 		// You only had one job...
 		if ( !$sportId || $sportId === null || !is_numeric( $sportId ) ) {
-			$this->dieUsageMsg( 'missingparam' );
+			$this->dieWithError( [ 'apierror-missingparam', 'sportId' ], 'missingparam' );
 		}
 
 		$dbr = $this->getDB();
