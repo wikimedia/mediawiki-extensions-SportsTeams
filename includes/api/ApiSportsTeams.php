@@ -22,9 +22,9 @@ class ApiSportsTeams extends ApiBase {
 		// Get the request parameters
 		$params = $this->extractRequestParams();
 
-		MediaWiki\suppressWarnings();
+		Wikimedia\suppressWarnings();
 		$sportId = $params['sportId'];
-		MediaWiki\restoreWarnings();
+		Wikimedia\restoreWarnings();
 
 		// You only had one job...
 		if ( !$sportId || $sportId === null || !is_numeric( $sportId ) ) {

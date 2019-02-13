@@ -452,9 +452,9 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 * @access private
 	 */
 	function unsaveUploadedFile() {
-		MediaWiki\suppressWarnings();
+		Wikimedia\suppressWarnings();
 		$success = unlink( $this->mUploadTempName );
-		MediaWiki\restoreWarnings();
+		Wikimedia\restoreWarnings();
 		if ( !$success ) {
 			throw new FatalError( $this->msg( 'filedeleteerror', $this->mUploadTempName )->escaped() );
 		}
