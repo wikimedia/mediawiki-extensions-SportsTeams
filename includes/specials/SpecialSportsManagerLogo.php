@@ -108,8 +108,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 		$this->checkReadOnly();
 
-		/** Check if the image directory is writeable, this is a common mistake */
-		if ( !is_writeable( $wgUploadDirectory ) ) {
+		/** Check if the image directory is writable, this is a common mistake */
+		if ( !is_writable( $wgUploadDirectory ) ) {
 			$out->addWikiMsg( 'upload_directory_read_only', $wgUploadDirectory );
 			return;
 		}
