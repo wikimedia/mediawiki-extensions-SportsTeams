@@ -532,7 +532,7 @@ class SportsTeams {
 		if ( !empty( $uids ) ) {
 			$ourWhere = array_merge(
 				$where,
-				// @see http://www.mediawiki.org/wiki/Special:Code/MediaWiki/92016#c19527
+				// @see https://www.mediawiki.org/wiki/Special:Code/MediaWiki/92016#c19527
 				[ 'sf_user_id' => $uids ]
 			);
 			$count = (int)$dbr->selectField(
