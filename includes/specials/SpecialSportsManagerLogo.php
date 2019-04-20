@@ -104,7 +104,6 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		/** Various rights checks */
 		if ( !$user->isAllowed( 'upload' ) || $user->isBlocked() ) {
 			throw new ErrorPageError( 'uploadnologin', 'uploadnologintext' );
-			return;
 		}
 		$this->checkReadOnly();
 

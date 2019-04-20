@@ -174,7 +174,7 @@ class TopNetworks extends SpecialPage {
 				// sportsteams-top-network-most-team-title
 				$out->setPageTitle(
 					$this->msg( 'sportsteams-top-network-' . strtolower( $adj ) . '-team-title',
-						$row_sports_nav->sport_name )->escaped()
+						$row_sport_nav->sport_name )->escaped()
 				);
 			} else {
 				$output .= '<p><a href="' . htmlspecialchars( $this->getPageTitle()->getFullURL(
