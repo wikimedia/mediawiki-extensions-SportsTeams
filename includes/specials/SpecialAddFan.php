@@ -52,7 +52,7 @@ class AddFan extends UnlistedSpecialPage {
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
-		  	$output .= '</div>';
+			$output .= '</div>';
 			$out->addHTML( $output );
 			return false;
 		}

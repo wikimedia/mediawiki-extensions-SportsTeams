@@ -106,7 +106,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				<select name=\"team_{$this->favorite_counter}\" id=\"team_{$this->favorite_counter}\">
 					{$team_opts}
 				</select>
-			    </p>
+				</p>
 				<div class=\"visualClear\"></div>
 
 			</div>";
