@@ -82,9 +82,10 @@ class SportsTeamsHooks {
 	 * form, add the user to that network, and if they also supplied a thought
 	 * about a team, post it.
 	 *
-	 * @param User $user User object representing the newly created account-to-be
+	 * @param User $user User object for the created user
+	 * @param bool $autocreated Whether this was an auto-creation or not
 	 */
-	public static function addFavoriteTeam( $user ) {
+	public static function addFavoriteTeam( $user, $autocreated ) {
 		if ( isset( $_COOKIE['sports_sid'] ) ) {
 			$sport_id = $_COOKIE['sports_sid'];
 			$team_id = $_COOKIE['sports_tid'];

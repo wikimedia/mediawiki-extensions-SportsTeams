@@ -112,7 +112,7 @@
 			"SportsTeamsUserProfile::showLatestThought",
 			"SportsTeamsUserProfile::showFavoriteTeams"
 		],
-		"AddNewAccount": "SportsTeamsHooks::addFavoriteTeam",
+		"LocalUserCreated": "SportsTeamsHooks::addFavoriteTeam",
 		"BeforePageDisplay": "SportsTeamsHooks::addSportsTeamsToSignupPage",
 		"LoadExtensionSchemaUpdates": "SportsTeamsHooks::onLoadExtensionSchemaUpdates",
 		"RenameUserSQL": "SportsTeamsHooks::onRenameUserSQL"
