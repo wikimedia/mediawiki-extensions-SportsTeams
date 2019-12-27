@@ -7,10 +7,6 @@ class SportsTeamsHooks {
 	/**
 	 * Adds the "favorite team or sport" drop-down menus to the signup page.
 	 *
-	 * Ideally this should be hooked into the UserCreateForm hook, except that
-	 * much like Special:UserLogin and its underlying code, said hook sucks
-	 * way too much.
-	 *
 	 * Based on GPL-licensed code from [[mw:Extension:CCAgreement]] by Josef
 	 * Martiňák.
 	 *
@@ -18,49 +14,28 @@ class SportsTeamsHooks {
 	 * @param Skin $skin
 	 */
 	public static function addSportsTeamsToSignupPage( &$out, &$skin ) {
-		$context = $out;
-		$title = $context->getTitle();
-		$request = $context->getRequest();
+		$title = $out->getTitle();
 
-		$signupParamIsSet = false;
+		$sports = SportsTeams::getSports();
 
-		// Only do our magic if we're on the login page
-		if ( $title->isSpecial( 'Userlogin' ) || $title->isSpecial( 'CreateAccount' ) ) {
-			if ( $title->isSpecial( 'Userlogin' ) ) {
-				$kaboom = explode( '/', $title->getText() );
+		// Only do our magic if we're on the account creation page *and* we have some
+		// sports & teams configured
+		if ( $title->isSpecial( 'CreateAccount' ) && !empty( $sports ) ) {
+			$bodyText = $out->getHTML();
 
-				// Catch [[Special:UserLogin/signup]]
-				if ( isset( $kaboom[1] ) && $kaboom[1] == 'signup' ) {
-					$signupParamIsSet = true;
-				}
-			} else {
-				// We're on Special:CreateAccount (MW 1.27 and newer only)
-				$signupParamIsSet = true;
-			}
-
-			// Both index.php?title=Special:UserLogin&type=signup and
-			// Special:UserLogin/signup are valid, obviously
-			if (
-				$request->getVal( 'type' ) == 'signup' ||
-				$signupParamIsSet
-			)
-			{
-				$bodyText = $out->getHTML();
-
-				$output = '<div>
+			$output = '<div>
 					<label for="sport_1">' .
 				wfMessage( 'sportsteams-signup-select' )->escaped() .
 			'</label>
 				<select name="sport_1" id="sport_1">
 					<option value="0">-</option>';
 
-				// Build sport option HTML
-				$sports = SportsTeams::getSports();
-				foreach ( $sports as $sport ) {
-					$output .= "<option value=\"{$sport['id']}\">{$sport['name']}</option>\n";
-				}
+			// Build sport option HTML
+			foreach ( $sports as $sport ) {
+				$output .= "<option value=\"{$sport['id']}\">{$sport['name']}</option>\n";
+			}
 
-				$output .= '</select>
+			$output .= '</select>
 			</div>
 			<div>
 				<label for="team_1">' .
@@ -81,32 +56,24 @@ class SportsTeamsHooks {
 				-->
 				<textarea tabindex="6" class="lr-input" id="thought" name="thought" maxlength="150" style="width: 150%; height: 80px;"></textarea>
 			</div>';
-				// This is needed to prevent the duplication of the form (:P)
-				// and also for injecting our custom HTML into the right place
-				$out->clearHTML();
 
-				// Append the sport/team selector to the output
-				if ( $title->isSpecial( 'CreateAccount' ) ) {
-					$bodyText = preg_replace(
-						'/<div class=\"mw-htmlform-field-HTMLSubmitField mw-ui-vform-field\">/',
-						$output . '<div class="mw-htmlform-field-HTMLSubmitField mw-ui-vform-field">',
-						$bodyText
-					);
-				} else {
-					$bodyText = preg_replace(
-						'/<div class=\"mw-submit\">/',
-						$output . '<div class="mw-submit">',
-						$bodyText
-					);
-				}
+			// This is needed to prevent the duplication of the form (:P)
+			// and also for injecting our custom HTML into the right place
+			$out->clearHTML();
 
-				// DoubleCombo is needed for populating the team drop-down menu's
-				// contents once the user has picked a team
-				$out->addModules( 'ext.sportsTeams.doubleCombo' );
+			// Append the sport/team selector to the output
+			$bodyText = preg_replace(
+				'/<div class=\"mw-htmlform-field-HTMLSubmitField mw-ui-vform-field\">/',
+				$output . '<div class="mw-htmlform-field-HTMLSubmitField mw-ui-vform-field">',
+				$bodyText
+			);
 
-				// Output the new HTML
-				$out->addHTML( $bodyText );
-			}
+			// DoubleCombo is needed for populating the team drop-down menu's
+			// contents once the user has picked a team
+			$out->addModules( 'ext.sportsTeams.doubleCombo' );
+
+			// Output the new HTML
+			$out->addHTML( $bodyText );
 		}
 	}
 
