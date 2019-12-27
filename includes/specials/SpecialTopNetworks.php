@@ -193,65 +193,73 @@ class TopNetworks extends SpecialPage {
 
 		if ( $type == 'sport' ) {
 			$fanHome = SpecialPage::getTitleFor( 'FanHome' );
-			foreach ( $res_sport as $row_sport ) {
-				// More variables
-				$user_count = $row_sport->sport_count;
-				$sport = htmlspecialchars( $row_sport->sport_name );
-				$sport_id = $row_sport->sf_sport_id;
+			if ( $dbr->numRows( $res_sport ) === 0 ) {
+				$output .= $this->msg( 'specialpage-empty' )->escaped();
+			} else {
+				foreach ( $res_sport as $row_sport ) {
+					// More variables
+					$user_count = $row_sport->sport_count;
+					$sport = htmlspecialchars( $row_sport->sport_name );
+					$sport_id = $row_sport->sf_sport_id;
 
-				// Get team logo
-				$sport_image = '<img src="' . $wgUploadPath . '/sport_logos/' .
-					SportsTeams::getSportLogo( $sport_id, 's' ) .
-					'" border="0" alt="logo" />';
+					// Get team logo
+					$sport_image = '<img src="' . $wgUploadPath . '/sport_logos/' .
+						SportsTeams::getSportLogo( $sport_id, 's' ) .
+						'" border="0" alt="logo" />';
 
-				$output .= "<div class=\"network-row\">
-					<span class=\"network-number\">{$x}.</span>
-					<span class=\"network-team\">
-						{$sport_image}
-						<a href=\"" . htmlspecialchars( $fanHome->getFullURL( [ 'sport_id' => $sport_id ] ) ) . "\">{$sport}</a>
-					</span>
-					<span class=\"network-count\">" .
-						$this->msg(
-							'sportsteams-count-fans',
-							$user_count
-						)->parse() .
-					'</span>
-					<div class="visualClear"></div>
-				</div>';
-				$x++;
+					$output .= "<div class=\"network-row\">
+						<span class=\"network-number\">{$x}.</span>
+						<span class=\"network-team\">
+							{$sport_image}
+							<a href=\"" . htmlspecialchars( $fanHome->getFullURL( [ 'sport_id' => $sport_id ] ) ) . "\">{$sport}</a>
+						</span>
+						<span class=\"network-count\">" .
+							$this->msg(
+								'sportsteams-count-fans',
+								$user_count
+							)->parse() .
+						'</span>
+						<div class="visualClear"></div>
+					</div>';
+					$x++;
+				}
 			}
 		} else {
-			foreach ( $res as $row ) {
-				// More variables
-				$user_count = $row->network_user_count;
-				$team = htmlspecialchars( $row->team_name );
-				$team_id = $row->sf_team_id;
-				$sport_id = $row->team_sport_id;
+			if ( $dbr->numRows( $res ) === 0 ) {
+				$output .= $this->msg( 'specialpage-empty' )->escaped();
+			} else {
+				foreach ( $res as $row ) {
+					// More variables
+					$user_count = $row->network_user_count;
+					$team = htmlspecialchars( $row->team_name );
+					$team_id = $row->sf_team_id;
+					$sport_id = $row->team_sport_id;
 
-				// Get team logo
-				$team_image = '<img src="' . $wgUploadPath . '/team_logos/' .
-					SportsTeams::getTeamLogo( $team_id, 's' ) .
-					'" border="0" alt="logo" />';
+					// Get team logo
+					$team_image = '<img src="' . $wgUploadPath . '/team_logos/' .
+						SportsTeams::getTeamLogo( $team_id, 's' ) .
+						'" border="0" alt="logo" />';
 
-				$fanHome = SpecialPage::getTitleFor( 'FanHome' );
-				$output .= "<div class=\"network-row\">
-					<span class=\"network-number\">{$x}.</span>
-					<span class=\"network-team\">
-						{$team_image}
-						<a href=\"" . htmlspecialchars( $fanHome->getFullURL( [
-							'sport_id' => $sport_id,
-							'team_id' => $team_id
-						] ) ) . "\">{$team}</a>
-					</span>
-					<span class=\"network-count\">" .
-						$this->msg(
-							'sportsteams-count-fans',
-							$user_count
-						)->parse() .
-					'</span>
-					<div class="visualClear"></div>
-				</div>';
-				$x++;
+					$fanHome = SpecialPage::getTitleFor( 'FanHome' );
+					$output .= "<div class=\"network-row\">
+						<span class=\"network-number\">{$x}.</span>
+						<span class=\"network-team\">
+							{$team_image}
+							<a href=\"" . htmlspecialchars( $fanHome->getFullURL( [
+								'sport_id' => $sport_id,
+								'team_id' => $team_id
+							] ) ) . "\">{$team}</a>
+						</span>
+						<span class=\"network-count\">" .
+							$this->msg(
+								'sportsteams-count-fans',
+								$user_count
+							)->parse() .
+						'</span>
+						<div class="visualClear"></div>
+					</div>';
+					$x++;
+				}
 			}
 		}
 
