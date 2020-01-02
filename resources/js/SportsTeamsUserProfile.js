@@ -7,7 +7,7 @@ var SportsTeamsUserProfile = {
 	 * else's user profile's status update message
 	 */
 	voteStatus: function( id, vote ) {
-		( new mw.Api() ).postWithToken( 'edit', {
+		( new mw.Api() ).postWithToken( 'csrf', {
 			action: 'userstatus',
 			what: 'votestatus',
 			us_id: id,
@@ -151,7 +151,7 @@ var SportsTeamsUserProfile = {
 			SportsTeamsUserProfile.posted = 1;
 			$( '#status-update' ).hide();
 
-			( new mw.Api() ).postWithToken( 'edit', {
+			( new mw.Api() ).postWithToken( 'csrf', {
 				action: 'userstatus',
 				what: 'addstatus',
 				sportId: sport_id,

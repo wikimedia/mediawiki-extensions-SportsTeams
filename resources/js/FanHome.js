@@ -12,7 +12,7 @@ var FanHome = {
 	posted: 0,
 
 	voteStatus: function( id, vote ) {
-		( new mw.Api() ).postWithToken( 'edit', {
+		( new mw.Api() ).postWithToken( 'csrf', {
 			action: 'userstatus',
 			what: 'votestatus',
 			us_id: id,
@@ -55,7 +55,7 @@ var FanHome = {
 		if ( statusUpdateText && !FanHome.posted ) {
 			FanHome.posted = 1;
 
-			( new mw.Api() ).postWithToken( 'edit', {
+			( new mw.Api() ).postWithToken( 'csrf', {
 				action: 'userstatus',
 				what: 'addnetworkstatus',
 				sportId: __sport_id__,
@@ -73,7 +73,7 @@ var FanHome = {
 
 	deleteMessage: function( id ) {
 		if ( confirm( 'Are you sure you want to delete this thought?' ) ) {
-			( new mw.Api() ).postWithToken( 'edit', {
+			( new mw.Api() ).postWithToken( 'csrf', {
 				action: 'userstatus',
 				what: 'deletestatus',
 				us_id: id,
