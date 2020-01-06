@@ -56,7 +56,8 @@ class SimilarFans extends SpecialPage {
 		$total = SportsTeams::getSimilarUserCount( $user->getId() );
 
 		/* Get all fans */
-		$fans = SportsTeams::getSimilarUsers( $user->getId(), $per_page, $page );
+		$st = new SportsTeams( $user );
+		$fans = $st->getSimilarUsers( $per_page, $page );
 
 		$out->setPageTitle( $this->msg( 'sportsteams-similar-fans' )->text() );
 

@@ -69,9 +69,8 @@ class AddFan extends UnlistedSpecialPage {
 		}
 
 		if ( $request->wasPosted() ) {
-			$s = new SportsTeams();
+			$s = new SportsTeams( $user );
 			$s->addFavorite(
-				$user->getId(),
 				$request->getVal( 's_id' ),
 				$request->getVal( 't_id' )
 			);
@@ -93,7 +92,7 @@ class AddFan extends UnlistedSpecialPage {
 			/**
 			 * Error message if you are already a fan
 			 */
-			if ( SportsTeams::isFan( $user->getId(), $sport_id, $team_id ) == true ) {
+			if ( SportsTeams::isFan( $user, $sport_id, $team_id ) == true ) {
 				$out->setPageTitle( $this->msg( 'sportsteams-network-already-member', $name )->text() );
 				$output .= '<div class="relationship-request-message">' .
 					$this->msg( 'sportsteams-network-no-need-join' )->escaped() . '</div>';

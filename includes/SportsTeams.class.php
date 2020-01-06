@@ -8,10 +8,18 @@
 class SportsTeams {
 
 	/**
-	 * Constructor
-	 * @private
+	 * @var User $user The user (object) performing actions like adding favorites
 	 */
-	/* private */ function __construct() { }
+	public $user;
+
+	/**
+	 * Constructor
+	 *
+	 * @param User $user
+	 */
+	public function __construct( $user ) {
+		$this->user = $user;
+	}
 
 	/**
 	 * Add a sport to the database.
@@ -19,7 +27,7 @@ class SportsTeams {
 	 * @param $sport_name String: user-supplied name of the sport
 	 * @param $sport_order
 	 */
-	function addSport( $sport_name, $sport_order = '' ) {
+	public function addSport( $sport_name, $sport_order = '' ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->insert(
@@ -41,7 +49,7 @@ class SportsTeams {
 	 * @param $sport_name String: user-supplied name of the sport
 	 * @param $sport_order
 	 */
-	function editSport( $sport_id, $sport_name, $sport_order = '' ) {
+	public function editSport( $sport_id, $sport_name, $sport_order = '' ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->update(
@@ -60,7 +68,7 @@ class SportsTeams {
 	 *
 	 * @return Array
 	 */
-	static function getSports() {
+	public static function getSports() {
 		$dbr = wfGetDB( DB_MASTER );
 
 		$res = $dbr->select(
@@ -88,7 +96,7 @@ class SportsTeams {
 	 * @param $sportId Integer: sport ID
 	 * @return Array: array containing each team's name and internal ID number
 	 */
-	static function getTeams( $sportId ) {
+	public static function getTeams( $sportId ) {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$res = $dbr->select(
@@ -111,7 +119,7 @@ class SportsTeams {
 		return $teams;
 	}
 
-	static function getTeam( $teamId ) {
+	public static function getTeam( $teamId ) {
 		$dbr = wfGetDB( DB_MASTER );
 
 		$res = $dbr->select(
@@ -135,7 +143,7 @@ class SportsTeams {
 		return $teams[0];
 	}
 
-	static function getSport( $sportId ) {
+	public static function getSport( $sportId ) {
 		$dbr = wfGetDB( DB_MASTER );
 
 		$res = $dbr->select(
@@ -158,7 +166,7 @@ class SportsTeams {
 		return $sports[0];
 	}
 
-	static function getNetworkName( $sport_id, $team_id ) {
+	public static function getNetworkName( $sport_id, $team_id ) {
 		if ( $team_id ) {
 			$network = SportsTeams::getTeam( $team_id );
 		} else {
@@ -168,40 +176,38 @@ class SportsTeams {
 		return $network['name'];
 	}
 
-	public function addFavorite( $user_id, $sport_id, $team_id ) {
-		if ( $user_id > 0 ) {
-			$user = User::newFromId( $user_id );
-			$user_name = $user->getName();
-
-			if ( !$this->isFan( $user_id, $sport_id, $team_id ) ) {
+	public function addFavorite( $sport_id, $team_id ) {
+		if ( $this->user->isLoggedIn() ) {
+			if ( !self::isFan( $user, $sport_id, $team_id ) ) {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->insert(
 					'sport_favorite',
 					[
 						'sf_sport_id' => $sport_id,
 						'sf_team_id' => $team_id,
-						'sf_user_id' => $user_id,
-						'sf_user_name' => $user_name,
-						'sf_order' => ( $this->getUserFavoriteTotal( $user_id ) + 1 ),
+						'sf_user_id' => $this->user->getId(),
+						'sf_user_name' => $this->user->getName(),
+						'sf_order' => ( $this->getUserFavoriteTotal( $this->user->getId() ) + 1 ),
 						'sf_date' => date( 'Y-m-d H:i:s' )
 					],
 					__METHOD__
 				);
-				$this->clearUserCache( $user_id );
+				self::clearUserCache( $this->user->getId() );
 			}
 		}
 	}
 
-	static function clearUserCache( $user_id ) {
+	public static function clearUserCache( $user_id ) {
 		global $wgMemc;
 		$key = $wgMemc->makeKey( 'user', 'teams', $user_id );
 		$data = $wgMemc->delete( $key );
 	}
 
-	static function getUserFavorites( $user_id, $order = 0 ) {
+	public function getUserFavorites( $order = 0 ) {
 		global $wgMemc;
 
 		// Try cache first
+		$user_id = $this->user->getId();
 		$key = $wgMemc->makeKey( 'user', 'teams', $user_id );
 		$data = $wgMemc->get( $key );
 
@@ -254,7 +260,7 @@ class SportsTeams {
 	 *                      medium-large and 'l' for large
 	 * @return String: full <img> tag
 	 */
-	static function getLogo( $sport_id, $team_id = 0, $size ) {
+	public static function getLogo( $sport_id, $team_id = 0, $size ) {
 		global $wgUploadPath;
 
 		if ( $sport_id > 0 && $team_id == 0 ) {
@@ -279,7 +285,7 @@ class SportsTeams {
 	 *                      medium-large and 'l' for large
 	 * @return String: team logo image filename
 	 */
-	static function getTeamLogo( $id, $size ) {
+	public static function getTeamLogo( $id, $size ) {
 		global $wgUploadDirectory;
 
 		$files = glob(
@@ -304,7 +310,7 @@ class SportsTeams {
 	 *                      medium-large and 'l' for large
 	 * @return String: sport logo image filename
 	 */
-	static function getSportLogo( $id, $size ) {
+	public static function getSportLogo( $id, $size ) {
 		global $wgUploadDirectory;
 
 		$files = glob(
@@ -320,7 +326,7 @@ class SportsTeams {
 		return $filename;
 	}
 
-	static function getUsersByFavorite( $sport_id, $team_id, $limit, $page ) {
+	public static function getUsersByFavorite( $sport_id, $team_id, $limit, $page ) {
 		global $wgMemc;
 
 		// Try cache first
@@ -378,7 +384,8 @@ class SportsTeams {
 		return $fans;
 	}
 
-	static function getSimilarUsers( $user_id, $limit = 0, $page = 0 ) {
+	public function getSimilarUsers( $limit = 0, $page = 0 ) {
+		$user_id = $this->user->getId();
 		$dbr = wfGetDB( DB_MASTER );
 
 		if ( $limit > 0 ) {
@@ -423,7 +430,7 @@ class SportsTeams {
 		return $fans;
 	}
 
-	static function getUsersByPoints( $sport_id, $team_id, $limit, $page ) {
+	public static function getUsersByPoints( $sport_id, $team_id, $limit, $page ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$where = $options = [];
 
@@ -472,7 +479,7 @@ class SportsTeams {
 		return $fans;
 	}
 
-	static function getUserCount( $sport_id, $team_id ) {
+	public static function getUserCount( $sport_id, $team_id ) {
 		if ( !$team_id ) {
 			$where = [
 				'sf_sport_id' => $sport_id,
@@ -493,7 +500,7 @@ class SportsTeams {
 		return $count;
 	}
 
-	static function getUserFavoriteTotal( $userId ) {
+	public static function getUserFavoriteTotal( $userId ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$res = (int)$dbr->selectField(
 			'sport_favorite',
@@ -504,7 +511,7 @@ class SportsTeams {
 		return $res;
 	}
 
-	static function getFriendsCountInFavorite( $user_id, $sport_id, $team_id ) {
+	public static function getFriendsCountInFavorite( $user_id, $sport_id, $team_id ) {
 		$where = [];
 		if ( !$team_id ) {
 			$where = [
@@ -548,7 +555,7 @@ class SportsTeams {
 		return $count;
 	}
 
-	static function getSimilarUserCount( $user_id ) {
+	public static function getSimilarUserCount( $user_id ) {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$teamIdQuery = $dbr->select(
@@ -584,13 +591,13 @@ class SportsTeams {
 	/**
 	 * Is the given user a fan of the given sports team?
 	 *
-	 * @param $user_id Integer: user ID number
-	 * @param $sport_id Integer: sport ID number
-	 * @param $team_id Integer: team ID number
-	 * @return Boolean: true if the user is a fan, otherwise false
+	 * @param User $user_id User who is being checked
+	 * @param int $sport_id Sport ID number
+	 * @param int $team_id Team ID number
+	 * @return bool True if the user is a fan, otherwise false
 	 */
-	static function isFan( $user_id, $sport_id, $team_id ) {
-		$where = [ 'sf_user_id' => $user_id ];
+	public static function isFan( $user, $sport_id, $team_id ) {
+		$where = [ 'sf_user_id' => $user->getId() ];
 		if ( !$team_id ) {
 			$where['sf_sport_id'] = $sport_id;
 			$where['sf_team_id'] = 0;
@@ -614,22 +621,27 @@ class SportsTeams {
 		}
 	}
 
-	static function removeFavorite( $user_id, $sport_id, $team_id ) {
-		$user_id = (int)$user_id;
+	public function removeFavorite( $sport_id, $team_id ) {
+		$user_id = (int)$this->user->getId();
 		$sport_id = (int)$sport_id;
 		$team_id = (int)$team_id;
 		if ( !$team_id ) {
-			$where_sql = " sf_sport_id = {$sport_id} AND sf_team_id = 0 ";
+			$where = [
+				'sf_user_id' => $user_id,
+				'sf_sport_id' => $sport_id,
+				'sf_team_id' => 0
+			];
 		} else {
-			$where_sql = " sf_team_id = {$team_id} ";
+			$where = [
+				'sf_user_id' => $user_id,
+				'sf_team_id' => $team_id
+			];
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
 
 		// Get the order of team being deleted;
-		$sql = "SELECT sf_order FROM {$dbw->tableName( 'sport_favorite' )} WHERE sf_user_id={$user_id} AND {$where_sql}";
-		$res = $dbw->query( $sql, __METHOD__ );
-		$row = $dbw->fetchObject( $res );
+		$res = $dbw->selectRow( 'sport_favorite', 'sf_order', $where, __METHOD__ );
 		$order = (int)$row->sf_order;
 
 		// Update orders for those less than one being deleted
@@ -641,11 +653,10 @@ class SportsTeams {
 		);
 
 		// Finally we can remove the fav
-		$sql = "DELETE FROM {$dbw->tableName( 'sport_favorite' )} WHERE sf_user_id={$user_id} AND {$where_sql}";
-		$res = $dbw->query( $sql, __METHOD__ );
+		$dbw->delete( 'sport_favorite', $where, __METHOD__ );
 	}
 
-	static function dateDiff( $date1, $date2 ) {
+	public static function dateDiff( $date1, $date2 ) {
 		$dtDiff = $date1 - $date2;
 
 		$totalDays = intval( $dtDiff / ( 24 * 60 * 60 ) );
@@ -659,7 +670,7 @@ class SportsTeams {
 		return $dif;
 	}
 
-	static function getTimeOffset( $time, $timeabrv, $timename ) {
+	public static function getTimeOffset( $time, $timeabrv, $timename ) {
 		$timeStr = '';
 		if ( $time[$timeabrv] > 0 ) {
 			$timeStr = wfMessage( "sportsteams-time-{$timename}", $time[$timeabrv] )->parse();
@@ -670,7 +681,7 @@ class SportsTeams {
 		return $timeStr;
 	}
 
-	static function getTimeAgo( $time ) {
+	public static function getTimeAgo( $time ) {
 		$timeArray = self::dateDiff( time(), $time );
 		$timeStr = '';
 		$timeStrD = self::getTimeOffset( $timeArray, 'd', 'days' );

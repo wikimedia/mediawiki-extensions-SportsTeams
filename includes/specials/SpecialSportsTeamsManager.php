@@ -50,7 +50,7 @@ class SportsTeamsManager extends SpecialPage {
  		if ( $request->wasPosted() ) {
 			// Handle the creation of a new sport here
 			if ( $request->getVal( 'method' ) == 'createsport' ) {
-				$st = new SportsTeams();
+				$st = new SportsTeams( $user );
 				$id = $st->addSport( $request->getVal( 'sport_name' ) );
 				if ( isset( $id ) && $id > 0 ) {
 					$out->addHTML(
@@ -65,7 +65,7 @@ class SportsTeamsManager extends SpecialPage {
 				$request->getVal( 'sport_id' )
 			)
 			{
-				$st = new SportsTeams();
+				$st = new SportsTeams( $user );
 				$id = $st->editSport(
 					$request->getVal( 'sport_id' ),
 					$request->getVal( 'sport_name' )

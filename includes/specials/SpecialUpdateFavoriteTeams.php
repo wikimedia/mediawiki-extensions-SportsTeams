@@ -170,9 +170,10 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		// If the request was POSTed, add/delete teams accordingly
 		if ( $request->wasPosted() ) {
+			$s = new SportsTeams( $user );
+
 			if ( $request->getVal( 'action' ) == 'delete' ) {
-				SportsTeams::removeFavorite(
-					$user->getId(),
+				$s->removeFavorite(
 					$request->getVal( 's_id' ),
 					$request->getVal( 't_id' )
 				);
@@ -206,8 +207,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 						if ( !$team_id ) {
 							$team_id = 0;
 						}
-						$s = new SportsTeams();
-						$s->addFavorite( $user->getId(), $sport_id, $team_id );
+						$s->addFavorite( $sport_id, $team_id );
 					}
 				}
 				$out->addHTML(

@@ -116,7 +116,7 @@ class FanHome extends UnlistedSpecialPage {
 		// If the user is a member of this network, visually indicate that and
 		// offer a link for leaving the network; otherwise if they're a logged-in
 		// user who isn't a member of the network, offer them a "join" link
-		if ( SportsTeams::isFan( $user->getId(), $sport_id, $team_id ) ) {
+		if ( SportsTeams::isFan( $user, $sport_id, $team_id ) ) {
 			$fan_info = '<p><span class="profile-on">' .
 				$this->msg( 'sportsteams-network-you-are-fan' )->escaped() . '</span></p>';
 			$fan_info .= '<p><span>';

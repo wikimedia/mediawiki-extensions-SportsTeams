@@ -99,8 +99,8 @@ class SportsTeamsHooks {
 			$thought = $request->getVal( 'thought' );
 
 			if ( $sport_id != 0 ) {
-				$s = new SportsTeams();
-				$s->addFavorite( $user->getId(), $sport_id, $team_id );
+				$s = new SportsTeams( $user );
+				$s->addFavorite( $sport_id, $team_id );
 
 				if ( $thought ) {
 					$b = new UserStatus( $user );

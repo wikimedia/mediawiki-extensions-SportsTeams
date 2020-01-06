@@ -20,7 +20,8 @@ class SportsTeamsUserProfile {
 
 		$add_networks_title = SpecialPage::getTitleFor( 'UpdateFavoriteTeams' );
 
-		$favs = SportsTeams::getUserFavorites( $user_id );
+		$st = new SportsTeams( $wgUser );
+		$favs = $st->getUserFavorites();
 
 		if ( $favs ) {
 			$output .= '<div class="user-section-heading">
