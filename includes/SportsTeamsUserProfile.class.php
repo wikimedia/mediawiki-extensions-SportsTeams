@@ -56,7 +56,7 @@ class SportsTeamsUserProfile {
 
 				// Originally the following two lines of code were not present and
 				// thus $user_updates was always undefined
-				$s = new UserStatus();
+				$s = new UserStatus( $wgUser );
 				$user_updates = $s->getStatusMessages(
 					$user_id, $fav['sport_id'], $fav['team_id'], 1, 1
 				);
@@ -123,7 +123,7 @@ class SportsTeamsUserProfile {
 		global $wgUser, $wgOut;
 
 		$user_id = $user_profile->user_id;
-		$s = new UserStatus();
+		$s = new UserStatus( $wgUser );
 		$user_update = $s->getStatusMessages( $user_id, 0, 0, 1, 1 );
 		$user_update = ( !empty( $user_update[0] ) ? $user_update[0] : [] );
 

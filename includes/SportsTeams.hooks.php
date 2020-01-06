@@ -86,21 +86,24 @@ class SportsTeamsHooks {
 	 * @param bool $autocreated Whether this was an auto-creation or not
 	 */
 	public static function addFavoriteTeam( $user, $autocreated ) {
-		if ( isset( $_COOKIE['sports_sid'] ) ) {
-			$sport_id = $_COOKIE['sports_sid'];
-			$team_id = $_COOKIE['sports_tid'];
-			$thought = $_COOKIE['thought'];
+		$context = RequestContext::getMain();
+		$request = $context->getRequest();
 
-			if ( !$team_id ) {
-				$team_id = 0;
-			}
+		// This code used to read the values of the cookies set in DoubleCombo.js;
+		// the cookie index names for the first two variables differ. In JS they
+		// are 'sports_sid' and 'sports_tid', but on the PHP side they are 'sport_1'
+		// and 'team_1'. 'thought' is always 'thought', though.
+		if ( $request->getInt( 'sport_1' ) ) {
+			$sport_id = $request->getInt( 'sport_1' );
+			$team_id = $request->getInt( 'team_1' );
+			$thought = $request->getVal( 'thought' );
 
 			if ( $sport_id != 0 ) {
 				$s = new SportsTeams();
 				$s->addFavorite( $user->getId(), $sport_id, $team_id );
 
 				if ( $thought ) {
-					$b = new UserStatus();
+					$b = new UserStatus( $user );
 					$m = $b->addStatus( $sport_id, $team_id, $thought );
 				}
 			}

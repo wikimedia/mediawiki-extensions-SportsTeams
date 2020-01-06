@@ -192,7 +192,7 @@ class FanHome extends UnlistedSpecialPage {
 
 		// Latest Network User Updates
 		$updates_show = 25;
-		$s = new UserStatus();
+		$s = new UserStatus( $user );
 		$output .= '<div class="network-updates">';
 		$output .= '<h1 class="network-page-title">' .
 			$this->msg( 'sportsteams-network-latest-thoughts' )->text() . '</h1>';
