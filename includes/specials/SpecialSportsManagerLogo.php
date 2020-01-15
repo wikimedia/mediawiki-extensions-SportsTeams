@@ -176,7 +176,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			$veri = $this->verify( $this->mUploadTempName, $finalExt );
 
 			if ( !$veri->isGood() ) { // it's a wiki error...
-				return $this->uploadError( $this->getOutput()->parse( $veri->getWikiText() ) );
+				return $this->uploadError( $this->getOutput()->parseAsInterface( $veri->getWikiText() ) );
 			}
 		}
 
