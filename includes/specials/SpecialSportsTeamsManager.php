@@ -21,7 +21,7 @@ class SportsTeamsManager extends SpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the special page or null
+	 * @param string|null $par Parameter passed to the special page, if any [unused]
 	 */
 	public function execute( $par ) {
 		$out = $this->getOutput();
@@ -151,10 +151,10 @@ class SportsTeamsManager extends SpecialPage {
 	 * The form for creating a brand new sport (since initially the database is
 	 * empty, naturally).
 	 *
-	 * @param $id Integer: if set, internal sport identifier, otherwise null
-	 * @return String: HTML
+	 * @param int|null $id Internal sport identifier
+	 * @return string HTML
 	 */
-	function displayCreateSportForm( $id = null ) {
+	private function displayCreateSportForm( $id = null ) {
 		$sportNameValue = '';
 
 		// If we're editing a sport that already exists, preload its name into
@@ -220,7 +220,7 @@ class SportsTeamsManager extends SpecialPage {
 		return $form;
 	}
 
-	function displaySportsList() {
+	private function displaySportsList() {
 		$output = '<div>';
 		$sports = SportsTeams::getSports();
 
@@ -260,10 +260,10 @@ class SportsTeamsManager extends SpecialPage {
 	/**
 	 * Display all teams for a given sport (via its internal identifier number).
 	 *
-	 * @param $sport_id Integer: sport identifier
-	 * @return String: HTML
+	 * @param int $sport_id Sport identifier
+	 * @return string HTML
 	 */
-	function displayTeamList( $sport_id ) {
+	private function displayTeamList( $sport_id ) {
 		$output = '<div>';
 		$teams = SportsTeams::getTeams( $sport_id );
 		$linkRenderer = $this->getLinkRenderer();

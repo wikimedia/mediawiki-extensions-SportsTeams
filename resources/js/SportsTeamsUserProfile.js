@@ -166,16 +166,20 @@ var SportsTeamsUserProfile = {
 					var theDiv2 = document.createElement( 'div' );
 					$( theDiv2 ).addClass( 'status-container' );
 					theDiv2.setAttribute( 'id', 'status-update' );
-					$( theDiv2 ).insertBefore( $( '#user-page-left:first' ) );
+					$( theDiv2 ).insertBefore( $( '#user-page-left' ).children( ':first' ) );
 
 					var theDiv = document.createElement( 'div' );
-					$( theDiv ).addClass( 'user-section-heading' );
-					theDiv.innerHTML = '<div class="user-section-title">' +
-						mw.msg( 'sportsteams-profile-latest-thought' ) + '</div>';
-					theDiv.innerHTML += '<div class="user-section-action"><a href="' +
-						__more_thoughts_url__ + '" rel="nofollow">' +
-						mw.msg( 'sportsteams-profile-view-all' ) + '</a></div>';
-					$( theDiv ).insertBefore( $( '#user-page-left:first' ) );
+					$( '<div>' )
+						.addClass( 'user-section-heading' )
+						.html(
+							'<div class="user-section-title">' +
+							mw.msg( 'sportsteams-profile-latest-thought' ) +
+							'</div>' +
+							'<div class="user-section-action"><a href="' +
+							__more_thoughts_url__ + '" rel="nofollow">' +
+							mw.msg( 'sportsteams-profile-view-all' ) + '</a></div>'
+						)
+						.insertBefore( $( '#user-page-left' ).children( ':first' ) );
 				}
 
 				$( '#status-update' ).html( data.userstatus.result ).show();

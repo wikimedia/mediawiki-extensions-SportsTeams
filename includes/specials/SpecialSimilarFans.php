@@ -12,7 +12,7 @@ class SimilarFans extends SpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the special page or null
+	 * @param string|null $par Parameter passed to the special page, if any [unused]
 	 */
 	public function execute( $par ) {
 		$lang = $this->getLanguage();
@@ -53,7 +53,7 @@ class SimilarFans extends SpecialPage {
 		$per_page = 50;
 		$per_row = 2;
 
-		$total = SportsTeams::getSimilarUserCount( $user->getId() );
+		$total = SportsTeams::getSimilarUserCount( $user );
 
 		/* Get all fans */
 		$st = new SportsTeams( $user );
@@ -73,24 +73,28 @@ class SimilarFans extends SpecialPage {
 		if ( $fans ) {
 			$x = 1;
 
+			$rr = SpecialPage::getTitleFor( 'RemoveRelationship' );
+			$ar = SpecialPage::getTitleFor( 'AddRelationship' );
+
 			foreach ( $fans as $fan ) {
 				$user_name_display = $lang->truncateForVisual( $fan['user_name'], 30 );
 
 				$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 				$avatar = new wAvatar( $fan['user_id'], 'ml' );
 				$avatar_img = $avatar->getAvatarURL();
+				$safeUserURL = htmlspecialchars( $loopUser->getFullURL(), ENT_QUOTES );
+				$safeUserName = htmlspecialchars( $user_name_display, ENT_QUOTES );
 
 				$output .= "<div class=\"relationship-item\">
-							<div class=\"relationship-image\"><a href=\"{$loopUser->getFullURL()}\">{$avatar_img}</a></div>
+							<div class=\"relationship-image\"><a href=\"{$safeUserURL}\">{$avatar_img}</a></div>
 							<div class=\"relationship-info\">
-								<div class=\"relationship-name\"><a href=\"{$loopUser->getFullURL()}\">{$user_name_display}</a>";
+								<div class=\"relationship-name\"><a href=\"{$safeUserURL}\">{$safeUserName}</a>";
 
 				$output .= '</div>
 					<div class="relationship-actions">';
-				$rr = SpecialPage::getTitleFor( 'RemoveRelationship' );
-				$ar = SpecialPage::getTitleFor( 'AddRelationship' );
+
 				$pipeList = [];
-				if ( in_array( $fan['user_id'], $friends ) ) {
+				if ( in_array( $fan['actor'], $friends ) ) {
 					$pipeList[] = $linkRenderer->makeLink(
 						$rr,
 						$this->msg( 'sportsteams-remove-as-friend' )->text(),
@@ -98,7 +102,7 @@ class SimilarFans extends SpecialPage {
 						[ 'user' => $loopUser->getText() ]
 					);
 				}
-				if ( in_array( $fan['user_id'], $foes ) ) {
+				if ( in_array( $fan['actor'], $foes ) ) {
 					$pipeList[] = $linkRenderer->makeLink(
 						$rr,
 						$this->msg( 'sportsteams-remove-as-foe' )->text(),
@@ -107,7 +111,7 @@ class SimilarFans extends SpecialPage {
 					);
 				}
 				if ( $fan['user_name'] != $user->getName() ) {
-					if ( !in_array( $fan['user_id'], $relationships ) ) {
+					if ( !in_array( $fan['actor'], $relationships ) ) {
 						$pipeList[] = $linkRenderer->makeLink(
 							$ar,
 							$this->msg( 'sportsteams-add-as-friend' )->text(),
@@ -197,8 +201,8 @@ class SimilarFans extends SpecialPage {
 		$out->addHTML( $output );
 	}
 
-	function getRelationships( $rel_type ) {
-		$rel = new UserRelationship( $this->getUser()->getName() );
+	private function getRelationships( $rel_type ) {
+		$rel = new UserRelationship( $this->getUser() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}

@@ -19,7 +19,7 @@ class TopNetworks extends SpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the special page or null
+	 * @param string|null $par Parameter passed to the special page, if any [unused]
 	 */
 	public function execute( $par ) {
 		global $wgUploadPath;
@@ -71,13 +71,13 @@ class TopNetworks extends SpecialPage {
 		$res = $dbr->select(
 			[ 'sport_favorite', 'sport_team' ],
 			[
-				'COUNT(sf_team_id) AS network_user_count',
-				'sf_team_id', 'team_name', 'team_sport_id'
+				'COUNT(sf_team_id) AS network_user_count', 'sf_team_id',
+				'team_name', 'team_sport_id'
 			],
 			$where,
 			__METHOD__,
 			[
-				'GROUP BY' => 'team_id',
+				'GROUP BY' => 'team_id, sf_team_id',
 				'ORDER BY' => "network_user_count {$order}",
 				'LIMIT' => 50
 			],
@@ -90,13 +90,12 @@ class TopNetworks extends SpecialPage {
 		$res_sport = $dbr->select(
 			[ 'sport_favorite', 'sport' ],
 			[
-				'COUNT(sf_sport_id) AS sport_count', 'sf_sport_id',
-				'sport_name'
+				'COUNT(sf_sport_id) AS sport_count', 'sf_sport_id', 'sport_name'
 			],
 			[],
 			__METHOD__,
 			[
-				'GROUP BY' => 'sf_sport_id',
+				'GROUP BY' => 'sf_sport_id, sport_name',
 				'ORDER BY' => "sport_count {$order}",
 				'LIMIT' => 50
 			],
@@ -110,7 +109,7 @@ class TopNetworks extends SpecialPage {
 			[],
 			__METHOD__,
 			[
-				'GROUP BY' => 'sport_name',
+				'GROUP BY' => 'sport_name, sport_id, team_sport_id',
 				'ORDER BY' => 'sport_id'
 			],
 			[

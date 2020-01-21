@@ -19,13 +19,13 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		parent::__construct( 'UpdateFavoriteTeams' );
 	}
 
-	function getFavorites() {
+	private function getFavorites() {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$res = $dbr->select(
 			'sport_favorite',
 			[ 'sf_sport_id', 'sf_team_id' ],
-			[ 'sf_user_id' => $this->getUser()->getId() ],
+			[ 'sf_actor' => $this->getUser()->getActorId() ],
 			__METHOD__,
 			[ 'ORDER BY' => 'sf_order' ]
 		);
@@ -42,7 +42,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		return $favorites;
 	}
 
-	function getSportsDropdown( $selected_sport_id = 0, $selected_team_id = 0 ) {
+	private function getSportsDropdown( $selected_sport_id = 0, $selected_team_id = 0 ) {
 		global $wgExtensionAssetsPath;
 
 		// Set surrent sport dropdown - show first one, or saved team
@@ -119,7 +119,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the special page or null
+	 * @param string|null $par Parameter passed to the special page, if any
 	 */
 	public function execute( $par ) {
 		global $wgExtensionsAssetsPath;
@@ -177,7 +177,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 					$request->getVal( 's_id' ),
 					$request->getVal( 't_id' )
 				);
-				SportsTeams::clearUserCache( $user->getId() );
+				SportsTeams::clearUserCache( $user );
 				$out->addHTML(
 					'<br /><br /><span class="profile-on">' .
 						$this->msg( 'user-profile-sports-teamremoved' )->escaped() .
@@ -187,13 +187,13 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 			if ( $request->getVal( 'favorites' ) ) {
 				// Clear user cache
-				SportsTeams::clearUserCache( $user->getId() );
+				SportsTeams::clearUserCache( $user );
 
 				$dbw = wfGetDB( DB_MASTER );
 				// Reset old favorites
 				$res = $dbw->delete(
 					'sport_favorite',
-					[ 'sf_user_id' => $user->getId() ],
+					[ 'sf_actor' => $user->getActorId() ],
 					__METHOD__
 				);
 
@@ -207,7 +207,15 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 						if ( !$team_id ) {
 							$team_id = 0;
 						}
-						$s->addFavorite( $sport_id, $team_id );
+						// Assuming you have chosen one favorite sport + team, DoubleCombo JS will
+						// show the drop-down for favorite #2, but the values will initially be "-"
+						// (empty) for both sport and team drop-downs. If you don't touch either,
+						// they will still exist in the WebRequest object and if we don't explicitly
+						// check for the existence of a non-zero sport ID, we'd end up saving one
+						// bogus entry into the DB which would have both sf_sport_id _and_ sf_team_id = 0.
+						if ( $sport_id > 0 ) {
+							$s->addFavorite( $sport_id, $team_id );
+						}
 					}
 				}
 				$out->addHTML(

@@ -1,6 +1,6 @@
 {
 	"name": "SportsTeams",
-	"version": "3.6.0",
+	"version": "3.7.0",
 	"author": [
 		"Aaron Wright",
 		"Ashish Datta",
@@ -9,7 +9,7 @@
 	],
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.32.0"
+		"MediaWiki": ">= 1.34.0"
 	},
 	"url": "https://www.mediawiki.org/wiki/Extension:SportsTeams",
 	"descriptionmsg": "sportsteams-desc",
@@ -114,8 +114,7 @@
 		],
 		"LocalUserCreated": "SportsTeamsHooks::addFavoriteTeam",
 		"BeforePageDisplay": "SportsTeamsHooks::addSportsTeamsToSignupPage",
-		"LoadExtensionSchemaUpdates": "SportsTeamsHooks::onLoadExtensionSchemaUpdates",
-		"RenameUserSQL": "SportsTeamsHooks::onRenameUserSQL"
+		"LoadExtensionSchemaUpdates": "SportsTeamsHooks::onLoadExtensionSchemaUpdates"
 	},
 	"config": {
 		"SportsTeamsGoogleAPIKey": "ABQIAAAAnfs7bKE82qgb3Zc2YyS-oBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxSySz_REpPq-4WZA27OwgbtyR3VcA"

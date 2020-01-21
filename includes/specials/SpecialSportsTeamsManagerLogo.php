@@ -28,7 +28,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter (team ID) passed to the special page or null
+	 * @param int|null $par Parameter (team ID) passed to the special page, if any
 	 */
 	public function execute( $par ) {
 		$this->team_id = $this->getRequest()->getInt( 'id', $par );

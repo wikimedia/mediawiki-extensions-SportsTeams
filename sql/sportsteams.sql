@@ -17,10 +17,9 @@ CREATE TABLE /*_*/sport_favorite (
 	sf_sport_id int(11) NOT NULL default 0,
 	-- Corresponds to sport_team.team_id, I believe
 	sf_team_id int(11) NOT NULL default 0,
-	-- User's ID number
-	sf_user_id int(11) NOT NULL default 0,
-	-- User's name
-	sf_user_name varchar(255) NOT NULL default '',
+	-- User's actor ID
+	sf_actor bigint unsigned NOT NULL,
+	--
 	sf_order int(11) NOT NULL default 0,
 	-- Timestamp of the last update
 	sf_date datetime default NULL

@@ -8,19 +8,23 @@
 
 class SportsTeamsUserProfile {
 
+	/**
+	 * @param UserProfilePage $user_profile
+	 */
 	public static function showFavoriteTeams( $user_profile ) {
-		global $wgUser, $wgOut, $wgUploadPath;
+		global $wgUploadPath;
 
 		$output = '';
-		$user_id = $user_profile->user_id;
+
+		$out = $user_profile->getContext()->getOutput();
 
 		// Add CSS and JS
-		$wgOut->addModuleStyles( 'ext.sportsTeams.userprofile.module.favoriteteams.css' );
-		$wgOut->addModules( 'ext.sportsTeams.userProfile' );
+		$out->addModuleStyles( 'ext.sportsTeams.userprofile.module.favoriteteams.css' );
+		$out->addModules( 'ext.sportsTeams.userProfile' );
 
 		$add_networks_title = SpecialPage::getTitleFor( 'UpdateFavoriteTeams' );
 
-		$st = new SportsTeams( $wgUser );
+		$st = new SportsTeams( $user_profile->profileOwner );
 		$favs = $st->getUserFavorites();
 
 		if ( $favs ) {
@@ -46,7 +50,7 @@ class SportsTeamsUserProfile {
 				$homepage_title = SpecialPage::getTitleFor( 'FanHome' );
 
 				$status_link = '';
-				if ( $wgUser->getId() == $user_id ) {
+				if ( $user_profile->isOwner() ) {
 					$status_link = ' <span class="status-message-add"> - <a href="javascript:void(0);" data-order="' .
 						$fav['order'] . '" data-sport-id="' . $fav['sport_id'] .
 						'" data-team-id="' . $fav['team_id'] . '" rel="nofollow">' .
@@ -57,9 +61,13 @@ class SportsTeamsUserProfile {
 
 				// Originally the following two lines of code were not present and
 				// thus $user_updates was always undefined
-				$s = new UserStatus( $wgUser );
+				$s = new UserStatus( $user_profile->profileOwner );
 				$user_updates = $s->getStatusMessages(
-					$user_id, $fav['sport_id'], $fav['team_id'], 1, 1
+					$user_profile->profileOwner->getActorId(),
+					$fav['sport_id'],
+					$fav['team_id'],
+					1,
+					1
 				);
 
 				// Added empty() check
@@ -117,15 +125,17 @@ class SportsTeamsUserProfile {
 			'</div>';
 		}
 
-		$wgOut->addHTML( $output );
+		$out->addHTML( $output );
 	}
 
+	/**
+	 * @param UserProfilePage $user_profile
+	 */
 	public static function showLatestThought( $user_profile ) {
-		global $wgUser, $wgOut;
+		$out = $user_profile->getContext()->getOutput();
 
-		$user_id = $user_profile->user_id;
-		$s = new UserStatus( $wgUser );
-		$user_update = $s->getStatusMessages( $user_id, 0, 0, 1, 1 );
+		$s = new UserStatus( $user_profile->profileOwner );
+		$user_update = $s->getStatusMessages( $user_profile->profileOwner->getActorId(), 0, 0, 1, 1 );
 		$user_update = ( !empty( $user_update[0] ) ? $user_update[0] : [] );
 
 		// Safe URLs
@@ -135,7 +145,7 @@ class SportsTeamsUserProfile {
 		$output = '';
 
 		// Add CSS
-		$wgOut->addModuleStyles( 'ext.sportsTeams.userprofile.module.latestthought.css' );
+		$out->addModuleStyles( 'ext.sportsTeams.userprofile.module.latestthoughts.css' );
 
 		if ( $user_update ) {
 			$output .= '<div class="user-section-heading">
@@ -144,7 +154,7 @@ class SportsTeamsUserProfile {
 				'</div>
 				<div class="user-section-actions">
 					<div class="action-right">
-						<a href="' . htmlspecialchars( $more_thoughts_link->getFullURL( 'user=' . $user_profile->user_name ) ) .
+						<a href="' . htmlspecialchars( $more_thoughts_link->getFullURL( [ 'user' => $user_profile->profileOwner->getName() ] ) ) .
 						'" rel="nofollow">' . wfMessage( 'sportsteams-profile-view-all' )->escaped() . '</a>
 					</div>
 					<div class="visualClear"></div>
@@ -156,7 +166,7 @@ class SportsTeamsUserProfile {
 			// next to the timestamp to the owner of the status update
 			// After all, there's no point in showing "0 people agree with this"...
 			if (
-				$wgUser->getName() == $user_update['user_name'] &&
+				$user_profile->viewingUser->getActorId() == $user_update['actor'] &&
 				$user_update['plus_count'] > 0
 			)
 			{
@@ -177,7 +187,10 @@ class SportsTeamsUserProfile {
 			// Allow registered users who are not owners of this status update to
 			// vote for it unless they've already voted; if they have voted, show
 			// the amount of people who agree with the status update
-			if ( $wgUser->isLoggedIn() && $wgUser->getName() != $user_update['user_name'] ) {
+			if (
+				$user_profile->viewingUser->isLoggedIn() &&
+				$user_profile->viewingUser->getActorId() != $user_update['actor']
+			) {
 				if ( !$user_update['voted'] ) {
 					$vote_link = "<a class=\"profile-vote-status-link\" href=\"javascript:void(0);\" data-status-update-id=\"{$user_update['id']}\" rel=\"nofollow\">" .
 						wfMessage( 'sportsteams-profile-do-you-agree' )->escaped() . '</a>';
@@ -204,11 +217,11 @@ class SportsTeamsUserProfile {
 			</div>";
 		} else {
 			$output .= '<script type="text/javascript">var __more_thoughts_url__ = "' .
-				htmlspecialchars( $more_thoughts_link->getFullURL( 'user=' . $user_profile->user_name ) ) .
+				htmlspecialchars( $more_thoughts_link->getFullURL( [ 'user' => $user_profile->profileOwner->getName() ] ) ) .
 			'";</script>';
 		}
 
-		$wgOut->addHTML( $output );
+		$out->addHTML( $output );
 	}
 
 }

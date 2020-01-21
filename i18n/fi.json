@@ -59,7 +59,7 @@
 	"sportsteams-network-join-are-you-sure": "Oletko varma, että haluat liittyä '''$1'''-faniverkostoon?",
 	"sportsteams-network-alt-logo": "logo",
 	"sportsteams-network-network-fans": "$1-fanit",
-	"sportsteams-network-back-to-network": "&lt; Takaisin verkoston \"$1\" sivulle",
+	"sportsteams-network-back-to-network": "< Takaisin verkoston \"$1\" sivulle",
 	"sportsteams-network-num-fans": "$1-sivulla on $2 {{PLURAL:$2|fani|fania}}.",
 	"sportsteams-network-num-fans-sport": "Urheilulajilla $1 on $2 {{PLURAL:$2|fani|fania}}.",
 	"sportsteams-network-no-longer-member": "Et ole enää $1-verkoston jäsen!",

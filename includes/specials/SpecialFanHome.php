@@ -73,7 +73,7 @@ class FanHome extends UnlistedSpecialPage {
 
 		$this->network_count = SportsTeams::getUserCount( $sport_id, $team_id );
 		$this->friends_network_count = SportsTeams::getFriendsCountInFavorite(
-			$user->getId(),
+			$user,
 			$sport_id,
 			$team_id
 		);
@@ -100,18 +100,12 @@ class FanHome extends UnlistedSpecialPage {
 		$out->addModules( [ 'ext.sportsTeams', 'ext.sportsTeams.fanHome' ] );
 
 		// Ashish Datta
-		// Add the script for the maps and set the onload() handler
+		// Add the script for the maps
 		// DON'T FORGET TO CHANGE KEY WHEN YOU CHANGE DOMAINS
-		// @note As of 12 August 2011, http://code.google.com/apis/maps/documentation/javascript/v2/
-		// states that the version 2 of Google Maps API has been deprecated.
-		// Furthermore, as of 26 August 2013, https://developers.google.com/maps/documentation/javascript/v2/
-		// states V2 of the Google Maps API will go away (de facto, anyway)
-		// after 19 November 2013 after which users requesting V2 API will be
-		// served a special, wrapped version of the V3 API
+		// @note The Google Maps JavaScript API v2 is deprecated and will be turned off on April 7, 2020.
+		// See https://developers.google.com/maps/documentation/javascript/v2/v2tov3 for migration notes.
 		$out->addScript( "<script src=\"http://maps.google.com/maps?file=api&amp;v=2.x&amp;key={$wgSportsTeamsGoogleAPIKey}\" type=\"text/javascript\"></script>" );
 		$out->addScript( $this->getMap() );
-		// this originally used setOnloadHandler; addOnloadHook() won't work
-		$out->addScript( '<script>jQuery( document ).ready( function() { loadMap(); } );</script>' );
 
 		// If the user is a member of this network, visually indicate that and
 		// offer a link for leaving the network; otherwise if they're a logged-in
@@ -323,10 +317,10 @@ class FanHome extends UnlistedSpecialPage {
 				SportsTeams::getSportLogo( $sport_id, 'l' );
 		}
 
-		// stores the userIDs for this network; needs to have some content to
+		// stores the actor IDs for this network; needs to have some content to
 		// prevent Database::makeList from chocking up in the DB call a few lines
 		// below...
-		$userIDs = [ 0 ];
+		$actorIDs = [ 0 ];
 		$fanLocations = []; // stores the locations on the map
 		$fanStates = []; // stores the states along with the fans from that state
 
@@ -337,22 +331,24 @@ class FanHome extends UnlistedSpecialPage {
 		$fans = SportsTeams::getUsersByFavorite( $sport_id, $team_id, 7, 0 );
 
 		// go through all the fans for this network
-		// grab their userIDs and save HTML for their mini-profiles
+		// grab their actor IDs and save HTML for their mini-profiles
 		foreach ( $fans as $fan ) {
 			$fanInfo = [];
 
 			$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 			$avatar = new wAvatar( $fan['user_id'], 'l' );
+			$safeUserURL = htmlspecialchars( $loopUser->getFullURL(), ENT_QUOTES );
+			$safeUserName = htmlspecialchars( $fan['user_name'], ENT_QUOTES );
 
 			$out = "<p class=\"map-avatar-image\">
-				<a href=\"{$loopUser->getFullURL()}\">{$avatar->getAvatarURL()}</a></p>
-				<p class=\"map-avatar-info\"> <a href=\"{$loopUser->getFullURL()}\">{$fan['user_name']}</a>";
+				<a href=\"{$safeUserURL}\">{$avatar->getAvatarURL()}</a></p>
+				<p class=\"map-avatar-info\"> <a href=\"{$safeUserURL}\">{$safeUserName}</a>";
 
 			$fanInfo['divHTML'] = $out;
 			$fanInfo['URL'] = $loopUser->getFullURL();
 			$fanInfo['user_name'] = $fan['user_name'];
 
-			$userIDs[$fan['user_id']] = $fanInfo;
+			$actorIDs[$fan['actor']] = $fanInfo;
 		}
 
 		// Get the info about the fans; only select fans that have country info
@@ -360,11 +356,11 @@ class FanHome extends UnlistedSpecialPage {
 		$res = $dbr->select(
 			'user_profile',
 			[
-				'up_user_id', 'up_location_country', 'up_location_city',
+				'up_actor', 'up_location_country', 'up_location_city',
 				'up_location_state'
 			],
 			[
-				'up_user_id' => array_keys( $userIDs ),
+				'up_actor' => array_keys( $actorIDs ),
 				'up_location_country IS NOT NULL'
 			],
 			__METHOD__
@@ -375,8 +371,8 @@ class FanHome extends UnlistedSpecialPage {
 			$loc = '';
 
 			$userInfo = [];
-			$userInfo['user_id'] = $row->up_user_id;
-			$userInfo['user_name'] = $userIDs[$row->up_user_id]['user_name'];
+			$userInfo['actor'] = $row->up_actor;
+			$userInfo['user_name'] = $actorIDs[$row->up_actor]['user_name'];
 
 			// case everything nicely
 			$country = ucwords( strtolower( $row->up_location_country ) );
@@ -414,7 +410,7 @@ class FanHome extends UnlistedSpecialPage {
 				$fanStates[$topLoc][] = $userInfo;
 			}
 
-			// htmlentities( $userIDs[$row->up_user_id]['divHTML'] )
+			// htmlentities( $actorIDs[$row->up_actor]['divHTML'] )
 			// JavaScript to place the marker
 			//
 			// @note Newlines and tab characters are trimmed from the HTML
@@ -426,9 +422,9 @@ class FanHome extends UnlistedSpecialPage {
 											function( point ) {
 												var nPoint = new GPoint( point.x + ( Math.random() * .12 ), point.y + ( Math.random() * .12 ) );
 												var gMark = FanHome.createMarker( nPoint, \"" .
-													str_replace( [ "\n", "\t" ], '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
+													str_replace( [ "\n", "\t" ], '', addslashes( $actorIDs[$row->up_actor]['divHTML'] ) ) .
 													'<br />' . $loc . "</p>\", '" .
-													$userIDs[$row->up_user_id]['URL'] . "', map
+													$actorIDs[$row->up_actor]['URL'] . "', map
 												);
 												mgr.addMarker( gMark, 6 );
 											}
@@ -445,9 +441,9 @@ class FanHome extends UnlistedSpecialPage {
 			}
 
 			$markerCode .= "var gMark = FanHome.createMarker(point, \"" .
-				str_replace( [ "\n", "\t" ], '', addslashes( $userIDs[$row->up_user_id]['divHTML'] ) ) .
+				str_replace( [ "\n", "\t" ], '', addslashes( $actorIDs[$row->up_actor]['divHTML'] ) ) .
 				'<br />' . $loc . "</p>\", '" .
-				$userIDs[$row->up_user_id]['URL'] . "', map);
+				$actorIDs[$row->up_actor]['URL'] . "', map);
 							mgr.addMarker( gMark, 6 );
 							}} );	";
 
@@ -492,7 +488,7 @@ class FanHome extends UnlistedSpecialPage {
 
 
 // loads everything onto the map
-function loadMap() {
+window.loadMap = function () {
 	if ( GBrowserIsCompatible() ) {
 		var geocoder = new GClientGeocoder();
 		var map = new GMap2( document.getElementById( 'gMap' ) );
@@ -521,7 +517,7 @@ function loadMap() {
 	 * Get the articles related to this network (articles where at least one
 	 * category matches the name of this network).
 	 *
-	 * @return String: HTML
+	 * @return string HTML
 	 */
 	function getArticles() {
 		global $wgMemc;
@@ -606,8 +602,8 @@ function loadMap() {
 	 *
 	 * Copypasta from extensions/BlogPage/BlogPage.php.
 	 *
-	 * @param $id Integer: page ID
-	 * @return Integer: amount of votes
+	 * @param int $id Page ID
+	 * @return int Amount of votes
 	 */
 	public static function getVotesForPage( $id ) {
 		global $wgMemc;
@@ -635,13 +631,13 @@ function loadMap() {
 		return $voteCount;
 	}
 
-	function getRelationships( $rel_type ) {
-		$rel = new UserRelationship( $this->getUser()->getName() );
+	private function getRelationships( $rel_type ) {
+		$rel = new UserRelationship( $this->getUser() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}
 
-	function getTopFans() {
+	private function getTopFans() {
 		$lang = $this->getLanguage();
 		$request = $this->getRequest();
 
@@ -659,8 +655,8 @@ function loadMap() {
 			$avatar = new wAvatar( $fan['user_id'], 'm' );
 			$output .= "<div class=\"top-fan-row\">
 				<span class=\"top-fan-num\">{$x}.</span> <span class=\"top-fan\">" .
-					$avatar->getAvatarURL() . ' <a href="' . $user->getFullURL() . '">' .
-						$user_name_short .
+					$avatar->getAvatarURL() . ' <a href="' . htmlspecialchars( $user->getFullURL(), ENT_QUOTES ) . '">' .
+						htmlspecialchars( $user_name_short, ENT_QUOTES ) .
 					'</a>
 				</span>
 				<span class="top-fan-points"><b>' .
@@ -681,9 +677,9 @@ function loadMap() {
 	 * Display the names and avatars of users who are fans of a given sport or
 	 * team.
 	 *
-	 * @return String: HTML
+	 * @return string HTML
 	 */
-	function getFans() {
+	private function getFans() {
 		$lang = $this->getLanguage();
 		$request = $this->getRequest();
 
@@ -697,10 +693,12 @@ function loadMap() {
 			$avatar = new wAvatar( $fan['user_id'], 'l' );
 
 			$fan_name = $lang->truncateForVisual( $fan['user_name'], 12 );
+			$safeUserURL = htmlspecialchars( $user->getFullURL(), ENT_QUOTES );
+			$safeUserName = htmlspecialchars( $fan_name, ENT_QUOTES );
 
 			$output .= "<p class=\"fan\">
-				<a href=\"{$user->getFullURL()}\">{$avatar->getAvatarURL()}</a><br>
-				<a href=\"{$user->getFullURL()}\">{$fan_name}</a>
+				<a href=\"{$safeUserURL}\">{$avatar->getAvatarURL()}</a><br>
+				<a href=\"{$safeUserURL}\">{$safeUserName}</a>
 			</p>";
 		}
 

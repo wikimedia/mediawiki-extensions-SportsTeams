@@ -58,7 +58,7 @@
 	"sportsteams-network-join-are-you-sure": "Are you sure you want to join the '''$1''' fan network?",
 	"sportsteams-network-alt-logo": "logo",
 	"sportsteams-network-network-fans": "$1 Fans",
-	"sportsteams-network-back-to-network": "&lt; Back to the $1 Network Page",
+	"sportsteams-network-back-to-network": "< Back to the $1 Network Page",
 	"sportsteams-network-num-fans": "The $1 have $2 {{PLURAL:$2|fan|fans}}.",
 	"sportsteams-network-num-fans-sport": "$1 has $2 {{PLURAL:$2|fan|fans}}.",
 	"sportsteams-network-no-longer-member": "You are no longer a member of the $1 network!",

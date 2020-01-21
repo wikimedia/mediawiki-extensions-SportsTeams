@@ -3,7 +3,7 @@
 class ViewFans extends UnlistedSpecialPage {
 
 	/**
-	 * @var String: name of the network (sports team)
+	 * @var string Name of the network (sports team)
 	 */
 	public $network;
 
@@ -17,7 +17,7 @@ class ViewFans extends UnlistedSpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the special page or null
+	 * @param string|null $par Parameter passed to the special page, if any [unused]
 	 */
 	public function execute( $par ) {
 		global $wgUploadPath;
@@ -97,8 +97,8 @@ class ViewFans extends UnlistedSpecialPage {
 				SportsTeams::getSportLogo( $sport_id, 'l' ) .
 				'" border="0" alt="' . $this->msg( 'sportsteams-network-alt-logo' )->escaped() . '" />';
 		}
-		$homepage_title = SpecialPage::getTitleFor( 'FanHome' );
 
+		$homepage_title = SpecialPage::getTitleFor( 'FanHome' );
 		$total = SportsTeams::getUserCount( $sport_id, $team_id );
 
 		/* Get all fans */
@@ -136,25 +136,26 @@ class ViewFans extends UnlistedSpecialPage {
 				$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
 				$avatar = new wAvatar( $fan['user_id'], 'l' );
 				$avatar_img = $avatar->getAvatarURL();
-				$escapedUserName = htmlspecialchars( $fan['user_name'] );
+				$escapedUserName = htmlspecialchars( $fan['user_name'], ENT_QUOTES );
+				$escapedUserPageURL = htmlspecialchars( $loopUser->getFullURL(), ENT_QUOTES );
 
 				$output .= "<div class=\"relationship-item\">
-						<div class=\"relationship-image\"><a href=\"{$loopUser->getFullURL()}\">{$avatar_img}</a></div>
+						<div class=\"relationship-image\"><a href=\"{$escapedUserPageURL}\">{$avatar_img}</a></div>
 						<div class=\"relationship-info\">
 						<div class=\"relationship-name\">
-							<a href=\"{$loopUser->getFullURL()}\">{$escapedUserName}</a>";
+							<a href=\"{$escapedUserPageURL}\">{$escapedUserName}</a>";
 
 				$output .= '</div>
 					<div class="relationship-actions">';
-				if ( in_array( $fan['user_id'], $friends ) ) {
+				if ( in_array( $fan['actor'], $friends ) ) {
 					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-friend' )->escaped() . '</span> ';
 				}
-				if ( in_array( $fan['user_id'], $foes ) ) {
+				if ( in_array( $fan['actor'], $foes ) ) {
 					$output .= '	<span class="profile-on">' . $this->msg( 'sportsteams-your-foe' )->escaped() . '</span> ';
 				}
 				if ( $fan['user_name'] != $user->getName() ) {
 					$pipeList = [];
-					if ( !in_array( $fan['user_id'], $relationships ) ) {
+					if ( !in_array( $fan['actor'], $relationships ) ) {
 						$ar = SpecialPage::getTitleFor( 'AddRelationship' );
 						$pipeList[] = $linkRenderer->makeLink(
 							$ar,
@@ -229,7 +230,7 @@ class ViewFans extends UnlistedSpecialPage {
 						$i,
 						[],
 						[
-							'page' => ( $i ),
+							'page' => $i,
 							'sport_id' => $sport_id,
 							'team_id' => $team_id
 						]
@@ -256,8 +257,8 @@ class ViewFans extends UnlistedSpecialPage {
 		$out->addHTML( $output );
 	}
 
-	function getRelationships( $rel_type ) {
-		$rel = new UserRelationship( $this->getUser()->getName() );
+	private function getRelationships( $rel_type ) {
+		$rel = new UserRelationship( $this->getUser() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}

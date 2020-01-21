@@ -119,23 +119,13 @@ class SportsTeamsHooks {
 	public static function onLoadExtensionSchemaUpdates( $updater ) {
 		$dbExt = '';
 
-		/*
 		if ( !in_array( $updater->getDB()->getType(), [ 'mysql', 'sqlite' ] ) ) {
 			$dbExt = ".{$updater->getDB()->getType()}";
 		}
-		*/
 
 		$updater->addExtensionTable( 'sport', __DIR__ . "/../sql/sportsteams$dbExt.sql" );
 		$updater->addExtensionTable( 'sport_favorite', __DIR__ . "/../sql/sportsteams$dbExt.sql" );
 		$updater->addExtensionTable( 'sport_team', __DIR__ . "/../sql/sportsteams$dbExt.sql" );
 	}
 
-	/**
-	 * For integration with the Renameuser extension.
-	 *
-	 * @param RenameuserSQL $renameUserSQL
-	 */
-	public static function onRenameUserSQL( $renameUserSQL ) {
-		$renameUserSQL->tables['sport_favorite'] = [ 'sf_user_name', 'sf_user_id' ];
-	}
 }

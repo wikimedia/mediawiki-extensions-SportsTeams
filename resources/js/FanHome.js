@@ -177,7 +177,7 @@ var FanHome = {
 		// just in case
 		caption = caption.replace( /<script>/i, 'script' );
 
-		$( marker ).bind( 'mouseover', function() {
+		$( marker ).on( 'mouseover', function() {
 			var bb  = this.map.getBounds();
 
 			// if the point isn't visible, just exit
@@ -209,14 +209,14 @@ var FanHome = {
 		} );
 
 		// when the icon is clicked, load the fan's profile page
-		$( marker ).bind( 'click', function() {
+		$( marker ).on( 'click', function() {
 			window.location = this.url;
-		});
+		} );
 
 		// hide the info-div on mouse-out
-		$( marker ).bind( 'mouseout', function() {
+		$( marker ).on( 'mouseout', function() {
 			document.getElementById( 'gMapInfo' ).style.display = 'none';
-		});
+		} );
 
 		return marker;
 	}
@@ -244,5 +244,9 @@ $( function() {
 		$( 'body' ).on( 'click', '.vote-status-link', function() {
 			FanHome.voteStatus( $( this ).data( 'message-id' ), 1 );
 		} );
+
+		if ( typeof window.loadMap === 'function' ) {
+			window.loadMap();
+		}
 	}
 } );
