@@ -648,7 +648,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		if ( $wgVerifyMimeType ) {
 			# check mime type against file extension
 			if ( !UploadBase::verifyExtension( $mime, $extension ) ) {
-				return Status::newFatal( 'uploadcorrupt' );
+				return Status::newFatal( 'filetype-mime-mismatch', $extension, $mime );
 			}
 
 			# check mime type blacklist
