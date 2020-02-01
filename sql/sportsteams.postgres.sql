@@ -7,6 +7,8 @@ CREATE TABLE /*_*/sport (
 	sport_order TEXT NOT NULL default ''
 );
 
+ALTER SEQUENCE sport_sport_id_seq OWNED BY sport.sport_id;
+
 CREATE TABLE /*_*/sport_favorite (
 	sf_id INTEGER NOT NULL default 0,
 	sf_sport_id INTEGER NOT NULL default 0,
@@ -24,3 +26,5 @@ CREATE TABLE /*_*/sport_team (
 	team_name TEXT NOT NULL default '',
 	team_sport_id INTEGER NOT NULL default 0
 );
+
+ALTER SEQUENCE sport_team_team_id_seq OWNED BY sport_team.team_id;
