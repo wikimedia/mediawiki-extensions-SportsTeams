@@ -5,6 +5,9 @@
  * @file
  * @ingroup Extensions
  */
+
+use MediaWiki\MediaWikiServices;
+
 class SportsTeams {
 
 	/**
@@ -229,9 +232,9 @@ class SportsTeams {
 	 * @param User $user
 	 */
 	public static function clearUserCache( $user ) {
-		global $wgMemc;
-		$key = $wgMemc->makeKey( 'user', 'teams', 'actor_id', $user->getActorId() );
-		$data = $wgMemc->delete( $key );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$key = $cache->makeKey( 'user', 'teams', 'actor_id', $user->getActorId() );
+		$cache->delete( $key );
 	}
 
 	/**
@@ -241,12 +244,11 @@ class SportsTeams {
 	 * @return array
 	 */
 	public function getUserFavorites() {
-		global $wgMemc;
-
 		// Try cache first
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 		$actorId = $this->user->getActorId();
-		$key = $wgMemc->makeKey( 'user', 'teams', 'actor_id', $actorId );
-		$data = $wgMemc->get( $key );
+		$key = $cache->makeKey( 'user', 'teams', 'actor_id', $actorId );
+		$data = $cache->get( $key );
 
 		if ( $data ) {
 			wfDebugLog( 'SportsTeams', "Got favorite teams for actor ID {$actorId} from cache" );
@@ -282,7 +284,7 @@ class SportsTeams {
 				];
 			}
 
-			$wgMemc->set( $key, $favs );
+			$cache->set( $key, $favs );
 		}
 
 		return $favs;
@@ -373,12 +375,11 @@ class SportsTeams {
 	 * @return array
 	 */
 	public static function getUsersByFavorite( $sport_id, $team_id, $limit, $page ) {
-		global $wgMemc;
-
 		// Try cache first
-		//$key = $wgMemc->makeKey( 'user', 'teams', $user_id );
-		#$wgMemc->delete( $key );
-		//$data = $wgMemc->get( $key );
+		//$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		//$key = $cache->makeKey( 'user', 'teams', $user_id );
+		#$cache->delete( $key );
+		//$data = $cache->get( $key );
 		//if ( $data ) {
 		//	wfDebugLog( 'SportsTeams', "Got favorite teams for {$user_id} from cache" );
 		//	$favs = $data;
@@ -427,7 +428,7 @@ class SportsTeams {
 					'user_name' => $row->actor_name
 				];
 			}
-			//$wgMemc->set( $key, $favs );
+			//$cache->set( $key, $favs );
 		//}
 		return $fans;
 	}
