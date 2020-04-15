@@ -14,6 +14,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	public $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
 	public $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
 	public $mOname, $mSessionKey, $mStashed, $mDestFile;
+	public $mTokenOk;
 	public $teamLogosUploadDirectory;
 	public $fileExtensions;
 	public $team_id;
@@ -81,6 +82,10 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			$this->mSessionKey     = false;
 			$this->mStashed        = false;
 		}
+
+		// If it was posted check for the token (no remote POST'ing with user credentials)
+		$token = $request->getVal( 'wpEditToken' );
+		$this->mTokenOk = $this->getUser()->matchEditToken( $token );
 	}
 
 	/**
@@ -115,8 +120,13 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		if ( $this->mReUpload ) {
 			$this->unsaveUploadedFile();
 			$this->mainUploadForm();
-		} elseif ( 'submit' == $this->mAction || $this->mUpload ) {
-			$this->processUpload();
+		} elseif ( $this->mAction == 'submit' || $this->mUpload ) {
+			if ( $this->mTokenOk ) {
+				$this->processUpload();
+			} else {
+				// Possible CSRF attempt or something...
+				$this->mainUploadForm( $this->msg( 'session_fail_preview' )->parse() );
+			}
 		} else {
 			$this->mainUploadForm();
 		}
@@ -644,6 +654,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		}
 		$out->addHTML( $output );
 
+		$token = Html::hidden( 'wpEditToken', $this->getUser()->getEditToken() );
+
 		$out->addHTML( "
 	<form id='upload' method='post' enctype='multipart/form-data' action=\"\">
 	<table border='0'><tr>
@@ -654,6 +666,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	{$source}
 	</tr>
 	<tr><td>
+	{$token}
 	<input tabindex='5' type='submit' name='wpUpload' value=\"{$ulb}\" />
 	</td></tr></table></form>\n" );
 	}

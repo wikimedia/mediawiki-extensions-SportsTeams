@@ -14,6 +14,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	public $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
 	public $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
 	public $mOname, $mSessionKey, $mStashed, $mDestFile;
+	public $mTokenOk;
 	public $uploadDirectory;
 	public $fileExtensions;
 	public $team_id;
@@ -28,10 +29,10 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param int|null $par Parameter (team ID) passed to the special page, if any
+	 * @param int|null $par Parameter (network ID) passed to the special page, if any
 	 */
 	public function execute( $par ) {
-		$this->team_id = $this->getRequest()->getVal( 'id', $par );
+		$this->team_id = $this->getRequest()->getInt( 'id', $par );
 		$this->initLogo();
 		$this->executeLogo();
 	}
@@ -82,6 +83,10 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			$this->mSessionKey     = false;
 			$this->mStashed        = false;
 		}
+
+		// If it was posted check for the token (no remote POST'ing with user credentials)
+		$token = $request->getVal( 'wpEditToken' );
+		$this->mTokenOk = $this->getUser()->matchEditToken( $token );
 	}
 
 	/**
@@ -116,8 +121,13 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		if ( $this->mReUpload ) {
 			$this->unsaveUploadedFile();
 			$this->mainUploadForm();
-		} elseif ( 'submit' == $this->mAction || $this->mUpload ) {
-			$this->processUpload();
+		} elseif ( $this->mAction == 'submit' || $this->mUpload ) {
+			if ( $this->mTokenOk ) {
+				$this->processUpload();
+			} else {
+				// Possible CSRF attempt or something...
+				$this->mainUploadForm( $this->msg( 'session_fail_preview' )->parse() );
+			}
 		} else {
 			$this->mainUploadForm();
 		}
@@ -617,6 +627,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 		$out->addHTML( $output );
 
+		$token = Html::hidden( 'wpEditToken', $this->getUser()->getEditToken() );
+
 		$out->addHTML( "
 	<form id='upload' method='post' enctype='multipart/form-data' action=\"\">
 	<table border='0'><tr>
@@ -627,6 +639,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	{$source}
 	</tr>
 	<tr><td>
+	{$token}
 	<input tabindex='5' type='submit' name='wpUpload' value=\"{$ulb}\" />
 	</td></tr></table></form>\n" );
 	}
