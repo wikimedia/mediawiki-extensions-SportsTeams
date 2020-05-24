@@ -9,6 +9,9 @@
  * @file
  * @ingroup Extensions
  */
+
+use MediaWiki\MediaWikiServices;
+
 class FanHome extends UnlistedSpecialPage {
 
 	public $friends, $foes, $relationships, $network_count,
@@ -520,11 +523,10 @@ window.loadMap = function () {
 	 * @return string HTML
 	 */
 	function getArticles() {
-		global $wgMemc;
-
 		// Try cache first
-		$key = $wgMemc->makeKey( 'fanhome', 'network-articles', 'six' );
-		$data = $wgMemc->get( $key );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$key = $cache->makeKey( 'fanhome', 'network-articles', 'six' );
+		$data = $cache->get( $key );
 
 		if ( $data != '' ) {
 			wfDebugLog( 'FanHome', 'Got network articles from cache' );
@@ -561,8 +563,8 @@ window.loadMap = function () {
 				];
 			}
 
-			// Cache in memcached for 15 minutes
-			$wgMemc->set( $key, $articles, 60 * 15 );
+			// Cache for 15 minutes
+			$cache->set( $key, $articles, 60 * 15 );
 		}
 
 		$html = '<div class="listpages-container">';
@@ -606,11 +608,10 @@ window.loadMap = function () {
 	 * @return int Amount of votes
 	 */
 	public static function getVotesForPage( $id ) {
-		global $wgMemc;
-
 		// Try cache first
-		$key = $wgMemc->makeKey( 'fanhome', 'vote', 'count' );
-		$data = $wgMemc->get( $key );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$key = $cache->makeKey( 'fanhome', 'vote', 'count' );
+		$data = $cache->get( $key );
 
 		if ( $data != '' ) {
 			wfDebugLog( 'FanHome', "Got vote count for the page with ID {$id} from cache" );
@@ -624,8 +625,8 @@ window.loadMap = function () {
 				[ 'vote_page_id' => intval( $id ) ],
 				__METHOD__
 			);
-			// Store in memcached for 15 minutes
-			$wgMemc->set( $key, $voteCount, 60 * 15 );
+			// Cache for 15 minutes
+			$cache->set( $key, $voteCount, 60 * 15 );
 		}
 
 		return $voteCount;
