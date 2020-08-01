@@ -217,7 +217,7 @@ class SportsTeams {
 						'sf_team_id' => $team_id,
 						'sf_actor' => $this->user->getActorId(),
 						'sf_order' => ( $this->getUserFavoriteTotal( $this->user ) + 1 ),
-						'sf_date' => date( 'Y-m-d H:i:s' )
+						'sf_date' => $dbw->timestamp( date( 'Y-m-d H:i:s' ) )
 					],
 					__METHOD__
 				);
