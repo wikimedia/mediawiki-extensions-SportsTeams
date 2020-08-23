@@ -433,6 +433,15 @@ class SportsTeams {
 		return $fans;
 	}
 
+	/**
+	 * Used on Special:SimilarFans to get the count of users who have similar interests
+	 * as the current user.
+	 *
+	 * @param int $limit LIMIT for the SQL query
+	 * @param int $page OFFSET for the SQL query
+	 * @return array Array containing similar users' user IDs and user names, or
+	 *   an empty array if no users are similar to the current user
+	 */
 	public function getSimilarUsers( $limit = 0, $page = 0 ) {
 		$actorId = $this->user->getActorId();
 		$dbr = wfGetDB( DB_MASTER );
