@@ -45,7 +45,7 @@ class SportsTeamsManager extends SpecialPage {
 		$out->setPageTitle( $this->msg( 'sportsteams-team-manager-title' )->plain() );
 
 		// Add CSS
-		$out->addModules( 'ext.sportsTeams.manager' );
+		$out->addModuleStyles( 'ext.sportsTeams.manager' );
 
  		if ( $request->wasPosted() ) {
 			// Handle the creation of a new sport here
