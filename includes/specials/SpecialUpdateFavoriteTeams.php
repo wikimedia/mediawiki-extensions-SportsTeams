@@ -151,11 +151,11 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$out->setPageTitle( $this->msg( 'user-profile-sports-title' )->plain() );
 
 		// Add CSS (from SocialProfile), DoubleCombo.js and UpdateFavoriteTeams.js files to the page output
-		$out->addModules( [
+		$out->addModuleStyles( [
 			'ext.socialprofile.userprofile.tabs.css',
 			'ext.socialprofile.special.updateprofile.css',
-			'ext.sportsTeams.updateFavoriteTeams'
 		] );
+		$out->addModules( 'ext.sportsTeams.updateFavoriteTeams' );
 
 		// This is annoying so I took it out for now.
 		//$output = '<h1>' . $this->msg( 'user-profile-sports-title' )->escaped() . '</h1>';
