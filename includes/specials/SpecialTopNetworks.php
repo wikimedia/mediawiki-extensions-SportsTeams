@@ -62,7 +62,7 @@ class TopNetworks extends SpecialPage {
 		$out->setPageTitle( $this->msg( 'sportsteams-top-network-team-title-' . $adj . '-' . $type_title )->text() );
 
 		// Add CSS
-		$out->addModules( 'ext.sportsTeams' );
+		$out->addModuleStyles( 'ext.sportsTeams' );
 
 		// Database handler
 		$dbr = wfGetDB( DB_MASTER );

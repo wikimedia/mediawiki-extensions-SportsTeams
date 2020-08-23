@@ -100,7 +100,8 @@ class FanHome extends UnlistedSpecialPage {
 		$out->setPageTitle( $this->msg( 'sportsteams-network-fan-network', $this->network )->text() );
 
 		// Add CSS & JS
-		$out->addModules( [ 'ext.sportsTeams', 'ext.sportsTeams.fanHome' ] );
+		$out->addModuleStyles( 'ext.sportsTeams' );
+		$out->addModules( 'ext.sportsTeams.fanHome' );
 
 		// Ashish Datta
 		// Add the script for the maps

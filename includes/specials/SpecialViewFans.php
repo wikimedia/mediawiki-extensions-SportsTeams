@@ -60,7 +60,7 @@ class ViewFans extends UnlistedSpecialPage {
 		}
 
 		// Add CSS
-		$out->addModules( 'ext.sportsTeams' );
+		$out->addModuleStyles( 'ext.sportsTeams' );
 
 		$relationships = [];
 		$friends = [];

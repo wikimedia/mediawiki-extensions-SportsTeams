@@ -32,7 +32,7 @@ class SimilarFans extends SpecialPage {
 		}
 
 		// Add CSS
-		$out->addModules( 'ext.sportsTeams' );
+		$out->addModuleStyles( 'ext.sportsTeams' );
 
 		$output = '';
 

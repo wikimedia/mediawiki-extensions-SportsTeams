@@ -32,7 +32,7 @@ class AddFan extends UnlistedSpecialPage {
 		$team_id = $request->getVal( 'team_id' );
 
 		// Add CSS
-		$out->addModules( 'ext.sportsTeams' );
+		$out->addModuleStyles( 'ext.sportsTeams' );
 
 		/**
 		 * Error message for URL with no team and sport specified
