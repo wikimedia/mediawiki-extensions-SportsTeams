@@ -673,7 +673,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		# check for HTML-ish code and JavaScript
-		if ( UploadBase::detectScript( $tmpfile, $mime ) ) {
+		if ( UploadBase::detectScript( $tmpfile, $mime, $extension ) ) {
 			return Status::newFatal( 'uploadscripted' );
 		}
 

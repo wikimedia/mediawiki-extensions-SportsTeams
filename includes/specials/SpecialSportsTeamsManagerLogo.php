@@ -248,6 +248,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 				$thumbWidth = $origWidth;
 			}
 			$thumbHeight = ( $thumbWidth * $origHeight / $origWidth );
+			$border = '';
 			if ( $thumbHeight < $thumbWidth ) {
 				$border = ' -bordercolor white  -border  0x' . ( ( $thumbWidth - $thumbHeight ) / 2 );
 			}
@@ -352,6 +353,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_m', 50 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_s', 25 );
 
+		$type = 0;
 		if ( $ext == 'JPG' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.jpg' ) ) {
 			$type = 2;
 		}
@@ -397,6 +399,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		if ( $type <= 0 ) {
+			$stash = $this->teamLogosUploadDirectory;
 			throw new FatalError( $this->msg( 'filecopyerror', $tempName, $stash )->escaped() );
 		}
 
@@ -700,7 +703,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		# check for HTML-ish code and JavaScript
-		if ( UploadBase::detectScript( $tmpfile, $mime ) ) {
+		if ( UploadBase::detectScript( $tmpfile, $mime, $extension ) ) {
 			return Status::newFatal( 'uploadscripted' );
 		}
 
