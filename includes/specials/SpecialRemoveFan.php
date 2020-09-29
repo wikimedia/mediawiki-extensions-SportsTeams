@@ -67,11 +67,12 @@ class RemoveFan extends UnlistedSpecialPage {
 			$name = $sport['name'];
 		}
 
-		if ( $request->wasPosted() ) {
+		// @todo FIXME: rename the various CSS classes below
+		if ( $request->wasPosted() && $user->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
 			$s = new SportsTeams( $user );
 			$s->removeFavorite(
-				$request->getVal( 's_id' ),
-				$request->getVal( 't_id' )
+				$request->getInt( 's_id' ),
+				$request->getInt( 't_id' )
 			);
 
 			$out->setPageTitle( $this->msg( 'sportsteams-network-no-longer-member', $name )->text() );
@@ -111,7 +112,7 @@ class RemoveFan extends UnlistedSpecialPage {
 
 			$output .= '<form action="" method="post" enctype="multipart/form-data" name="form1">
 
-				<div class="give-gift-message" style="margin:0px 0px 0px 0px;">' .
+				<div class="give-gift-message" style="margin:0;">' .
 					$this->msg( 'sportsteams-network-leave-are-you-sure', $name )->parse() .
 				"</div>
 
@@ -119,7 +120,8 @@ class RemoveFan extends UnlistedSpecialPage {
 				<div class=\"give-gift-buttons\">
 					<input type=\"hidden\" name=\"s_id\" value=\"{$sport_id}\" />
 					<input type=\"hidden\" name=\"t_id\" value=\"{$team_id}\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-remove-me' )->escaped() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
+					<input type=\"hidden\" name=\"wpEditToken\" value=\"" . htmlspecialchars( $user->getEditToken(), ENT_QUOTES ) . "\" />
+					<input type=\"submit\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-remove-me' )->escaped() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
 					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->escaped() . "\" size=\"20\" onclick=\"history.go(-1)\" />
 				</div>
 			</form>";

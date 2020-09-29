@@ -16,7 +16,7 @@ class AddFan extends UnlistedSpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the special page or null
+	 * @param string|null $par Parameter passed to the special page, if any [unused]
 	 */
 	public function execute( $par ) {
 		$out = $this->getOutput();
@@ -68,11 +68,12 @@ class AddFan extends UnlistedSpecialPage {
 			$name = $sport['name'];
 		}
 
-		if ( $request->wasPosted() ) {
+		// @todo FIXME: rename the various CSS classes below
+		if ( $request->wasPosted() && $user->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
 			$s = new SportsTeams( $user );
 			$s->addFavorite(
-				$request->getVal( 's_id' ),
-				$request->getVal( 't_id' )
+				$request->getInt( 's_id' ),
+				$request->getInt( 't_id' )
 			);
 
 			$view_fans_title = SpecialPage::getTitleFor( 'ViewFans' );
@@ -116,7 +117,7 @@ class AddFan extends UnlistedSpecialPage {
 
 			$output .= '<form action="" method="post" enctype="multipart/form-data" name="form1">
 
-				<div class="give-gift-message" style="margin:0px 0px 0px 0px;">' .
+				<div class="give-gift-message" style="margin:0;">' .
 					$this->msg( 'sportsteams-network-join-are-you-sure', $name )->parse() .
 				"</div>
 
@@ -124,7 +125,8 @@ class AddFan extends UnlistedSpecialPage {
 				<div class=\"give-gift-buttons\">
 					<input type=\"hidden\" name=\"s_id\" value=\"{$sport_id}\" />
 					<input type=\"hidden\" name=\"t_id\" value=\"{$team_id}\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-join-network' )->escaped() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
+					<input type=\"hidden\" name=\"wpEditToken\" value=\"" . htmlspecialchars( $user->getEditToken(), ENT_QUOTES ) . "\" />
+					<input type=\"submit\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-join-network' )->escaped() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
 					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->plain() . "\" size=\"20\" onclick=\"history.go(-1)\" />
 				</div>
 			</form>";
