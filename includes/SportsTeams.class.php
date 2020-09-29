@@ -487,6 +487,15 @@ class SportsTeams {
 		return $fans;
 	}
 
+	/**
+	 * Get the top fans (users who have the most points) for a given sport or
+	 * sport+team combo.
+	 *
+	 * @param int $sport_id Sport identifier
+	 * @param int $team_id Team identifier [optional]
+	 * @param int $limit LIMIT for the SQL query, i.e. get this many users
+	 * @param int $page OFFSET for the SQL query, for pagination [optional]
+	 */
 	public static function getUsersByPoints( $sport_id, $team_id, $limit, $page ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$where = $options = [];
