@@ -272,7 +272,7 @@ class FanHome extends UnlistedSpecialPage {
 			$this->msg( 'sportsteams-network-articles', $this->network )->text() . '</h1>';
 		$output .= '<p class="fan-network-sub-text">';
 		if ( class_exists( 'BlogPage' ) ) { // @todo CHECKME: is there any point in this check?
-			$createBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' );
+			$createBlogPage = SpecialPage::getTitleFor( 'CreateBlogPost' );
 			$output .= $linkRenderer->makeLink(
 				$createBlogPage,
 				$this->msg( 'sportsteams-network-write-article' )->text()
