@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"sportsteams-no-articles": "Keng Artikelen.",
+	"sportsteams-network-friends-col": "Frënn: $1",
+	"sportsteams-network-articles": "$1 Artikelen",
+	"sportsteams-network-write-article": "En Artikel schreiwen",
+	"sportsteams-network-main-page": "Haaptsäit",
+	"sportsteams-network-your-profile": "Äre Profil",
+	"sportsteams-network-remove-me": "Mech ewechhuelen",
+	"sportsteams-top-network-teams": "Ekippen",
+	"sportsteams-logo-size-large": "Grouss",
+	"sportsteams-logo-size-medium": "Mëttel",
+	"sportsteams-logo-size-small": "Kleng",
+	"sportsteams-logo-go-back": "Gitt zréck",
+	"sportsteams-logo-back": "Zréck",
+	"sportsteams-team-manager-sport": "Sport",
+	"sportsteams-team-manager-team": "Ekipp",
+	"sportsteams-profile-button-cancel": "ofbriechen",
+	"sportsteams-signup-team": "Ekipp"
+}

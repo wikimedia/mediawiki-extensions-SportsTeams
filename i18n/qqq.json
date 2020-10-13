@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Robby"
+		]
 	},
 	"sportsteams-desc": "{{desc|name=SportsTeams|url=https://www.mediawiki.org/wiki/Extension:SportsTeams}}",
 	"topnetworks": "{{doc-special}}",
@@ -82,11 +84,11 @@
 	"sportsteams-logo-images-below": "Informational message shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
 	"sportsteams-logo-size-large": "Informational message shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
 	"sportsteams-logo-size-medium": "Informational message shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
-	"sportsteams-logo-size-small": "Informational message shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
+	"sportsteams-logo-size-small": "Informational message shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team\n{{identical|Small}}",
 	"sportsteams-logo-go-back": "Navigation label shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
 	"sportsteams-logo-back-to-list": "Navigation link shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
 	"sportsteams-logo-back-to-team": "Navigation link shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
-	"sportsteams-logo-back": "Navigation button text on <code>Special:SportsManagerLogo</code> & <code>Special:SportsTeamsManagerLogo</code>; shown when the user has uploaded a file that has triggered an upload warning",
+	"sportsteams-logo-back": "Navigation button text on <code>Special:SportsManagerLogo</code> & <code>Special:SportsTeamsManagerLogo</code>; shown when the user has uploaded a file that has triggered an upload warning\n{{identical|Back}}",
 	"sportsteams-logo-current-image": "Label message shown on <code>Special:SportsTeamsManagerLogo</code> when a team already has a logo uploaded",
 	"sportsteams-logo-image-instructions": "Informational text shown on <code>Special:SportsTeamsManagerLogo</code>",
 	"sportsteams-team-manager-title": "Page title for <code>Special:SportsTeamsManager</code>",
@@ -111,7 +113,7 @@
 	"sportsteams-updatefavoriteteams-team": "Section label thing on <code>Special:UpdateFavoriteTeams</code>",
 	"sportsteams-updatefavoriteteams-favorite": "Section label thing on <code>Special:UpdateFavoriteTeams</code>",
 	"sportsteams-profile-button-add": "Button text; this button and the corresponding cancel button ({{msg-mw|sportsteams-profile-button-cancel}}) become visible on the user's own [[mw:File:Social user profile.png|social user profile pages]] if they have at least one network in their profile. On the left side (on LTR languages) of this button is an input box where the user can enter a status update (max. 150 characters long) related to a team.",
-	"sportsteams-profile-button-cancel": "Button text; this button and the corresponding submission button ({{msg-mw|sportsteams-profile-button-add}}) become visible on the user's own [[mw:File:Social user profile.png|social user profile pages]] if they have at least one network in their profile. Clicking on this button hides the status update box and the buttons.",
+	"sportsteams-profile-button-cancel": "Button text; this button and the corresponding submission button ({{msg-mw|sportsteams-profile-button-add}}) become visible on the user's own [[mw:File:Social user profile.png|social user profile pages]] if they have at least one network in their profile. Clicking on this button hides the status update box and the buttons.\n{{identical|Cancel}}",
 	"sportsteams-profile-networks": "Section title on [[mw:File:Social user profile.png|social user profile pages]]",
 	"sportsteams-profile-no-networks": "Message shown on [[mw:File:Social user profile.png|social user profile pages]] when the user has not joined any sports networks yet; visually similar to the \"No halo information\" section on [[mw:File:Social user profile.png|this screenshot]]",
 	"sportsteams-profile-add-network": "Link text shown on [[mw:File:Social user profile.png|social user profile pages]] in the networks ({{msg-mw|sportsteams-profile-networks}}) section, on the right side (for LTR languages); clicking on this link takes the user to <code>Special:UpdateFavoriteTeams</code>, the special page where they can add, modify and delete their favorite sports teams (which will then show up on their social profile page appropriately)",
