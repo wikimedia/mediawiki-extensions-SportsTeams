@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"A2y4"
+		]
+	},
+	"topnetworks": "ネットワーク統計",
+	"sportsteams-network-articles": "$1記事",
+	"sportsteams-network-your-profile": "あなたのプロフィール",
+	"sportsteams-team-manager-add-new-team": "+ 新しいチームを追加",
+	"sportsteams-profile-button-add": "追加",
+	"sportsteams-profile-networks": "ネットワーク",
+	"sportsteams-time-seconds": "{{PLURAL:$1|1秒|$1秒}}"
+}

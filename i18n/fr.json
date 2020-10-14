@@ -49,7 +49,7 @@
 	"sportsteams-network-points": "{{PLURAL:$1|1 point|$1 points}}",
 	"sportsteams-network-newest": "Nouveaux fans à partir de $1",
 	"sportsteams-network-clicktozoom": "(Cliquez pour zoomer)",
-	"sportsteams-network-now-member": "Vous n’êtes pas membre du groupe utilisateur « $1 ».",
+	"sportsteams-network-now-member": "Vous êtes maintenant membre du réseau « $1 ».",
 	"sportsteams-network-invite-more": "Invitez plus de fans à $1",
 	"sportsteams-network-find-other": "Trouver d'autres fans à $1",
 	"sportsteams-network-already-member": "Vous êtes déjà membre du groupe utilisateur $1 !",
