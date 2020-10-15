@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aranka"
+		]
+	},
+	"sportsteams-next": "volgende",
+	"sportsteams-network-articles": "$1 Artikels",
+	"sportsteams-top-network-sports": "Sporten",
+	"sportsteams-top-network-least": "Minst",
+	"sportsteams-top-network-team-title-least-sports": "Minst populaire sporten",
+	"sportsteams-top-network-most-popular": "Populairst",
+	"sportsteams-top-network-most-pop-by-sport": "Populairste sport",
+	"sportsteams-top-network-least-team-title": "Minst populaire $1 teams",
+	"sportsteams-logo-images-below": "Onderaan staan de afbeeldingen die op de site gebruikt zullen worden",
+	"sportsteams-logo-back-to-list": "Terug naar de lijst met sporten",
+	"sportsteams-team-manager-teamname": "teamnaam",
+	"sportsteams-team-manager-team": "team",
+	"sportsteams-team-manager-edit": "bewerken",
+	"sportsteams-team-manager-add-sport-button": "Sport toevoegen",
+	"sportsteams-profile-networks": "Netwerken"
+}

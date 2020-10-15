@@ -4,7 +4,16 @@
 			"Robby"
 		]
 	},
+	"sportsteams-add-button": "dobäisetzen",
+	"sportsteams-articles-votes": "({{PLURAL:$1|Stëmm|Stëmmen}})",
 	"sportsteams-no-articles": "Keng Artikelen.",
+	"sportsteams-your-friend": "Äre Frënd",
+	"sportsteams-your-foe": "Äre Feind",
+	"sportsteams-add-as-friend": "Als Frënd derbäisetzen",
+	"sportsteams-remove-as-friend": "Als Frënd ewechhuelen",
+	"sportsteams-add-as-foe": "Als Feind derbäisetzen",
+	"sportsteams-remove-as-foe": "Als Feind ewechhuelen",
+	"sportsteams-give-a-gift": "E Kaddo maachen",
 	"sportsteams-network-friends-col": "Frënn: $1",
 	"sportsteams-network-articles": "$1 Artikelen",
 	"sportsteams-network-write-article": "En Artikel schreiwen",

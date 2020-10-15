@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mpayansilva"
+		]
+	},
+	"sportsteams-remove-as-friend": "Remover amigo",
+	"sportsteams-next": "siguiente",
+	"sportsteams-network-main-page": "Página principial",
+	"sportsteams-top-network-team-title-least-sports": "Deportes menos populares",
+	"sportsteams-top-network-most-popular": "Más popular",
+	"sportsteams-logo-images-below": "Abajo están las imágenes suyas que serán usadas en el sitio",
+	"sportsteams-logo-size-medium": "Mediano",
+	"sportsteams-logo-back-to-list": "Regresar a la lista de deportes",
+	"sportsteams-team-manager-sport": "deporte",
+	"sportsteams-team-manager-teamname": "nombre del equipo",
+	"sportsteams-team-manager-team": "equipo",
+	"sportsteams-team-manager-edit": "editar",
+	"sportsteams-team-manager-edit-this-sport": "Editar este deporte",
+	"sportsteams-profile-networks": "Redes"
+}

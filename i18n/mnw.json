@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aue Nai"
+		]
+	},
+	"sportsteams-your-foe": "သၞ ဇကု",
+	"sportsteams-remove-as-friend": "တးပဲါထောံ နဒဒှ် ရဲ",
+	"sportsteams-prev": "ကိုပ်ကၠာ",
+	"sportsteams-next": "ဂတ",
+	"sportsteams-network-you-are-fan": "မၞး ဒှ်သ္ကံရဲ",
+	"sportsteams-network-complete-list": "ပတုဲ စရင်",
+	"sportsteams-network-articles": "$1 လိက်ပရေင်ဂမၠိုင်",
+	"sportsteams-network-main-page": "မုက်လိက်တမ်",
+	"sportsteams-network-your-profile": "ဝၚ်ပူဂိုလ် ဇကု",
+	"sportsteams-network-already-member": "တၠအဲဂှ်ဒှ်ဒၟံၚ်ကောန်ဂကောံဇာဇၞိက် $1 တုဲတုဲဒၟံၚ်ရ!",
+	"sportsteams-network-not-member": "မၞးဂှ် ကောန်ဂကောံဇာဇၞိက် $1 ဏအ်ဟွံသေၚ်!",
+	"sportsteams-top-network-sports": "ပရေၚ်ချဳဒရာၚ်ဂမၠိုၚ်",
+	"sportsteams-top-network-teams": "ဂကောံသ္ကံ",
+	"sportsteams-top-network-least": "ကြဴ",
+	"sportsteams-top-network-team-title-least-teams": "ဂကောံသ္ကအ်မပြာကတ်ကြဴ",
+	"sportsteams-top-network-most-popular": "မပြာကတ် အိုတ်",
+	"sportsteams-logo-upload-success": "ပၠောပ်ပတိုန် အံင်ဇၞးပေင်င်",
+	"sportsteams-logo-size-medium": "လဒေါဝ်",
+	"sportsteams-team-manager-add-new-team": "+ ထပ်စုတ်စဳပၞောန်တၟိ",
+	"sportsteams-team-manager-view-teams": "သ္ၚဳရံၚ်စရၚ်ဂကောံသ္ကံ",
+	"sportsteams-team-manager-sport": "ဝေၚ်ကာယ",
+	"sportsteams-team-manager-teamname": "ယၟု ဂကောံသ္ကံ",
+	"sportsteams-team-manager-team": "ဂကောံသ္ကံ",
+	"sportsteams-team-manager-edit": "ပလေဝ်ဒါန်",
+	"sportsteams-team-manager-add-sport-button": "စုတ် ပရေၚ်ဝေၚ်ကာယ",
+	"sportsteams-updatefavoriteteams-team": "ဂကောံသ္ကံ",
+	"sportsteams-updatefavoriteteams-favorite": "ဒဂၞပ် #$1",
+	"sportsteams-profile-button-add": "စုတ်",
+	"sportsteams-profile-networks": "ဇာဇၞိက်",
+	"sportsteams-profile-ago": "$1 တုဲကၠုၚ်",
+	"sportsteams-time-days": "{{PLURAL:$1|မွဲတ္ၚဲ|$1 တ္ၚဲဂမၠိုၚ်}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|မွဲစက္က|$1 စက္ကဂမၠိုၚ်}}"
+}
