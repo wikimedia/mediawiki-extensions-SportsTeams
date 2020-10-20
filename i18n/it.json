@@ -1,8 +1,35 @@
 {
 	"@metadata": {
 		"authors": [
-			"Beta16"
+			"Beta16",
+			"Luca.favorido"
 		]
 	},
-	"sportsteams-network-friends-col": "Amici: $1"
+	"sportsteams-add-button": "aggiungi",
+	"sportsteams-remove-as-friend": "Rimuovi amico",
+	"sportsteams-woops": "Oops!",
+	"sportsteams-network-woops-text": "L'indirizzo URL specificato non è corretto.",
+	"sportsteams-network-logo": "(Logo ufficiale)",
+	"sportsteams-network-friends-col": "Amici: $1",
+	"sportsteams-network-complete-list": "Elenco completo",
+	"sportsteams-network-write-article": "Crea una voce",
+	"sportsteams-network-main-page": "Pagina principale",
+	"sportsteams-network-your-profile": "Il tuo profilo",
+	"sportsteams-top-network-sports": "Sport",
+	"sportsteams-top-network-team-title-least-sports": "Sport meno popolari",
+	"sportsteams-top-network-most-popular": "Più popolare",
+	"sportsteams-logo-size-small": "Piccolo",
+	"sportsteams-logo-back-to-list": "Ritornare all'elenco degli sport",
+	"sportsteams-logo-back": "Indietro",
+	"sportsteams-logo-current-image": "Immagine attuale",
+	"sportsteams-team-manager-sport": "sport",
+	"sportsteams-team-manager-add-replace-logo": "aggiungi/sostituisci logo",
+	"sportsteams-team-manager-add-sport-button": "Aggiungi sport",
+	"sportsteams-profile-button-add": "aggiungi",
+	"sportsteams-profile-button-cancel": "annulla",
+	"sportsteams-profile-view-all": "Mostra tutto",
+	"sportsteams-profile-do-you-agree": "Sei d'accordo?",
+	"sportsteams-time-days": "{{PLURAL:$1|un giorno|$1 giorni}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|un secondo|$1 secondi}}",
+	"sportsteams-profile-characters-remaining": "{{PLURAL:$1|Un carattere|$1 caratteri rimanenti}}"
 }
