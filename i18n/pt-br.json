@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eduardo Addad de Oliveira"
+			"Eduardo Addad de Oliveira",
+			"Tks4Fish"
 		]
 	},
 	"sportsteams-desc": "Fornece funcionalidade de rede",
@@ -13,6 +14,7 @@
 	"sportsteams-no-articles": "Sem artigos.",
 	"sportsteams-count-fans": "{{PLURAL:$1|'''Um''' fã|'''$1''' fãs}}",
 	"sportsteams-similar-fans": "Fãs similares",
+	"sportsteams-num-similar": "Há {{PLURAL:$1|um fã que é similar|$1 fãs que são similares}} a você.",
 	"sportsteams-your-friend": "seu amigo",
 	"sportsteams-your-foe": "seu inimigo",
 	"sportsteams-add-as-friend": "Adicionar como amigo",
@@ -34,6 +36,7 @@
 	"sportsteams-network-fans-col": "Fãs:",
 	"sportsteams-network-friends-col": "Amigos: $1",
 	"sportsteams-network-fans": "$1 fãs",
+	"sportsteams-network-fan-display": "{{PLURAL:$3|Mostrando $1 de <a href=\"$2\">$3</a> Fã|Mostrando $1 de <a href=\"$2\">$3</a> Fãs}}",
 	"sportsteams-network-latest-thoughts": "Pensamentos recentes",
 	"sportsteams-network-all-thoughts": "Todos os pensamentos",
 	"sportsteams-network-fan-locations": "Localizações de fãs",
