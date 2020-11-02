@@ -10,6 +10,7 @@
 	"sportsteams-no-articles": "문서 없음.",
 	"sportsteams-similar-fans": "비슷한 팬",
 	"sportsteams-your-friend": "내 친구",
+	"sportsteams-add-as-friend": "친구로 추가",
 	"sportsteams-prev": "이전",
 	"sportsteams-next": "다음",
 	"sportsteams-woops": "이런!",
@@ -64,6 +65,7 @@
 	"sportsteams-error-no-sports-title": "오류: 데이터베이스에 스포츠가 없습니다",
 	"sportsteams-updatefavoriteteams-team": "팀",
 	"sportsteams-profile-button-add": "추가",
+	"sportsteams-profile-button-cancel": "취소",
 	"sportsteams-profile-networks": "네트워크",
 	"sportsteams-profile-no-networks": "네트워크 없음",
 	"sportsteams-profile-add-network": "네트워크 추가",
@@ -79,5 +81,6 @@
 	"sportsteams-profile-characters-remaining": "{{PLURAL:$1|1자|$1자 남음}}",
 	"sportsteams-signup-select": "좋아하는 팀이나 스포츠를 선택하세요",
 	"sportsteams-signup-team": "팀",
-	"action-sportsteamsmanager": "새 네트워크 추가"
+	"action-sportsteamsmanager": "새 네트워크 추가",
+	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|네트워크 관리]]"
 }
