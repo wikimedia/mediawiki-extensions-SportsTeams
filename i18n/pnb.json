@@ -4,5 +4,6 @@
 			"Abbas dhothar"
 		]
 	},
-	"sportsteams-time-days": "{{PLURAL:$1|اک دن|$1 دناں}}"
+	"sportsteams-time-days": "{{PLURAL:$1|اک دن|$1 دناں}}",
+	"sportsteams-time-seconds": "$1 {{PLURAL:$1|سکنٹ|سکنٹاں}}"
 }
