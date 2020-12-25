@@ -16,26 +16,26 @@ class SportsTeamsHooks {
 	public static function addSportsTeamsToSignupPage( &$out, &$skin ) {
 		$title = $out->getTitle();
 
-		$sports = SportsTeams::getSports();
+		// Only do our magic if we're on the account creation page...
+		if ( $title->isSpecial( 'CreateAccount' ) ) {
+			$sports = SportsTeams::getSports();
+			// ...*and* we have some sports & teams configured
+			if ( !empty( $sports ) ) {
+				$bodyText = $out->getHTML();
 
-		// Only do our magic if we're on the account creation page *and* we have some
-		// sports & teams configured
-		if ( $title->isSpecial( 'CreateAccount' ) && !empty( $sports ) ) {
-			$bodyText = $out->getHTML();
-
-			$output = '<div>
+				$output = '<div>
 					<label for="sport_1">' .
 				wfMessage( 'sportsteams-signup-select' )->escaped() .
 			'</label>
 				<select name="sport_1" id="sport_1">
 					<option value="0">-</option>';
 
-			// Build sport option HTML
-			foreach ( $sports as $sport ) {
-				$output .= "<option value=\"{$sport['id']}\">{$sport['name']}</option>\n";
-			}
+				// Build sport option HTML
+				foreach ( $sports as $sport ) {
+					$output .= "<option value=\"{$sport['id']}\">{$sport['name']}</option>\n";
+				}
 
-			$output .= '</select>
+				$output .= '</select>
 			</div>
 			<div>
 				<label for="team_1">' .
@@ -57,23 +57,24 @@ class SportsTeamsHooks {
 				<textarea tabindex="6" class="lr-input" id="thought" name="thought" maxlength="150" style="width: 150%; height: 80px;"></textarea>
 			</div>';
 
-			// This is needed to prevent the duplication of the form (:P)
-			// and also for injecting our custom HTML into the right place
-			$out->clearHTML();
+				// This is needed to prevent the duplication of the form (:P)
+				// and also for injecting our custom HTML into the right place
+				$out->clearHTML();
 
-			// Append the sport/team selector to the output
-			$bodyText = preg_replace(
-				'/<div class=\"mw-htmlform-field-HTMLSubmitField mw-ui-vform-field\">/',
-				$output . '<div class="mw-htmlform-field-HTMLSubmitField mw-ui-vform-field">',
-				$bodyText
-			);
+				// Append the sport/team selector to the output
+				$bodyText = preg_replace(
+					'/<div class=\"mw-htmlform-field-HTMLSubmitField mw-ui-vform-field\">/',
+					$output . '<div class="mw-htmlform-field-HTMLSubmitField mw-ui-vform-field">',
+					$bodyText
+				);
 
-			// DoubleCombo is needed for populating the team drop-down menu's
-			// contents once the user has picked a team
-			$out->addModules( 'ext.sportsTeams.doubleCombo' );
+				// DoubleCombo is needed for populating the team drop-down menu's
+				// contents once the user has picked a team
+				$out->addModules( 'ext.sportsTeams.doubleCombo' );
 
-			// Output the new HTML
-			$out->addHTML( $bodyText );
+				// Output the new HTML
+				$out->addHTML( $bodyText );
+			}
 		}
 	}
 
