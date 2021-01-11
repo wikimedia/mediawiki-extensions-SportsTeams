@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Umherirrender"
 		]
 	},
 	"sportsteams-desc": "{{desc|name=SportsTeams|url=https://www.mediawiki.org/wiki/Extension:SportsTeams}}",
@@ -56,7 +57,7 @@
 	"sportsteams-network-no-need-join": "Informational text shown on <code>Special:FanHome</code> when attempting to join a network you already belong to again",
 	"sportsteams-network-join-named-network": "Page title for <code>Special:AddFan</code> when you try to join a fan network that you don't belong to yet.\nParameters:\n* $1 is the name of the fan network you want to join, e.g. \"New York Mets\"",
 	"sportsteams-network-join-are-you-sure": "Confirmation prompt shown on <code>Special:AddFan</code> when you attempt to join a fan network.\nParameters:\n* $1 is the name of the fan network you want to join, e.g. \"New York Mets\"",
-	"sportsteams-network-alt-logo": "<code>alt</code> text for various <code>&lt;img&gt;</code> elements on <code>Special:ViewFans</code> and <code>Special:SportsTeamsManager</code> pages; this is shown for text-based browsers as well as when the image in question fails to load for whatever reason",
+	"sportsteams-network-alt-logo": "{{optional}}\n<code>alt</code> text for various <code>&lt;img&gt;</code> elements on <code>Special:ViewFans</code> and <code>Special:SportsTeamsManager</code> pages; this is shown for text-based browsers as well as when the image in question fails to load for whatever reason",
 	"sportsteams-network-network-fans": "Page title of <code>Special:ViewFans</code>",
 	"sportsteams-network-back-to-network": "Text of a navigation link that is shown on <code>Special:ViewFans</code>.\nParameters:\n* $1 is the name of the fan network that you are currently viewing, e.g. \"New York Mets\"",
 	"sportsteams-network-num-fans": "Informational message shown on <code>Special:ViewFans</code> when viewing the fan list for a sport '''team''' (e.g. [[wikipedia:New York Mets|New York Mets]]) as opposed to viewing the fan list for a given '''sport''' (e.g. [[wikipedia:Major League Baseball|Major League Baseball]]); in the latter case, the message that will be used will instead be {{msg-mw|sportsteams-network-num-fans-sport}}.\nParameters:$1 is the name of the fan network/team that you are currently viewing, e.g. \"New York Mets\"\n* $2 is the amount of fans the team has",
