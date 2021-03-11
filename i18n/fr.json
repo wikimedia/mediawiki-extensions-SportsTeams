@@ -59,6 +59,7 @@
 	"sportsteams-network-no-need-join": "Pas besoin de vous inscrire à nouveau !",
 	"sportsteams-network-join-named-network": "Rejoignez le réseau de fans de $1",
 	"sportsteams-network-join-are-you-sure": "Voulez-vous vraiment rejoindre le réseau de fans '''$1''' ?",
+	"sportsteams-network-alt-logo": "logo",
 	"sportsteams-network-network-fans": "Fans de $1",
 	"sportsteams-network-back-to-network": "< Retour à la page du réseau $1",
 	"sportsteams-network-num-fans": "$1 compte $2 fan{{PLURAL:$2||s}}.",
