@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Gebu",
 			"Robby",
 			"Umherirrender"
 		]
@@ -91,7 +92,7 @@
 	"sportsteams-logo-back-to-team": "Navigation link shown on <code>Special:SportsTeamsManagerLogo</code> after successfully uploading a logo to represent a team",
 	"sportsteams-logo-back": "Navigation button text on <code>Special:SportsManagerLogo</code> & <code>Special:SportsTeamsManagerLogo</code>; shown when the user has uploaded a file that has triggered an upload warning\n{{identical|Back}}",
 	"sportsteams-logo-current-image": "Label message shown on <code>Special:SportsTeamsManagerLogo</code> when a team already has a logo uploaded",
-	"sportsteams-logo-image-instructions": "Informational text shown on <code>Special:SportsTeamsManagerLogo</code>",
+	"sportsteams-logo-image-instructions": "Informational text shown on <code>Special:SportsTeamsManagerLogo</code>\n\nQuestion: Did you really mean \"Kilobit\" (kb)?",
 	"sportsteams-team-manager-title": "Page title for <code>Special:SportsTeamsManager</code>",
 	"sportsteams-team-manager-created": "Success message shown on <code>Special:SportsTeamsManager</code> after creating a new sport",
 	"sportsteams-team-manager-saved": "Success message shown on <code>Special:SportsTeamsManager</code> after creating a new team for a sport",
