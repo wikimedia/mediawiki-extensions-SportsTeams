@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"BPX-web",
 			"Gebu"
 		]
 	},
@@ -30,7 +31,7 @@
 	"sportsteams-top-network-least-popular": "Am unbeliebtesten",
 	"sportsteams-top-network-most-pop-by-sport": "Am beliebtesten nach Sportart",
 	"sportsteams-top-network-least-pop-by-sport": "Am wenigsten beliebt nach Sportart",
-	"sportsteams-top-network-most-team-title": "Beliebteste 1$-Teams",
+	"sportsteams-top-network-most-team-title": "Beliebteste $1 Teams",
 	"sportsteams-top-network-least-team-title": "Unbeliebteste $1-Teams",
 	"sportsteams-logo-size-large": "Groß",
 	"sportsteams-logo-size-medium": "Mittel",
