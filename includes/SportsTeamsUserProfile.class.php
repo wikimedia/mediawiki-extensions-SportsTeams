@@ -6,6 +6,8 @@
  * @file
  */
 
+use MediaWiki\MediaWikiServices;
+
 class SportsTeamsUserProfile {
 
 	/**
@@ -28,6 +30,8 @@ class SportsTeamsUserProfile {
 		$favs = $st->getUserFavorites();
 
 		if ( $favs ) {
+			$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
+
 			$output .= '<div class="user-section-heading">
 			<div class="user-section-title">' .
 				wfMessage( 'sportsteams-profile-networks' )->escaped() .
@@ -35,9 +39,9 @@ class SportsTeamsUserProfile {
 			<div class="user-section-actions">
 				<div class="action-right">';
 			if ( $user_profile->isOwner() ) {
-				$output .= Linker::link(
+				$output .= $linkRenderer->makeKnownLink(
 					$add_networks_title,
-					wfMessage( 'sportsteams-profile-add-network' )->escaped()
+					wfMessage( 'sportsteams-profile-add-network' )->text()
 				);
 			}
 			$output .= '</div>
@@ -87,7 +91,7 @@ class SportsTeamsUserProfile {
 						'" border="0" alt="" />';
 				}
 
-				$homepageLink = Linker::link(
+				$homepageLink = $linkRenderer->makeKnownLink(
 					$homepage_title,
 					$display_name,
 					[],
@@ -177,9 +181,9 @@ class SportsTeamsUserProfile {
 				)->parse();
 			}
 
-			$view_thought_link = Linker::link(
+			$view_thought_link = MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink(
 				$thought_link,
-				$vote_count,
+				new HtmlArmor( $vote_count ),
 				[],
 				[ 'id' => $user_update['id'] ]
 			);
