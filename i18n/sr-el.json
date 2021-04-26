@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"topnetworks": "Statistike mreže",
+	"sportsteams-no-articles": "Nema članaka.",
+	"sportsteams-network-main-page": "Glavna strana",
+	"sportsteams-network-your-profile": "Vaš profil",
+	"sportsteams-top-network-sports": "Sportovi",
+	"sportsteams-top-network-teams": "Timovi",
+	"sportsteams-profile-networks": "Mreže",
+	"sportsteams-profile-no-networks": "Nema mreža",
+	"sportsteams-profile-add-network": "Dodajte mrežu",
+	"sportsteams-profile-view-all": "Vidi sve",
+	"sportsteams-profile-do-you-agree": "Da li se slažete?",
+	"sportsteams-profile-ago": "pre $1",
+	"sportsteams-signup-team": "Tim"
+}

@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kizule"
+		]
+	},
+	"topnetworks": "Статистике мреже",
+	"sportsteams-no-articles": "Нема чланака.",
+	"sportsteams-network-main-page": "Главна страна",
+	"sportsteams-network-your-profile": "Ваш профил",
+	"sportsteams-top-network-sports": "Спортови",
+	"sportsteams-top-network-teams": "Тимови",
+	"sportsteams-profile-networks": "Мреже",
+	"sportsteams-profile-no-networks": "Нема мрежа",
+	"sportsteams-profile-add-network": "Додајте мрежу",
+	"sportsteams-profile-view-all": "Види све",
+	"sportsteams-profile-do-you-agree": "Да ли се слажете?",
+	"sportsteams-profile-ago": "пре $1",
+	"sportsteams-signup-team": "Тим"
+}
