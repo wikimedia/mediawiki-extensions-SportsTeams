@@ -130,7 +130,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		// This is like core Special:Preferences, so you need to be logged in
 		// to use this special page
-		if ( !$user->isLoggedIn() ) {
+		if ( !$user->isRegistered() ) {
 			$out->setPageTitle( $this->msg( 'user-profile-sports-notloggedintitle' )->text() );
 			$out->addHTML( $this->msg( 'user-profile-sports-notloggedintext' )->escaped() );
 			return;

@@ -48,7 +48,7 @@ class ViewFans extends UnlistedSpecialPage {
 				$this->msg( 'sportsteams-network-main-page' )->escaped() .
 				"\" onclick=\"window.location='" .
 				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
-			if ( $user->isLoggedIn() ) {
+			if ( $user->isRegistered() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
 					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
@@ -65,7 +65,7 @@ class ViewFans extends UnlistedSpecialPage {
 		$relationships = [];
 		$friends = [];
 		$foes = [];
-		if ( $user->isLoggedIn() ) {
+		if ( $user->isRegistered() ) {
 			$friends = $this->getRelationships( 1 );
 			$foes = $this->getRelationships( 2 );
 			$relationships = array_merge( $friends, $foes );

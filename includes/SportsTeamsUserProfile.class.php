@@ -192,7 +192,7 @@ class SportsTeamsUserProfile {
 			// vote for it unless they've already voted; if they have voted, show
 			// the amount of people who agree with the status update
 			if (
-				$user_profile->viewingUser->isLoggedIn() &&
+				$user_profile->viewingUser->isRegistered() &&
 				$user_profile->viewingUser->getActorId() != $user_update['actor']
 			) {
 				if ( !$user_update['voted'] ) {

@@ -37,7 +37,7 @@ class FanHome extends UnlistedSpecialPage {
 		$user = $this->getUser();
 		$linkRenderer = $this->getLinkRenderer();
 
-		if ( $user->isLoggedIn() ) {
+		if ( $user->isRegistered() ) {
 			$this->friends = $this->getRelationships( 1 );
 			$this->foes = $this->getRelationships( 2 );
 			$this->relationships = array_merge( $this->friends, $this->foes );
@@ -63,7 +63,7 @@ class FanHome extends UnlistedSpecialPage {
 				$this->msg( 'sportsteams-network-main-page' )->escaped() .
 				"\" onclick=\"window.location='" .
 				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
-			if ( $user->isLoggedIn() ) {
+			if ( $user->isRegistered() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
 					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
@@ -125,7 +125,7 @@ class FanHome extends UnlistedSpecialPage {
 				[ 'sport_id' => $sport_id, 'team_id' => $team_id ]
 			);
 			$fan_info .= '</span></p>';
-		} elseif ( $user->isLoggedIn() ) {
+		} elseif ( $user->isRegistered() ) {
 			$fan_info = '<p><span class="profile-on">';
 			$fan_info .= $linkRenderer->makeLink(
 				$join_fans_title,
@@ -159,7 +159,7 @@ class FanHome extends UnlistedSpecialPage {
 		) . '</p>';
 		// For registered users, show the amount of their friends who also
 		// belong to this network
-		if ( $user->isLoggedIn() ) {
+		if ( $user->isRegistered() ) {
 			$output .= '<p>' . $this->msg(
 				'sportsteams-network-friends-col'
 			)->numParams( $this->friends_network_count )->parse() . '</p>';
@@ -206,7 +206,7 @@ class FanHome extends UnlistedSpecialPage {
 		// Registered users (whether they're members of the network or not) can
 		// post new status updates on the network's page from the network's
 		// page
-		if ( $user->isLoggedIn() ) {
+		if ( $user->isRegistered() ) {
 			$output .= "\n<script type=\"text/javascript\">
 				var __sport_id__ = {$sport_id};
 				var __team_id__ = {$team_id};

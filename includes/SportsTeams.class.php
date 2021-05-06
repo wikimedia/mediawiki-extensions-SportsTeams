@@ -207,7 +207,7 @@ class SportsTeams {
 	 * @param int $team_id Team identifier [optional]
 	 */
 	public function addFavorite( $sport_id, $team_id ) {
-		if ( $this->user->isLoggedIn() ) {
+		if ( $this->user->isRegistered() ) {
 			if ( !self::isFan( $this->user, $sport_id, $team_id ) ) {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->insert(

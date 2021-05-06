@@ -46,7 +46,7 @@ class AddFan extends UnlistedSpecialPage {
 				$this->msg( 'sportsteams-network-main-page' )->escaped() .
 				"\" onclick=\"window.location='" .
 				htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
-			if ( $user->isLoggedIn() ) {
+			if ( $user->isRegistered() ) {
 				$output .= ' <input type="button" class="site-button" value="' .
 					$this->msg( 'sportsteams-network-your-profile' )->escaped() .
 					"\" onclick=\"window.location='" .
@@ -102,7 +102,7 @@ class AddFan extends UnlistedSpecialPage {
 					$this->msg( 'sportsteams-network-main-page' )->escaped() .
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::newMainPage()->getFullURL() ) . "'\"/>";
-				if ( $user->isLoggedIn() ) {
+				if ( $user->isRegistered() ) {
 					$output .= ' <input type="button" class="site-button" value="' .
 						$this->msg( 'sportsteams-network-your-profile' ) .
 						"\" onclick=\"window.location='" .

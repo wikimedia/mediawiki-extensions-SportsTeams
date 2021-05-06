@@ -41,7 +41,7 @@ class SimilarFans extends SpecialPage {
 		 */
 		$page = $this->getRequest()->getInt( 'page', 1 );
 
-		if ( $user->isLoggedIn() ) {
+		if ( $user->isRegistered() ) {
 			$friends = $this->getRelationships( 1 );
 			$foes = $this->getRelationships( 2 );
 			$relationships = array_merge( $friends, $foes );
