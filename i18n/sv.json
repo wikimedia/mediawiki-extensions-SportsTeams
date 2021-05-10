@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Sabelöga",
 			"WikiPhoenix"
 		]
 	},
@@ -20,7 +21,7 @@
 	"sportsteams-remove-as-friend": "Ta bort som vän",
 	"sportsteams-add-as-foe": "Lägg till som fiende",
 	"sportsteams-remove-as-foe": "Ta bort som fiende",
-	"sportsteams-give-a-gift": "Ge en gåva",
+	"sportsteams-give-a-gift": "Ge en present",
 	"sportsteams-prev": "föreg",
 	"sportsteams-next": "nästa",
 	"sportsteams-woops": "Hoppsan!",
