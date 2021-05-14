@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"ಮಲ್ನಾಡಾಚ್ ಕೊಂಕ್ಣೊ"
+		]
+	},
+	"sportsteams-add-button": "ಸೇರಿಸು",
+	"sportsteams-articles-votes": "{{PLURAL:$1|ಮತ|ಮತಗಳು}}",
+	"sportsteams-your-friend": "ನಿಮ್ಮ ಗೆಳೆಯ",
+	"sportsteams-your-foe": "ನಿಮ್ಮ ವೈರಿ",
+	"sportsteams-network-articles": "$1 ಲೇಖನಗಳು",
+	"sportsteams-network-write-article": "ಒಂದು ಲೇಖನ ಬರೆಯಿರಿ",
+	"sportsteams-network-main-page": "ಮುಖ್ಯ ಪುಟ",
+	"sportsteams-network-no-need-join": "ಮತ್ತೊಮ್ಮೆ ಸೇರಬೇಕಾಗಿಲ್ಲ!",
+	"sportsteams-network-network-fans": "$1 ಅಭಿಮಾನಿಗಳು",
+	"sportsteams-top-network-sports": "ಕ್ರೀಡೆಗಳು",
+	"sportsteams-top-network-teams": "ತಂಡಗಳು",
+	"sportsteams-logo-go-back": "ಹಿಂದೆ ಹೋಗಿ"
+}
