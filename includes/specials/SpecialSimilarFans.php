@@ -41,6 +41,7 @@ class SimilarFans extends SpecialPage {
 		 */
 		$page = $this->getRequest()->getInt( 'page', 1 );
 
+		$friends = $foes = $relationships = [];
 		if ( $user->isRegistered() ) {
 			$friends = $this->getRelationships( 1 );
 			$foes = $this->getRelationships( 2 );
@@ -179,7 +180,7 @@ class SimilarFans extends SpecialPage {
 				} else {
 					$output .= $linkRenderer->makeLink(
 						$this->getPageTitle(),
-						$i,
+						(string)$i,
 						[],
 						[ 'page' => $i ]
 					) . $this->msg( 'word-separator' )->escaped();

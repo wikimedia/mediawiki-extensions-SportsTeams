@@ -294,7 +294,7 @@ class SportsTeams {
 	 * Get the full <img> tag for the given sport team's logo image.
 	 *
 	 * @param int $sport_id Sport ID number
-	 * @param int $team_id Team ID number, 0 by default
+	 * @param int|bool $team_id Team ID number, 0 by default
 	 * @param string $size 's' for small, 'm' for medium, 'ml' for
 	 *                      medium-large and 'l' for large
 	 * @return string Full <img> tag
@@ -693,7 +693,7 @@ class SportsTeams {
 	/**
 	 * Is the given user a fan of the given sports team?
 	 *
-	 * @param User $user_id User who is being checked
+	 * @param User $user User who is being checked
 	 * @param int $sport_id Sport ID number
 	 * @param int $team_id Team ID number [optional]
 	 * @return bool True if the user is a fan, otherwise false
@@ -750,8 +750,7 @@ class SportsTeams {
 		$dbw = wfGetDB( DB_MASTER );
 
 		// Get the order of team being deleted;
-		$res = $dbw->selectRow( 'sport_favorite', 'sf_order', $where, __METHOD__ );
-		$order = (int)$row->sf_order;
+		$order = (int)$dbw->selectField( 'sport_favorite', 'sf_order', $where, __METHOD__ );
 
 		// Update orders for those less than one being deleted
 		$res = $dbw->update(
@@ -770,6 +769,7 @@ class SportsTeams {
 
 		$totalDays = intval( $dtDiff / ( 24 * 60 * 60 ) );
 		$totalSecs = $dtDiff - ( $totalDays * 24 * 60 * 60 );
+		$dif = [];
 		$dif['w'] = intval( $totalDays / 7 );
 		$dif['d'] = $totalDays;
 		$dif['h'] = $h = intval( $totalSecs / ( 60 * 60 ) );

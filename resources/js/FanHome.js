@@ -236,7 +236,8 @@ $( function() {
 		} );
 
 		// Handle status message deletion (clicks on the "x")
-		$( 'body' ).on( 'click', '.user-status-delete-link a', function() {
+		$( 'body' ).on( 'click', '.user-status-delete-link a', function ( e ) {
+			e.preventDefault();
 			FanHome.deleteMessage( $( this ).data( 'message-id' ) );
 		} );
 

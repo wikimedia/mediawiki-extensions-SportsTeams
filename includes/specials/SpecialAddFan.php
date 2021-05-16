@@ -28,8 +28,8 @@ class AddFan extends UnlistedSpecialPage {
 		/**
 		 * Get query string variables
 		 */
-		$sport_id = $request->getVal( 'sport_id' );
-		$team_id = $request->getVal( 'team_id' );
+		$sport_id = $request->getInt( 'sport_id' );
+		$team_id = $request->getInt( 'team_id' );
 
 		// Add CSS
 		$out->addModuleStyles( 'ext.sportsTeams' );
@@ -127,7 +127,7 @@ class AddFan extends UnlistedSpecialPage {
 					<input type=\"hidden\" name=\"t_id\" value=\"{$team_id}\" />
 					<input type=\"hidden\" name=\"wpEditToken\" value=\"" . htmlspecialchars( $user->getEditToken(), ENT_QUOTES ) . "\" />
 					<input type=\"submit\" class=\"site-button\" value=\"" . $this->msg( 'sportsteams-network-join-network' )->escaped() . "\" size=\"20\" onclick=\"document.form1.submit()\" />
-					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->plain() . "\" size=\"20\" onclick=\"history.go(-1)\" />
+					<input type=\"button\" class=\"site-button\" value=\"" . $this->msg( 'cancel' )->escaped() . "\" size=\"20\" onclick=\"history.go(-1)\" />
 				</div>
 			</form>";
 		}

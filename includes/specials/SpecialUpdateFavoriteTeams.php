@@ -77,9 +77,11 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// Build Sport Option HTML
 		$sports = SportsTeams::getSports();
 		foreach ( $sports as $sport ) {
-			$output .= "<option value=\"{$sport['id']}\"" .
-				( ( $sport['id'] == $selected_sport_id ) ? ' selected' : '' ) .
-				">{$sport['name']}</option>\n";
+			$output .= Xml::option(
+				$sport['name'],
+				$sport['id'],
+				( $sport['id'] == $selected_sport_id )
+			);
 		}
 		$output .= '</select>';
 		$output .= '</p>
@@ -95,9 +97,11 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		}
 
 		foreach ( $teams as $team ) {
-			$team_opts.= "<option value=\"{$team['id']}\"" .
-				( ( $team['id'] == $selected_team_id ) ? ' selected' : '' ) .
-				">{$team['name']}</option>";
+			$team_opts .= Xml::option(
+				$team['name'],
+				$team['id'],
+				( $team['id'] == $selected_team_id )
+			);
 		}
 
 		$output .= '<p class="profile-update-unit-left">' .
@@ -131,7 +135,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// This is like core Special:Preferences, so you need to be logged in
 		// to use this special page
 		if ( !$user->isRegistered() ) {
-			$out->setPageTitle( $this->msg( 'user-profile-sports-notloggedintitle' )->text() );
+			$out->setPageTitle( $this->msg( 'user-profile-sports-notloggedintitle' ) );
 			$out->addHTML( $this->msg( 'user-profile-sports-notloggedintext' )->escaped() );
 			return;
 		}
@@ -142,13 +146,13 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$sports = SportsTeams::getSports();
 		// Error message when there are no sports in the database
 		if ( empty( $sports ) ) {
-			$out->setPageTitle( $this->msg( 'sportsteams-error-no-sports-title' )->plain() );
+			$out->setPageTitle( $this->msg( 'sportsteams-error-no-sports-title' ) );
 			$out->addWikiMsg( 'sportsteams-error-no-sports-message' );
 			return;
 		}
 
 		// Set the page title
-		$out->setPageTitle( $this->msg( 'user-profile-sports-title' )->plain() );
+		$out->setPageTitle( $this->msg( 'user-profile-sports-title' ) );
 
 		// Add CSS (from SocialProfile), DoubleCombo.js and UpdateFavoriteTeams.js files to the page output
 		$out->addModuleStyles( [
@@ -164,7 +168,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// @todo FIXME/CHECKME: This requires site admins to manually edit [[MediaWiki:Update_profile_nav]]
 		// to add something like * Special:UpdateFavoriteTeams|user-profile-section-sportsteams there
 		// and that's not exactly ideal
-		$output = UserProfile::getEditProfileNav( $this->msg( 'user-profile-section-sportsteams' )->text() );
+		$output = UserProfile::getEditProfileNav( $this->msg( 'user-profile-section-sportsteams' )->escaped() );
 
 		$output .= '<div class="profile-info">';
 
@@ -174,8 +178,8 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 			if ( $request->getVal( 'action' ) == 'delete' ) {
 				$s->removeFavorite(
-					$request->getVal( 's_id' ),
-					$request->getVal( 't_id' )
+					$request->getInt( 's_id' ),
+					$request->getInt( 't_id' )
 				);
 				SportsTeams::clearUserCache( $user );
 				$out->addHTML(
@@ -201,8 +205,8 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				foreach ( $items as $favorite ) {
 					if ( $favorite ) {
 						$atts = explode( ',', $favorite );
-						$sport_id = $atts[0];
-						$team_id = $atts[1];
+						$sport_id = (int)$atts[0];
+						$team_id = (int)$atts[1];
 
 						if ( !$team_id ) {
 							$team_id = 0;

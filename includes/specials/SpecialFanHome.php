@@ -17,6 +17,9 @@ class FanHome extends UnlistedSpecialPage {
 	public $friends, $foes, $relationships, $network_count,
 		$friends_network_count;
 
+	/** @var string Sport or sport team name, e.g. "Cheerleading" */
+	public $network;
+
 	/**
 	 * Constructor -- set up the new special page
 	 */
@@ -150,7 +153,7 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<p>' . $this->msg( 'sportsteams-network-fans-col' )->escaped() . ' ';
 		$output .= $linkRenderer->makeLink(
 			$view_fans_title,
-			$this->network_count,
+			(string)$this->network_count,
 			[],
 			[
 				'sport_id' => $sport_id,
@@ -170,8 +173,9 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '</div>';
 		$this_count = count( SportsTeams::getUsersByFavorite( $sport_id, $team_id, 7, 0 ) );
 		$output .= '<div class="fan-top-right">';
-		$output .= '<h1>' . $this->msg( 'sportsteams-network-fans', $this->network )->text() . '</h1>';
+		$output .= '<h1>' . $this->msg( 'sportsteams-network-fans', $this->network )->escaped() . '</h1>';
 		$output .= '<p style="margin:-8px 0px 0px 0px; color:#797979;">' .
+			// @todo FIXME: get rid of the raw HTML here, needed to make seccheck pass for this file
 			$this->msg(
 				'sportsteams-network-fan-display',
 				$this_count,
@@ -193,7 +197,7 @@ class FanHome extends UnlistedSpecialPage {
 		$s = new UserStatus( $user );
 		$output .= '<div class="network-updates">';
 		$output .= '<h1 class="network-page-title">' .
-			$this->msg( 'sportsteams-network-latest-thoughts' )->text() . '</h1>';
+			$this->msg( 'sportsteams-network-latest-thoughts' )->escaped() . '</h1>';
 		$output .= '<div style="margin-bottom:10px;">';
 		$output .= $linkRenderer->makeLink(
 			SpecialPage::getTitleFor( 'FanUpdates' ),
@@ -211,10 +215,12 @@ class FanHome extends UnlistedSpecialPage {
 				var __sport_id__ = {$sport_id};
 				var __team_id__ = {$team_id};
 				var __updates_show__ = {$updates_show};
-				var __user_status_link__ = '" . SpecialPage::getTitleFor( 'UserStatus' )->getFullURL() . "';</script>\n";
+				var __user_status_link__ = '" . htmlspecialchars( SpecialPage::getTitleFor( 'UserStatus' )->getFullURL(), ENT_QUOTES ) . "';</script>\n";
+			$safeUserName = htmlspecialchars( $user->getName(), ENT_QUOTES );
+			// NoJS TODO: need a <form> here which POSTs to Special:UserStatus, I guess, with action=add
 			$output .= "<div class=\"user-status-form\">
-				<span class=\"user-name-top\">{$user->getName()}</span> <input type=\"text\" name=\"user_status_text\" id=\"user_status_text\" size=\"40\" maxlength=\"150\" />
-				<input id=\"add-status-btn\" type=\"button\" value=\"" . $this->msg( 'sportsteams-add-button' )->text() . '" class="site-button" />
+				<span class=\"user-name-top\">{$safeUserName}</span> <input type=\"text\" name=\"user_status_text\" id=\"user_status_text\" size=\"40\" maxlength=\"150\" />
+				<input id=\"add-status-btn\" type=\"button\" value=\"" . $this->msg( 'sportsteams-add-button' )->escaped() . '" class="site-button" />
 			</div>';
 		}
 		$output .= '<div id="network-updates">';
@@ -230,7 +236,7 @@ class FanHome extends UnlistedSpecialPage {
 		// Network location map
 		$output .= '<div class="fan-map">';
 		$output .= '<h1 class="network-page-title">' .
-			$this->msg( 'sportsteams-network-fan-locations' )->text() . '</h1>';
+			$this->msg( 'sportsteams-network-fan-locations' )->escaped() . '</h1>';
 		$output .= '<div class="gMap" id="gMap"></div>
 			<div class="gMapInfo" id="gMapInfo"></div>';
 		$output .= '</div>';
@@ -238,15 +244,15 @@ class FanHome extends UnlistedSpecialPage {
 		// Top network fans
 		$output .= '<div class="top-fans">';
 		$output .= '<h1 class="network-page-title">' .
-			$this->msg( 'sportsteams-network-top-fans' )->text() . '</h1>';
+			$this->msg( 'sportsteams-network-top-fans' )->escaped() . '</h1>';
 		$tfr = SpecialPage::getTitleFor( 'TopUsersRecent' );
 		/*
 		$output .= "<p class=\"fan-network-sub-text\">
 				<a href=\"" . htmlspecialchars( $tfr->getFullURL( 'period=weekly' )  ). '">' .
-					$this->msg( 'sportsteams-network-top-fans-week' )->text() .
+					$this->msg( 'sportsteams-network-top-fans-week' )->escaped() .
 				"</a> -
 				<a href=\"{$view_fans_title->getFullURL( [ 'sport_id' => $sport_id, 'team_id' => $team_id ] )}\">" .
-					$this->msg( 'sportsteams-network-complete-list' )->text() . '</a>
+					$this->msg( 'sportsteams-network-complete-list' )->escaped() . '</a>
 			</p>';
 		*/
 		$output .= '<p class="fan-network-sub-text">';
@@ -269,7 +275,7 @@ class FanHome extends UnlistedSpecialPage {
 
 		$output .= '<div class="network-articles">';
 		$output .= '<h1 class="network-page-title">' .
-			$this->msg( 'sportsteams-network-articles', $this->network )->text() . '</h1>';
+			$this->msg( 'sportsteams-network-articles', $this->network )->escaped() . '</h1>';
 		$output .= '<p class="fan-network-sub-text">';
 		if ( class_exists( 'BlogPage' ) ) { // @todo CHECKME: is there any point in this check?
 			$createBlogPage = SpecialPage::getTitleFor( 'CreateBlogPost' );
@@ -290,6 +296,7 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '</div>';
 		$output .= '<div class="visualClear"></div>';
 
+		// @phan-suppress-next-line SecurityCheck-XSS It's technically a "real" issue as long as 'sportsteams-network-fan-display' accepts HTML
 		$out->addHTML( $output );
 	}
 
@@ -478,10 +485,10 @@ class FanHome extends UnlistedSpecialPage {
 										mgr.addMarker(
 
 									FanHome.createTopMarker( point, '<div id=\"gMapStateInfo\" class=\"gMapStateInfo\"> <div class=\"fan-location-blurb-title\">" .
-										$this->msg( 'sportsteams-network-newest', $state )->text() .
+										$this->msg( 'sportsteams-network-newest', $state )->escaped() .
 										"</div><div class=\"user-list\">" . $userList .
 										"<div><div style=\"font-size:10px; color:#797979;\">" .
-										$this->msg( 'sportsteams-network-clicktozoom' )->text() . "</div></div>', map ), 1, 5 );
+										$this->msg( 'sportsteams-network-clicktozoom' )->escaped() . "</div></div>', map ), 1, 5 );
 									}
 								}
 							);";
@@ -570,7 +577,7 @@ window.loadMap = function () {
 
 		$html = '<div class="listpages-container">';
 		if ( empty( $articles ) ) {
-			$html .= $this->msg( 'sportsteams-no-articles' )->text();
+			$html .= $this->msg( 'sportsteams-no-articles' )->escaped();
 		} else {
 			foreach ( $articles as $article ) {
 				$titleObj = Title::makeTitle( NS_BLOG, $article['title'] );

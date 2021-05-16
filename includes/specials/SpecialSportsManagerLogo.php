@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\Shell\Shell;
+
 /**
  * A special page to upload images for networks.
  * This is mostly copied from an old version of Special:Upload and changed a
@@ -13,7 +16,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	public $mUploadFile, $mUploadDescription, $mIgnoreWarning;
 	public $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
 	public $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
-	public $mOname, $mSessionKey, $mStashed, $mDestFile;
+	public $mOname, $mSessionKey, $mWatchthis, $mStashed, $mDestFile;
 	public $mTokenOk;
 	public $uploadDirectory;
 	public $fileExtensions;
@@ -46,7 +49,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			return;
 		}
 
-		$this->team_id            = $request->getVal( 'id' );
+		$this->team_id            = $request->getInt( 'id' );
 		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning');
 		$this->mReUpload          = $request->getCheck( 'wpReUpload' );
 		$this->mUpload            = $request->getCheck( 'wpUpload' );
@@ -59,8 +62,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 
 		$this->mAction            = $request->getVal( 'action' );
 		$this->mSessionKey        = $request->getInt( 'wpSessionKey' );
-		if ( !empty( $this->mSessionKey ) &&
-			isset( $_SESSION['wsUploadData'][$this->mSessionKey] ) ) {
+		if ( !empty( $this->mSessionKey ) && isset( $_SESSION['wsUploadData'][$this->mSessionKey] ) ) {
 			/**
 			 * Confirming a temporarily stashed upload.
 			 * We don't want path names to be forged, so we keep
@@ -76,7 +78,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			/**
 			 * Check for a newly uploaded file.
 			 */
-			$this->mUploadTempName = $request->getFileTempName( 'wpUploadFile' );
+			$this->mUploadTempName = $request->getFileTempname( 'wpUploadFile' );
 			$file = new WebRequestUpload( $request, 'wpUploadFile' );
 			$this->mUploadSize = $file->getSize();
 			$this->mOname          = $request->getFileName( 'wpUploadFile' );
@@ -183,6 +185,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		 * probably not accept it.
 		 */
 		if ( !$this->mStashed ) {
+			// @phan-suppress-next-line SecurityCheck-PathTraversal False positive
 			$veri = $this->verify( $this->mUploadTempName, $finalExt );
 
 			if ( !$veri->isGood() ) { // it's a wiki error...
@@ -239,6 +242,14 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 	}
 
+	/**
+	 * Create the sport image thumbnails, either with ImageMagick or GD.
+	 *
+	 * @param string $imageSrc Path to the temporary file
+	 * @param string $ext File extension (gif, jpg, png); de facto unused when using GD
+	 * @param string $imgDest <sport ID>_<size code>, e.g. 20_l for a large image for sport ID #20
+	 * @param int $thumbWidth Thumbnail image width in pixels
+	 */
 	function createThumbnail( $imageSrc, $ext, $imgDest, $thumbWidth ) {
 		global $wgUseImageMagick, $wgImageMagickConvertCommand;
 
@@ -254,24 +265,24 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			}
 			if ( $typeCode == 2 ) {
 				wfShellExec(
-					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth . 'x' .
+					Shell::escape( $wgImageMagickConvertCommand ) . ' -size ' . $thumbWidth . 'x' .
 					$thumbWidth . ' -resize ' . $thumbWidth . '    -quality 100 ' .
-					$border . ' ' . $imageSrc . ' ' .
+					$border . ' ' . Shell::escape( $imageSrc ) . ' ' .
 					$this->uploadDirectory . '/' . $imgDest . '.jpg'
 				);
 			}
 			if ( $typeCode == 1 ) {
 				wfShellExec(
-					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth . 'x' .
-					$thumbWidth . ' -resize ' . $thumbWidth . '  ' . $imageSrc .
+					Shell::escape( $wgImageMagickConvertCommand ) . ' -size ' . $thumbWidth . 'x' .
+					$thumbWidth . ' -resize ' . $thumbWidth . '  ' . Shell::escape( $imageSrc ) .
 					' ' . $border . ' ' .
 					$this->uploadDirectory . '/' . $imgDest . '.gif'
 				);
 			}
 			if ( $typeCode == 3 ) {
 				wfShellExec(
-					$wgImageMagickConvertCommand . ' -size ' . $thumbWidth . 'x' .
-					$thumbWidth . ' -resize ' . $thumbWidth . '   ' . $imageSrc .
+					Shell::escape( $wgImageMagickConvertCommand ) . ' -size ' . $thumbWidth . 'x' .
+					$thumbWidth . ' -resize ' . $thumbWidth . '   ' . Shell::escape( $imageSrc ) .
 					' ' . $this->uploadDirectory . '/' . $imgDest . '.png'
 				);
 			}
@@ -339,15 +350,11 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 *
 	 * @todo If the later save fails, we may have disappeared the original file.
 	 *
-	 * @param string $saveName
-	 * @param string $tempName full path to the temporary file
-	 * @param bool $useRename if true, doesn't check that the source file
-	 *                        is a PHP-managed upload temporary
+	 * @param string $saveName Unused
+	 * @param string $tempName Full path to the temporary file
+	 * @param string $ext File extension
 	 */
 	function saveUploadedFile( $saveName, $tempName, $ext ) {
-		$dest = $this->uploadDirectory;
-
-		$this->mSavedFile = "{$dest}/{$saveName}";
 	 	$this->createThumbnail( $tempName, $ext, $this->team_id . '_l', 100 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_m', 50 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_s', 25 );
@@ -473,7 +480,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 * Show some text and linkage on successful upload.
 	 * @access private
 	 */
-	function showSuccess( $status ) {
+	function showSuccess( int $status ) {
 		global $wgUploadPath;
 
 		$ext = 'jpg';
@@ -568,7 +575,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		<input type='hidden' name='wpSessionKey' value=\"" . htmlspecialchars( $this->mSessionKey ) . "\" />
 		<input type='hidden' name='wpUploadDescription' value=\"" . htmlspecialchars( $this->mUploadDescription ) . "\" />
 		<input type='hidden' name='wpDestFile' value=\"" . htmlspecialchars( $this->mDestFile ) . "\" />
-		<input type='hidden' name='wpWatchthis' value=\"" . htmlspecialchars( intval( $this->mWatchthis ) ) . "\" />
+		<input type='hidden' name='wpWatchthis' value=\"" . intval( $this->mWatchthis ) . "\" />
 	{$copyright}
 	<table border='0'>
 		<tr>
@@ -624,8 +631,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 				$this->msg( 'sportsteams-logo-current-image' )->escaped() . '</td></tr>';
 			$output .= '<tr><td><img src="' . $wgUploadPath . '/sport_logos/' .
 				$team_logo . '" border="0" alt="no logo" /></td></tr></table><br />';
+			$out->addHTML( $output );
 		}
-		$out->addHTML( $output );
 
 		$token = Html::hidden( 'wpEditToken', $this->getUser()->getEditToken() );
 

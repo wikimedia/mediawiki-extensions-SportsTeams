@@ -202,7 +202,8 @@ $( function() {
 	} );
 
 	// "Agree" links on other users' profiles
-	$( 'a.profile-vote-status-link' ).on( 'click', function() {
+	$( 'a.profile-vote-status-link' ).on( 'click', function( e ) {
+		e.preventDefault();
 		SportsTeamsUserProfile.voteStatus( $( this ).data( 'status-update-id' ), 1 );
 	} );
 } );

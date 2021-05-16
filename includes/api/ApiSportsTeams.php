@@ -26,6 +26,7 @@ class ApiSportsTeams extends ApiBase {
 		Wikimedia\restoreWarnings();
 
 		// You only had one job...
+		// @phan-suppress-next-line PhanImpossibleTypeComparison
 		if ( !$sportId || $sportId === null || !is_numeric( $sportId ) ) {
 			$this->dieWithError( [ 'apierror-missingparam', 'sportId' ], 'missingparam' );
 		}
@@ -40,22 +41,14 @@ class ApiSportsTeams extends ApiBase {
 			[ 'ORDER BY' => 'team_name' ]
 		);
 
-		$x = 0;
 		$output = [];
 		$output['options'] = [];
 
 		foreach ( $res as $row ) {
-			/*
-			if ( $x != 0 ) {
-				$out .= ',';
-			}
-			*/
-
 			$output['options'][] = [
 				'id' => $row->team_id,
 				'name' => $row->team_name
 			];
-			$x++;
 		}
 
 		// Top level
@@ -67,14 +60,6 @@ class ApiSportsTeams extends ApiBase {
 	}
 
 	/**
-	 * @deprecated since MediaWiki core 1.25
-	 * @return string Human-readable module description
-	 */
-	public function getDescription() {
-		return 'API for fetching the teams for a given sport from the database';
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getAllowedParams() {
@@ -83,28 +68,6 @@ class ApiSportsTeams extends ApiBase {
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
 			]
-		];
-	}
-
-	/**
-	 * Describe the parameter
-	 *
-	 * @deprecated since MediaWiki core 1.25
-	 */
-	public function getParamDescription() {
-		return array_merge( parent::getParamDescription(), [
-			'sportId' => 'Unique identifier (number) of the sport in question'
-		] );
-	}
-
-	/**
-	 * Get examples
-	 *
-	 * @deprecated since MediaWiki core 1.25
-	 */
-	public function getExamples() {
-		return [
-			'api.php?action=sportsteams&sportId=3' => 'Get the names and teams under sport #3'
 		];
 	}
 

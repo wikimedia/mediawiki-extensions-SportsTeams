@@ -33,8 +33,8 @@ class ViewFans extends UnlistedSpecialPage {
 		 * Get query string variables
 		 */
 		$page = $request->getInt( 'page', 1 );
-		$sport_id = $request->getVal( 'sport_id' );
-		$team_id = $request->getVal( 'team_id' );
+		$sport_id = $request->getInt( 'sport_id' );
+		$team_id = $request->getInt( 'team_id' );
 
 		/**
 		 * Error message for teams/sports that do not exist (from URL)
@@ -227,7 +227,7 @@ class ViewFans extends UnlistedSpecialPage {
 				} else {
 				    $output .= $linkRenderer->makeLink(
 						$pt,
-						$i,
+						(string)$i,
 						[],
 						[
 							'page' => $i,

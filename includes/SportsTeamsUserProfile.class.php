@@ -196,7 +196,13 @@ class SportsTeamsUserProfile {
 				$user_profile->viewingUser->getActorId() != $user_update['actor']
 			) {
 				if ( !$user_update['voted'] ) {
-					$vote_link = "<a class=\"profile-vote-status-link\" href=\"javascript:void(0);\" data-status-update-id=\"{$user_update['id']}\" rel=\"nofollow\">" .
+					$votePage = SpecialPage::getTitleFor( 'UserStatus' )->getFullURL( [
+						'action' => 'vote',
+						'us_id' => (int)$user_update['id'],
+						'vote' => '1'
+					] );
+					$votePageSafe = htmlspecialchars( $votePage, ENT_QUOTES );
+					$vote_link = "<a class=\"profile-vote-status-link\" href=\"{$votePageSafe}\" data-status-update-id=\"{$user_update['id']}\" rel=\"nofollow\">" .
 						wfMessage( 'sportsteams-profile-do-you-agree' )->escaped() . '</a>';
 				} else {
 					$vote_count = wfMessage(
