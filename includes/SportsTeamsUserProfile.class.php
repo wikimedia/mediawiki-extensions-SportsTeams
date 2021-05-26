@@ -56,8 +56,8 @@ class SportsTeamsUserProfile {
 				$status_link = '';
 				if ( $user_profile->isOwner() ) {
 					$status_link = ' <span class="status-message-add"> - <a href="javascript:void(0);" data-order="' .
-						$fav['order'] . '" data-sport-id="' . $fav['sport_id'] .
-						'" data-team-id="' . $fav['team_id'] . '" rel="nofollow">' .
+						(int)$fav['order'] . '" data-sport-id="' . (int)$fav['sport_id'] .
+						'" data-team-id="' . (int)$fav['team_id'] . '" rel="nofollow">' .
 						wfMessage( 'sportsteams-profile-add-thought' )->escaped() . '</a></span>';
 				}
 
@@ -231,6 +231,7 @@ class SportsTeamsUserProfile {
 			'";</script>';
 		}
 
+		// @phan-suppress-next-line SecurityCheck-XSS False positive due to $user_update['text'] or $user_update['id'] usage
 		$out->addHTML( $output );
 	}
 

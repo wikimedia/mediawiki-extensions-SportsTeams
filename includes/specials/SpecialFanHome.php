@@ -580,6 +580,7 @@ window.loadMap = function () {
 			$html .= $this->msg( 'sportsteams-no-articles' )->escaped();
 		} else {
 			foreach ( $articles as $article ) {
+				// @phan-suppress-next-line PhanUndeclaredConstant False positive basically...
 				$titleObj = Title::makeTitle( NS_BLOG, $article['title'] );
 				$votes = self::getVotesForPage( $article['id'] );
 				$html .= '<div class="listpages-item">
