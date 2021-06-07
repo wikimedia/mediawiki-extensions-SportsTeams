@@ -1,11 +1,17 @@
 {
 	"@metadata": {
 		"authors": [
-			"Aranka"
+			"Aranka",
+			"Mainframe98"
 		]
 	},
+	"sportsteams-add-button": "toevoegen",
+	"sportsteams-articles-votes": "{{PLURAL:$1|stem|stemmen}}",
+	"sportsteams-prev": "vorige",
 	"sportsteams-next": "volgende",
+	"sportsteams-network-logo": "(Officiële Logo)",
 	"sportsteams-network-articles": "$1 Artikels",
+	"sportsteams-network-main-page": "Hoofdpagina",
 	"sportsteams-top-network-sports": "Sporten",
 	"sportsteams-top-network-least": "Minst",
 	"sportsteams-top-network-team-title-least-sports": "Minst populaire sporten",
@@ -13,10 +19,22 @@
 	"sportsteams-top-network-most-pop-by-sport": "Populairste sport",
 	"sportsteams-top-network-least-team-title": "Minst populaire $1 teams",
 	"sportsteams-logo-images-below": "Onderaan staan de afbeeldingen die op de site gebruikt zullen worden",
+	"sportsteams-logo-size-large": "Groot",
+	"sportsteams-logo-size-medium": "Gemiddeld",
+	"sportsteams-logo-size-small": "Klein",
+	"sportsteams-logo-go-back": "Ga terug",
 	"sportsteams-logo-back-to-list": "Terug naar de lijst met sporten",
+	"sportsteams-logo-back": "Terug",
 	"sportsteams-team-manager-teamname": "teamnaam",
 	"sportsteams-team-manager-team": "team",
 	"sportsteams-team-manager-edit": "bewerken",
 	"sportsteams-team-manager-add-sport-button": "Sport toevoegen",
-	"sportsteams-profile-networks": "Netwerken"
+	"sportsteams-profile-button-add": "toevoegen",
+	"sportsteams-profile-button-cancel": "annuleren",
+	"sportsteams-profile-networks": "Netwerken",
+	"sportsteams-profile-ago": "$1 geleden",
+	"sportsteams-time-days": "{{PLURAL:$1|één dag|$1 dagen}}",
+	"sportsteams-time-hours": "{{PLURAL:$1|één uur|$1 uren}}",
+	"sportsteams-time-minutes": "{{PLURAL:$1|één minuut|$1 minuten}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|één seconde|$1 seconden}}"
 }
