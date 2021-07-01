@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ajeje Brazorf",
 			"Beta16",
 			"Luca.favorido"
 		]
@@ -29,6 +30,7 @@
 	"sportsteams-profile-button-cancel": "annulla",
 	"sportsteams-profile-view-all": "Mostra tutto",
 	"sportsteams-profile-do-you-agree": "Sei d'accordo?",
+	"sportsteams-profile-ago": "$1 fa",
 	"sportsteams-time-days": "{{PLURAL:$1|un giorno|$1 giorni}}",
 	"sportsteams-time-seconds": "{{PLURAL:$1|un secondo|$1 secondi}}",
 	"sportsteams-profile-characters-remaining": "{{PLURAL:$1|Un carattere|$1 caratteri rimanenti}}"
