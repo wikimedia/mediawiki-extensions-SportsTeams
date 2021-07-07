@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"sportsteams-desc": "Dèje funziune pe rezze",
+	"topnetworks": "Statisteche de rezze",
+	"similarfans": "Tefuse ca s'assemegghiane",
+	"sportsteamsmanager": "Gestisce le squadre sportive",
+	"sportsteams-add-button": "aggiunge",
+	"sportsteams-articles-votes": "{{PLURAL:$1|vote}}",
+	"sportsteams-no-articles": "Nisciuna vôsce.",
+	"sportsteams-count-fans": "{{PLURAL:$1|'''<nowiki>'</nowiki>Nu''' tefose|'''$1''' tefuse}}",
+	"sportsteams-similar-fans": "Tefuse ca s'assemegghiane",
+	"sportsteams-num-similar": "{{PLURAL:$1|Ste 'nu tefose ca s'assemegghie|Stonne $1 tefuse ca s'assemegghiane}} a te.",
+	"sportsteams-your-friend": "amiche tune",
+	"sportsteams-your-foe": "nemiche tune",
+	"sportsteams-add-as-friend": "Aggiunge cumme amiche",
+	"sportsteams-remove-as-friend": "Lìve da amiche",
+	"sportsteams-add-as-foe": "Aggiunge cumme nemiche",
+	"sportsteams-remove-as-foe": "Lìve da nemiche",
+	"sportsteams-give-a-gift": "Fà 'nu riale",
+	"sportsteams-prev": "precedende",
+	"sportsteams-next": "prosseme",
+	"sportsteams-woops": "Pizze!",
+	"sportsteams-network-fans-col": "Tefuse:",
+	"sportsteams-network-fans": "$1 tefuse",
+	"sportsteams-network-articles": "$1 vôsce",
+	"sportsteams-network-network-fans": "$1 tefuse",
+	"sportsteams-profile-ago": "$1 fà",
+	"sportsteams-time-days": "{{PLURAL:$1|'nu sciurne|$1 sciurne}}",
+	"sportsteams-time-hours": "{{PLURAL:$1|'n'ore|$1 ore}}",
+	"sportsteams-time-minutes": "{{PLURAL:$1|'nu menute|$1 menute}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|'nu seconde|$1 seconde}}",
+	"sportsteams-signup-team": "Squadre"
+}
