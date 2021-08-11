@@ -37,8 +37,9 @@ class SportsTeamsManager extends SpecialPage {
 		$this->checkReadOnly();
 
 		// If the user is blocked, s/he doesn't need to access this page
-		if ( $user->isBlocked() ) {
-			throw new UserBlockedError( $user->getBlock() );
+		$block = $user->getBlock();
+		if ( $block ) {
+			throw new UserBlockedError( $block );
 		}
 
 		// Set the page title
