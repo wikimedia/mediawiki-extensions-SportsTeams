@@ -2,9 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"BPX-web",
-			"Gebu"
+			"Gebu",
+			"Zabe"
 		]
 	},
+	"sportsteams-add-button": "hinzufügen",
 	"sportsteams-add-as-foe": "Als Gegner hinzufügen",
 	"sportsteams-remove-as-foe": "Als Gegner entfernen",
 	"sportsteams-give-a-gift": "Ein Geschenk geben",
@@ -51,6 +53,9 @@
 	"sportsteams-updatefavoriteteams-team": "Team",
 	"sportsteams-profile-button-add": "hinzufügen",
 	"sportsteams-profile-button-cancel": "abbrechen",
+	"sportsteams-profile-networks": "Netzwerke",
+	"sportsteams-profile-no-networks": "Keine Netzwerke",
+	"sportsteams-profile-add-network": "Netzwerk hinzufügen",
 	"sportsteams-profile-view-all": "Alles anzeigen",
 	"sportsteams-profile-ago": "vor $1",
 	"sportsteams-signup-team": "Team"
