@@ -32,7 +32,7 @@ class SportsTeamsHooks {
 
 				// Build sport option HTML
 				foreach ( $sports as $sport ) {
-					$output .= "<option value=\"{$sport['id']}\">{$sport['name']}</option>\n";
+					$output .= '<option value="' . htmlspecialchars( $sport['id'] ) . '">' . htmlspecialchars( $sport['name'] ) . "</option>\n";
 				}
 
 				$output .= '</select>

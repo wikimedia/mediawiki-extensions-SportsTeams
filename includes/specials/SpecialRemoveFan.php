@@ -90,7 +90,7 @@ class RemoveFan extends UnlistedSpecialPage {
 			/**
 			 * Error message if the user is not a fan
 			 */
-			if ( !SportsTeams::isFan( $user, $sport_id, $team_id ) == true ) {
+			if ( !SportsTeams::isFan( $user, $sport_id, $team_id ) ) {
 				$out->setPageTitle( $this->msg( 'sportsteams-network-not-member', $name )->text() );
 				//$output .= '<div class="relationship-request-message">' . $this->msg( 'sportsteams-network-no-need-join' )->escaped() . '</div>';
 				$output .= '<div class="relationship-request-buttons">';

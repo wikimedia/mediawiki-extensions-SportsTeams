@@ -45,8 +45,9 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 	private function getSportsDropdown( $selected_sport_id = 0, $selected_team_id = 0 ) {
 		global $wgExtensionAssetsPath;
 
+		$favCount = (int)$this->favorite_counter;
 		// Set surrent sport dropdown - show first one, or saved team
-		if ( $this->favorite_counter == 1 || $selected_sport_id > 0 ) {
+		if ( $favCount == 1 || $selected_sport_id > 0 ) {
 			$style = 'display: block;';
 		} else {
 			$style = 'display: none;';
@@ -61,17 +62,17 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 			</a>";
 		}
 
-		$output .= "<div id=\"fav_{$this->favorite_counter}\" style=\"{$style};padding-bottom: 15px;\">
+		$output .= "<div id=\"fav_{$favCount}\" style=\"{$style};padding-bottom: 15px;\">
 			<p class=\"profile-update-title\">" .
 				$this->msg(
 					'sportsteams-updatefavoriteteams-favorite',
-					$this->favorite_counter
+					$favCount
 				)->parse() . " {$remove_link}</p>
 				<p class=\"profile-update-unit-left\"> " .
 					$this->msg( 'user-profile-sports-sport' )->escaped() .
 				" </p>
 				<p class=\"profile-update-unit-right\">
-				<select name=\"sport_{$this->favorite_counter}\" id=\"sport_{$this->favorite_counter}\">
+				<select name=\"sport_{$favCount}\" id=\"sport_{$favCount}\">
 					<option value=\"0\">-</option>";
 
 		// Build Sport Option HTML
@@ -107,7 +108,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$output .= '<p class="profile-update-unit-left">' .
 			$this->msg( 'sportsteams-updatefavoriteteams-team' )->escaped() . "</p>
 				<p class=\"profile-update-unit\">
-				<select name=\"team_{$this->favorite_counter}\" id=\"team_{$this->favorite_counter}\">
+				<select name=\"team_{$favCount}\" id=\"team_{$favCount}\">
 					{$team_opts}
 				</select>
 				</p>
@@ -233,8 +234,8 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$favorites = $this->getFavorites();
 		foreach ( $favorites as $favorite ) {
 			$output .= $this->getSportsDropdown(
-				$favorite['sport_id'],
-				$favorite['team_id']
+				htmlspecialchars( $favorite['sport_id'] ),
+				htmlspecialchars( $favorite['team_id'] )
 			);
 		}
 

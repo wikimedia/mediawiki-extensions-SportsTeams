@@ -100,13 +100,14 @@ class SportsTeamsUserProfile {
 						'team_id' => $fav['team_id']
 					]
 				);
+				$order = htmlspecialchars( $fav['order'] );
 				$output .= "<div class=\"network\">
 					{$logo}
 					{$homepageLink}
 					{$status_link}
 				</div>
 
-				<div class=\"status-update-box\" id=\"status-update-box-{$fav['order']}\" style=\"display:none\"></div>";
+				<div class=\"status-update-box\" id=\"status-update-box-{$order}\" style=\"display:none\"></div>";
 			}
 
 			$output .= '<div class="visualClear"></div>
