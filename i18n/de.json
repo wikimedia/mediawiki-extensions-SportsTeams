@@ -3,10 +3,15 @@
 		"authors": [
 			"BPX-web",
 			"Gebu",
+			"Umlaut",
 			"Zabe"
 		]
 	},
+	"topnetworks": "Netzwerkstatistik",
 	"sportsteams-add-button": "hinzufügen",
+	"sportsteams-articles-votes": "{{PLURAL:$1|Stimme|Stimmen}}",
+	"sportsteams-no-articles": "Keine Artikel",
+	"sportsteams-your-friend": "Dein Freund",
 	"sportsteams-add-as-foe": "Als Gegner hinzufügen",
 	"sportsteams-remove-as-foe": "Als Gegner entfernen",
 	"sportsteams-give-a-gift": "Ein Geschenk geben",
@@ -16,6 +21,7 @@
 	"sportsteams-network-fans-col": "Fans:",
 	"sportsteams-network-friends-col": "Freunde: $1",
 	"sportsteams-network-fans": "$1 Fans",
+	"sportsteams-network-articles": "$1 Artikel",
 	"sportsteams-network-main-page": "Hauptseite",
 	"sportsteams-network-your-profile": "Dein Profil",
 	"sportsteams-network-newest": "Neueste Fans aus $1",
@@ -58,5 +64,7 @@
 	"sportsteams-profile-add-network": "Netzwerk hinzufügen",
 	"sportsteams-profile-view-all": "Alles anzeigen",
 	"sportsteams-profile-ago": "vor $1",
+	"sportsteams-time-minutes": "{{PLURAL:$1|eine Minute|$1 Minuten}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|eine Sekunde|$1 Sekunden}}",
 	"sportsteams-signup-team": "Team"
 }
