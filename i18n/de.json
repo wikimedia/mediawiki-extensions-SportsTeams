@@ -12,6 +12,8 @@
 	"sportsteams-articles-votes": "{{PLURAL:$1|Stimme|Stimmen}}",
 	"sportsteams-no-articles": "Keine Artikel",
 	"sportsteams-your-friend": "Dein Freund",
+	"sportsteams-add-as-friend": "Als Freund hinzufügen",
+	"sportsteams-remove-as-friend": "Als Freund entfernen",
 	"sportsteams-add-as-foe": "Als Gegner hinzufügen",
 	"sportsteams-remove-as-foe": "Als Gegner entfernen",
 	"sportsteams-give-a-gift": "Ein Geschenk geben",
@@ -64,7 +66,10 @@
 	"sportsteams-profile-add-network": "Netzwerk hinzufügen",
 	"sportsteams-profile-view-all": "Alles anzeigen",
 	"sportsteams-profile-ago": "vor $1",
+	"sportsteams-time-days": "{{PLURAL:$1|ein Tag|$1 Tage}}",
+	"sportsteams-time-hours": "{{PLURAL:$1|eine Stunde|$1 Stunden}}",
 	"sportsteams-time-minutes": "{{PLURAL:$1|eine Minute|$1 Minuten}}",
 	"sportsteams-time-seconds": "{{PLURAL:$1|eine Sekunde|$1 Sekunden}}",
+	"sportsteams-profile-num-agree": "{{PLURAL:$1|Eine Person stimmt zu|$1 Personen stimmen zu}}",
 	"sportsteams-signup-team": "Team"
 }
