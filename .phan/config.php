@@ -25,8 +25,6 @@ $cfg['suppress_issue_types'] = array_merge( $cfg['suppress_issue_types'], [
 	'PhanPluginDuplicateAdjacentStatement',
 	# Required parameter follows optional, so fucking what?
 	'PhanParamReqAfterOpt',
-	# Tracked as T198154 (wfImageArchiveDir)
-	'PhanUndeclaredFunction',
 	# Noise
 	'PhanPluginDuplicateConditionalTernaryDuplication',
 	'PhanTypeMismatchArgumentNullableInternal',

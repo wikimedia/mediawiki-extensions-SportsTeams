@@ -424,8 +424,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * @return string - full path the stashed file, or false on failure
 	 */
 	private function saveTempUploadedFile( $saveName, $tempName ) {
-		$archive = wfImageArchiveDir( $saveName, 'temp' );
-		$stash = $archive . '/' . gmdate( 'YmdHis' ) . '!' . $saveName;
+		$uploadPath = $this->getConfig()->get( 'UploadPath' );
+		$stash = $uploadPath . '/temp/' . gmdate( 'YmdHis' ) . '!' . $saveName;
 
 		if ( !move_uploaded_file( $tempName, $stash ) ) {
 			throw new FatalError( $this->msg( 'filecopyerror', $tempName, $stash )->escaped() );
