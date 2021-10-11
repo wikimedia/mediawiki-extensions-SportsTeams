@@ -137,9 +137,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	/**
 	 * Really do the upload
 	 * Checks are made in SpecialUpload::execute()
-	 * @access private
 	 */
-	function processUpload() {
+	private function processUpload() {
 		/**
 		 * If there was no filename or a zero size given, give up quick.
 		 */
@@ -423,9 +422,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * @param string $saveName - the destination filename
 	 * @param string $tempName - the source temporary file to save
 	 * @return string - full path the stashed file, or false on failure
-	 * @access private
 	 */
-	function saveTempUploadedFile( $saveName, $tempName ) {
+	private function saveTempUploadedFile( $saveName, $tempName ) {
 		$archive = wfImageArchiveDir( $saveName, 'temp' );
 		$stash = $archive . '/' . gmdate( 'YmdHis' ) . '!' . $saveName;
 
@@ -443,9 +441,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * to pick up the path info on a later invocation.
 	 *
 	 * @return int
-	 * @access private
 	 */
-	function stashSession() {
+	private function stashSession() {
 		$stash = $this->saveTempUploadedFile(
 			$this->mUploadSaveName,
 			$this->mUploadTempName
@@ -467,9 +464,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 	/**
 	 * Remove a temporarily kept file stashed by saveTempUploadedFile().
-	 * @access private
 	 */
-	function unsaveUploadedFile() {
+	private function unsaveUploadedFile() {
 		Wikimedia\suppressWarnings();
 		$success = unlink( $this->mUploadTempName );
 		Wikimedia\restoreWarnings();
@@ -480,9 +476,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 	/**
 	 * Show some text and linkage on successful upload.
-	 * @access private
 	 */
-	function showSuccess( $status ) {
+	private function showSuccess( $status ) {
 		global $wgUploadPath;
 
 		$ext = 'jpg';
@@ -542,9 +537,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 	/**
 	 * @param string $error as HTML
-	 * @access private
 	 */
-	function uploadError( $error ) {
+	private function uploadError( $error ) {
 		$out = $this->getOutput();
 		$sub = $this->msg( 'uploadwarning' )->escaped();
 		$out->addHTML( "<h2>{$sub}</h2>\n" );
@@ -561,9 +555,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * Stash it away, then present a form asking to confirm or cancel.
 	 *
 	 * @param string $warning as HTML
-	 * @access private
 	 */
-	function uploadWarning( $warning ) {
+	private function uploadWarning( $warning ) {
 		global $wgUseCopyrightUpload;
 
 		$out = $this->getOutput();
@@ -617,9 +610,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * error message up at the top.
 	 *
 	 * @param string $msg as HTML
-	 * @access private
 	 */
-	function mainUploadForm( $msg = '' ) {
+	private function mainUploadForm( $msg = '' ) {
 		global $wgUseCopyrightUpload, $wgUploadPath;
 
 		$out = $this->getOutput();
