@@ -4,7 +4,31 @@
 			"Ajeje Brazorf"
 		]
 	},
+	"sportsteams-add-button": "agghiunci",
+	"sportsteams-no-articles": "Nudda vuci.",
+	"sportsteams-your-friend": "lu tò amicu",
+	"sportsteams-add-as-friend": "Agghiunci comu amicu",
+	"sportsteams-woops": "Ops!",
+	"sportsteams-network-logo": "(Logo officiali)",
+	"sportsteams-network-friends-col": "Amici: $1",
+	"sportsteams-network-articles": "$1 vuci",
 	"sportsteams-network-main-page": "Pàggina principali",
+	"sportsteams-network-your-profile": "Lu tò prufilu",
+	"sportsteams-top-network-sports": "Sport",
+	"sportsteams-logo-size-small": "Nicu",
+	"sportsteams-logo-current-image": "Mmàggini attuali",
+	"sportsteams-team-manager-view-sports": "Talìa tutti li sport",
+	"sportsteams-team-manager-sport": "sport",
+	"sportsteams-team-manager-edit": "cancia",
+	"sportsteams-team-manager-sport-name": "nomu dû sport",
+	"sportsteams-team-manager-add-sport-button": "Agghiunci sport",
+	"sportsteams-team-manager-edit-this-sport": "Cancia stu sport",
 	"sportsteams-profile-button-add": "agghiunci",
-	"sportsteams-profile-ago": "$1 fa"
+	"sportsteams-profile-button-cancel": "annulla",
+	"sportsteams-profile-view-all": "Talìa tuttu",
+	"sportsteams-profile-ago": "$1 fa",
+	"sportsteams-time-days": "{{PLURAL:$1|nu jornu|$1 jorna}}",
+	"sportsteams-time-hours": "{{PLURAL:$1|na ura|$1 uri}}",
+	"sportsteams-time-minutes": "{{PLURAL:$1|nu minutu|$1 minuti}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|nu sicunnu|$1 sicunni}}"
 }
