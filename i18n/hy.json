@@ -4,6 +4,8 @@
 			"Kareyac"
 		]
 	},
+	"topnetworks": "Ցանցի վիճակագրություն",
 	"sportsteams-network-main-page": "Գլխավոր էջ",
-	"sportsteams-profile-button-add": "ավելացնել"
+	"sportsteams-profile-button-add": "ավելացնել",
+	"sportsteams-profile-add-network": "Ավելացնել ցանց"
 }
