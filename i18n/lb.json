@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Les Meloures",
+			"Robby"
+		]
+	},
+	"sportsteams-add-button": "derbäisetzen",
+	"sportsteams-articles-votes": "({{PLURAL:$1|Stëmm|Stëmmen}})",
+	"sportsteams-no-articles": "Keng Artikelen.",
+	"sportsteams-your-friend": "Äre Frënd",
+	"sportsteams-your-foe": "Äre Feind",
+	"sportsteams-add-as-friend": "Als Frënd derbäisetzen",
+	"sportsteams-remove-as-friend": "Als Frënd ewechhuelen",
+	"sportsteams-add-as-foe": "Als Feind derbäisetzen",
+	"sportsteams-remove-as-foe": "Als Feind ewechhuelen",
+	"sportsteams-give-a-gift": "E Kaddo maachen",
+	"sportsteams-network-friends-col": "Frënn: $1",
+	"sportsteams-network-articles": "$1 Artikelen",
+	"sportsteams-network-write-article": "En Artikel schreiwen",
+	"sportsteams-network-main-page": "Haaptsäit",
+	"sportsteams-network-your-profile": "Äre Profil",
+	"sportsteams-network-remove-me": "Mech ewechhuelen",
+	"sportsteams-top-network-teams": "Ekippen",
+	"sportsteams-logo-size-large": "Grouss",
+	"sportsteams-logo-size-medium": "Mëttel",
+	"sportsteams-logo-size-small": "Kleng",
+	"sportsteams-logo-go-back": "Gitt zréck",
+	"sportsteams-logo-back": "Zréck",
+	"sportsteams-team-manager-sport": "Sport",
+	"sportsteams-team-manager-team": "Ekipp",
+	"sportsteams-profile-button-cancel": "ofbriechen",
+	"sportsteams-signup-team": "Ekipp"
+}
