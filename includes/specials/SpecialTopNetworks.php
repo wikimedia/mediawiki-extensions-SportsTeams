@@ -192,7 +192,7 @@ class TopNetworks extends SpecialPage {
 
 		if ( $type == 'sport' ) {
 			$fanHome = SpecialPage::getTitleFor( 'FanHome' );
-			if ( $dbr->numRows( $res_sport ) === 0 ) {
+			if ( $res_sport->numRows() === 0 ) {
 				$output .= $this->msg( 'specialpage-empty' )->escaped();
 			} else {
 				foreach ( $res_sport as $row_sport ) {
@@ -224,7 +224,7 @@ class TopNetworks extends SpecialPage {
 				}
 			}
 		} else {
-			if ( $dbr->numRows( $res ) === 0 ) {
+			if ( $res->numRows() === 0 ) {
 				$output .= $this->msg( 'specialpage-empty' )->escaped();
 			} else {
 				foreach ( $res as $row ) {
