@@ -1,9 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"Seipinne",
 			"Yupik"
 		]
 	},
 	"sportsteams-network-main-page": "Ovdâsijđo",
-	"sportsteams-profile-button-add": "lasseet"
+	"sportsteams-logo-current-image": "Tááláš kove",
+	"sportsteams-profile-button-add": "lasseet",
+	"sportsteams-profile-button-cancel": "jooskâ",
+	"sportsteams-time-days": "{{PLURAL:$1|ohtâ peivi|$1 peivid}}"
 }
