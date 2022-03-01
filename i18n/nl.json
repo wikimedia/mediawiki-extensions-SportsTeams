@@ -2,13 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"Aranka",
-			"Mainframe98"
+			"Mainframe98",
+			"Romaine"
 		]
 	},
 	"sportsteams-add-button": "toevoegen",
 	"sportsteams-articles-votes": "{{PLURAL:$1|stem|stemmen}}",
 	"sportsteams-prev": "vorige",
 	"sportsteams-next": "volgende",
+	"sportsteams-woops": "Oeps!",
 	"sportsteams-network-logo": "(Officiële Logo)",
 	"sportsteams-network-articles": "$1 Artikels",
 	"sportsteams-network-main-page": "Hoofdpagina",
@@ -29,6 +31,8 @@
 	"sportsteams-team-manager-team": "team",
 	"sportsteams-team-manager-edit": "bewerken",
 	"sportsteams-team-manager-add-sport-button": "Sport toevoegen",
+	"sportsteams-error-no-sports-title": "Fout: geen sport in de database",
+	"sportsteams-updatefavoriteteams-team": "Team",
 	"sportsteams-profile-button-add": "toevoegen",
 	"sportsteams-profile-button-cancel": "annuleren",
 	"sportsteams-profile-networks": "Netwerken",
