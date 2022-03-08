@@ -5,9 +5,12 @@
 			"Seipinne"
 		]
 	},
+	"sportsteams-network-articles": "Artikkâleh fáádást $1",
 	"sportsteams-network-main-page": "Ovdâsijđo",
+	"sportsteams-logo-upload-success": "Vuorkkim luhostui",
 	"sportsteams-logo-current-image": "Tááláš kove",
 	"sportsteams-profile-button-add": "lasseet",
 	"sportsteams-profile-button-cancel": "jooskâ",
+	"sportsteams-profile-view-all": "Keejâ puoh",
 	"sportsteams-time-days": "{{PLURAL:$1|ohtâ peivi|$1 peivid}}"
 }
