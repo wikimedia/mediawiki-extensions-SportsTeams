@@ -14,5 +14,5 @@
 	"sportsteams-profile-button-add": "lasseet",
 	"sportsteams-profile-button-cancel": "jooskâ",
 	"sportsteams-profile-view-all": "Keejâ puoh",
-	"sportsteams-time-days": "{{PLURAL:$1|ohtâ peivi|$1 peivid}}"
+	"sportsteams-time-days": "{{PLURAL:$1|ohtâ peivi|$1 peeivi|$1 peeivi|$1 peivid}}"
 }
