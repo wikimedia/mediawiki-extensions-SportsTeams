@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Shell\Shell;
+use Wikimedia\AtEase\AtEase;
 
 /**
  * A special page to upload images for sport teams.
@@ -466,9 +467,9 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * Remove a temporarily kept file stashed by saveTempUploadedFile().
 	 */
 	private function unsaveUploadedFile() {
-		Wikimedia\suppressWarnings();
+		AtEase::suppressWarnings();
 		$success = unlink( $this->mUploadTempName );
-		Wikimedia\restoreWarnings();
+		AtEase::restoreWarnings();
 		if ( !$success ) {
 			throw new FatalError( $this->msg( 'filedeleteerror', $this->mUploadTempName )->escaped() );
 		}
