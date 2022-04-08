@@ -24,9 +24,9 @@ class ApiSportsTeams extends ApiBase {
 		// Get the request parameters
 		$params = $this->extractRequestParams();
 
-		Wikimedia\suppressWarnings();
+		AtEase::suppressWarnings();
 		$sportId = $params['sportId'];
-		Wikimedia\restoreWarnings();
+		AtEase::restoreWarnings();
 
 		// You only had one job...
 		// @phan-suppress-next-line PhanImpossibleTypeComparison
