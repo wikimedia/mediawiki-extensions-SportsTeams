@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jeeputer"
+			"Jeeputer",
+			"Mohammad ebz"
 		]
 	},
-	"sportsteams-prev": "قبلی"
+	"sportsteams-prev": "قبلی",
+	"sportsteams-network-complete-list": "فهرست کامل",
+	"sportsteams-team-manager-edit": "ویرایش"
 }
