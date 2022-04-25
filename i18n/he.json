@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"ישראל קלר",
-			"מגזין יהלום"
+			"מגזין יהלום",
+			"Ex-Diktator"
 		]
 	},
 	"sportsteams-add-button": "הוספה",
@@ -26,6 +27,7 @@
 	"sportsteams-team-manager-edit": "עריכה",
 	"sportsteams-updatefavoriteteams-team": "צוות",
 	"sportsteams-profile-button-add": "הוספה",
+	"sportsteams-profile-button-cancel": "ביטול",
 	"sportsteams-profile-networks": "רשתות",
 	"sportsteams-profile-ago": "לפני $1",
 	"sportsteams-time-days": "{{PLURAL:$1|יום אחד|$1 ימים}}",
