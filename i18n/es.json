@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mpayansilva"
+			"Mpayansilva",
+			"DiegoAmbrocio"
 		]
 	},
+	"sportsteams-add-button": "añadir",
+	"sportsteams-no-articles": "No hay artículos.",
 	"sportsteams-remove-as-friend": "Remover amigo",
 	"sportsteams-next": "siguiente",
 	"sportsteams-network-main-page": "Página principial",
