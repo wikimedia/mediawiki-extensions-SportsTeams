@@ -1,8 +1,30 @@
 {
 	"@metadata": {
 		"authors": [
-			")8"
+			")8",
+			"StarrySky"
 		]
 	},
+	"sportsteams-add-button": "增加",
+	"sportsteams-articles-votes": "{{PLURAL:$1|vote|votes}}",
+	"sportsteams-no-articles": "无条目。",
+	"sportsteams-your-friend": "你的朋友",
+	"sportsteams-your-foe": "你的仇敌",
+	"sportsteams-add-as-friend": "增加为朋友",
+	"sportsteams-remove-as-friend": "取消朋友",
+	"sportsteams-add-as-foe": "增加为仇敌",
+	"sportsteams-remove-as-foe": "取消仇敌",
+	"sportsteams-give-a-gift": "送一个礼物",
+	"sportsteams-prev": "上一个",
+	"sportsteams-next": "下一个",
+	"sportsteams-woops": "哎呦！",
+	"sportsteams-network-you-are-fan": "你是一个粉丝",
+	"sportsteams-network-fans-col": "粉丝：",
+	"sportsteams-network-friends-col": "朋友：$1",
+	"sportsteams-network-fans": "$1粉丝",
+	"sportsteams-network-main-page": "首页",
+	"sportsteams-network-your-profile": "用户资料",
+	"sportsteams-top-network-sports": "体育",
+	"sportsteams-team-manager-edit": "编辑",
 	"sportsteams-profile-ago": "$1前"
 }
