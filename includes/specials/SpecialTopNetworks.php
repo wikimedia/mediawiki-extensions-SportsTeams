@@ -69,20 +69,17 @@ class TopNetworks extends SpecialPage {
 
 		// Teams
 		$res = $dbr->select(
-			[ 'sport_favorite', 'sport_team' ],
-			[
-				'COUNT(sf_team_id) AS network_user_count', 'sf_team_id',
-				'team_name', 'team_sport_id'
-			],
+			[ 'sport_team', 'sport_favorite' ],
+			[ 'team_id', 'team_name', 'team_sport_id', 'sf_team_id', 'COUNT(*) AS network_user_count' ],
 			$where,
 			__METHOD__,
 			[
-				'GROUP BY' => 'team_id, sf_team_id',
+				'GROUP BY' => 'team_id, team_name, team_sport_id, sf_team_id',
 				'ORDER BY' => "network_user_count {$order}",
 				'LIMIT' => 50
 			],
 			[
-				'sport_team' => [ 'INNER JOIN', 'sf_team_id = team_id' ]
+				'sport_favorite' => [ 'INNER JOIN', 'sf_team_id = team_id' ]
 			]
 		);
 
