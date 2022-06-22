@@ -2,11 +2,12 @@
 	"@metadata": {
 		"authors": [
 			")8",
-			"StarrySky"
+			"StarrySky",
+			"Jack Phoenix"
 		]
 	},
 	"sportsteams-add-button": "增加",
-	"sportsteams-articles-votes": "{{PLURAL:$1|vote|votes}}",
+	"sportsteams-articles-votes": "{{PLURAL:$1|票}}",
 	"sportsteams-no-articles": "无条目。",
 	"sportsteams-your-friend": "你的朋友",
 	"sportsteams-your-foe": "你的仇敌",
