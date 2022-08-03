@@ -9,5 +9,8 @@
 	"sportsteams-network-write-article": "Raaj artikkeeʹl",
 	"sportsteams-network-main-page": "Ouddseidd",
 	"sportsteams-team-manager-add-team": "lââʹzzet joouk",
-	"sportsteams-profile-button-add": "lââʹzzet"
+	"sportsteams-profile-button-add": "lââʹzzet",
+	"sportsteams-time-hours": "{{PLURAL:$1|õhtt čiâss|$1 čiâss|$1 čiâssâd}}",
+	"sportsteams-time-minutes": "{{PLURAL:$1|õhtt minutt|$1 minuutt|$1 minuttâd}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|õhtt sekuntt|$1 sekuunt|$1 sekunttâd}}"
 }
