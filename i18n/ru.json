@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kareyac",
 			"Okras"
 		]
 	},
+	"sportsteams-profile-button-add": "добавить",
 	"sportsteams-profile-button-cancel": "отмена"
 }
