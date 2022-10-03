@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vlad5250"
+		]
+	},
+	"sportsteams-desc": "Omogućuje mrežnu funkcionalnost",
+	"topnetworks": "Statistike mreže",
+	"sportsteams-add-button": "dodaj",
+	"sportsteams-no-articles": "Nema članaka.",
+	"sportsteams-prev": "preth - претх",
+	"sportsteams-next": "sljed - след",
+	"sportsteams-network-main-page": "Glavna stranica",
+	"sportsteams-network-your-profile": "Vaš profil",
+	"sportsteams-team-manager-team": "tim",
+	"sportsteams-team-manager-add-replace-logo": "dodaj/zamijeni logo",
+	"sportsteams-team-manager-edit": "uredi"
+}
