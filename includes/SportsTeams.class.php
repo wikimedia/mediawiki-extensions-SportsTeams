@@ -638,6 +638,7 @@ class SportsTeams {
 				// @see https://www.mediawiki.org/wiki/Special:Code/MediaWiki/92016#c19527
 				[ 'sf_actor' => $actorIds ]
 			);
+			// @phan-suppress-next-line SecurityCheck-SQLInjection Taint-check doesn't fully understand array_merge
 			$count = (int)$dbr->selectField(
 				'sport_favorite',
 				'COUNT(*) AS the_count',
