@@ -3,7 +3,8 @@
 		"authors": [
 			"Ex-Diktator",
 			"ישראל קלר",
-			"מגזין יהלום"
+			"מגזין יהלום",
+			"Amire80"
 		]
 	},
 	"sportsteams-add-button": "הוספה",
@@ -30,6 +31,6 @@
 	"sportsteams-profile-button-cancel": "ביטול",
 	"sportsteams-profile-networks": "רשתות",
 	"sportsteams-profile-ago": "לפני $1",
-	"sportsteams-time-days": "{{PLURAL:$1|יום אחד|$1 ימים}}",
+	"sportsteams-time-days": "{{PLURAL:$1|יום|יומיים|$1 ימים}}",
 	"sportsteams-time-seconds": "{{PLURAL:$1|שניה אחת|$1 שניות}}"
 }
