@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Hamilton Abreu",
-			"Kareyac"
+			"Kareyac",
+			"McDutchie"
 		]
 	},
 	"sportsteams-desc": "Fornece funcionalidades de comunicação para grupos de adeptos desportivos",
@@ -43,7 +44,7 @@
 	"sportsteams-network-top-fans": "Melhores adeptos",
 	"sportsteams-network-top-fans-week": "Melhores adeptos desta semana",
 	"sportsteams-network-complete-list": "Lista completa",
-	"sportsteams-network-articles": "$1 artigos",
+	"sportsteams-network-articles": "Artigos sobre $1",
 	"sportsteams-network-write-article": "Escrever um artigo",
 	"sportsteams-network-main-page": "Página principal",
 	"sportsteams-network-your-profile": "O seu perfil",
@@ -90,7 +91,7 @@
 	"sportsteams-logo-back-to-team": "Voltar à edição esta equipa",
 	"sportsteams-logo-back": "Voltar",
 	"sportsteams-logo-current-image": "Imagem atual",
-	"sportsteams-logo-image-instructions": "A sua imagem tem de ser um jpeg, png ou gif (não pode usar gifs animados) e ter tamanho inferior a 100 KB.",
+	"sportsteams-logo-image-instructions": "A sua imagem tem de ser um jpeg, png ou gif (não pode usar gifs animados) e ter tamanho inferior a 100 KB.\nEscolha um ficheiro:",
 	"sportsteams-team-manager-title": "Administração de equipas desportivas",
 	"sportsteams-team-manager-created": "A equipa foi criada",
 	"sportsteams-team-manager-saved": "A equipa foi gravada",
