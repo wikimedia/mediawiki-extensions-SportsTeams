@@ -5,7 +5,8 @@
 			"Gebu",
 			"Zabe",
 			"Umlaut",
-			"Brettchenweber"
+			"Brettchenweber",
+			"McDutchie"
 		]
 	},
 	"topnetworks": "Netzwerkstatistik",
@@ -24,7 +25,7 @@
 	"sportsteams-network-fans-col": "Fans:",
 	"sportsteams-network-friends-col": "Freunde: $1",
 	"sportsteams-network-fans": "$1 Fans",
-	"sportsteams-network-articles": "$1 Artikel",
+	"sportsteams-network-articles": "Artikel über $1",
 	"sportsteams-network-write-article": "Schreibe einen Artikel",
 	"sportsteams-network-main-page": "Hauptseite",
 	"sportsteams-network-your-profile": "Dein Profil",

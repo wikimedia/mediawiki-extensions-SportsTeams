@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"DDPAT"
+			"DDPAT",
+			"Ice bulldog",
+			"McDutchie"
 		]
 	},
 	"sportsteams-desc": "Забезпечує функціональність мережі",
@@ -42,7 +44,7 @@
 	"sportsteams-network-top-fans": "Найпопулярніші шанувальники",
 	"sportsteams-network-top-fans-week": "Найкращі шанувальники цього тижня",
 	"sportsteams-network-complete-list": "Повний список",
-	"sportsteams-network-articles": "$1 статей",
+	"sportsteams-network-articles": "Статті близько $1",
 	"sportsteams-network-write-article": "Написати статтю",
 	"sportsteams-network-main-page": "Головна сторінка",
 	"sportsteams-network-your-profile": "Твій профіль",
