@@ -3,7 +3,8 @@
 		"authors": [
 			"Aranka",
 			"Mainframe98",
-			"Romaine"
+			"Romaine",
+			"McDutchie"
 		]
 	},
 	"sportsteams-add-button": "toevoegen",
@@ -12,7 +13,7 @@
 	"sportsteams-next": "volgende",
 	"sportsteams-woops": "Oeps!",
 	"sportsteams-network-logo": "(Officiële Logo)",
-	"sportsteams-network-articles": "$1 Artikels",
+	"sportsteams-network-articles": "Artikelen over $1",
 	"sportsteams-network-main-page": "Hoofdpagina",
 	"sportsteams-top-network-sports": "Sporten",
 	"sportsteams-top-network-least": "Minst",
