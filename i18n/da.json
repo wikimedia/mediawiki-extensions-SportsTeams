@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Saederup92"
+			"Saederup92",
+			"McDutchie"
 		]
 	},
 	"sportsteams-add-button": "tilføj",
@@ -20,7 +21,7 @@
 	"sportsteams-network-friends-col": "Venner: $1",
 	"sportsteams-network-latest-thoughts": "Sidste tanker",
 	"sportsteams-network-all-thoughts": "Alle tanker",
-	"sportsteams-network-articles": "$1 artikler",
+	"sportsteams-network-articles": "Artikler om $1",
 	"sportsteams-network-write-article": "Skriv en artikel",
 	"sportsteams-network-main-page": "Forside",
 	"sportsteams-network-your-profile": "Din profil",
