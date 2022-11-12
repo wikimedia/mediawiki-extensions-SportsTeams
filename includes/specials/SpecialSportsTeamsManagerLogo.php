@@ -109,7 +109,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		/** Various rights checks */
-		if ( !$user->isAllowed( 'upload' ) || $user->isBlocked() ) {
+		if ( !$user->isAllowed( 'upload' ) || $user->getBlock() ) {
 			throw new ErrorPageError( 'uploadnologin', 'uploadnologintext' );
 		}
 		$this->checkReadOnly();
