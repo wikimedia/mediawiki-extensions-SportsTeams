@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Sabelöga",
-			"WikiPhoenix"
+			"WikiPhoenix",
+			"McDutchie"
 		]
 	},
 	"sportsteams-desc": "Tillhandahåller nätverksfunktionalitet",
@@ -43,7 +44,7 @@
 	"sportsteams-network-top-fans": "Toppfans",
 	"sportsteams-network-top-fans-week": "Denna veckas toppfans",
 	"sportsteams-network-complete-list": "Fullständig lista",
-	"sportsteams-network-articles": "$1s artiklar",
+	"sportsteams-network-articles": "Artiklar om $1",
 	"sportsteams-network-write-article": "Skriv en artikel",
 	"sportsteams-network-main-page": "Huvudsida",
 	"sportsteams-network-your-profile": "Din profil",

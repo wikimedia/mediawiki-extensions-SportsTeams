@@ -5,7 +5,8 @@
 			"Robby",
 			"Umherirrender",
 			"Verdy p",
-			"Hamilton Abreu"
+			"Hamilton Abreu",
+			"McDutchie"
 		]
 	},
 	"sportsteams-desc": "{{desc|name=SportsTeams|url=https://www.mediawiki.org/wiki/Extension:SportsTeams}}",
@@ -48,7 +49,7 @@
 	"sportsteams-network-top-fans": "Header message on network pages (e.g. <code>Special:FanHome?sport_id=1&team_id=1</code>); below this header are listed the five newest fans of the team the network page is about and how many points they've gained during the current week",
 	"sportsteams-network-top-fans-week": "Link text for a link on network pages (e.g. <code>Special:FanHome?sport_id=1&team_id=1</code>); this link points to the <code>Special:TopUsersRecent</code> page, which displays the listing of top users for a given period (either last week or last month). This text is shown below {{msg-mw|sportsteams-network-top-fans}}, above the user avatars and on the left side (for LTR languages) of the {{msg-mw|sportsteams-network-complete-list}} message.",
 	"sportsteams-network-complete-list": "Link text for a link on network pages (e.g. <code>Special:FanHome?sport_id=1&team_id=1</code>); this link points to the <code>Special:ViewFans</code> page, which displays the listing of users who have joined the network in question. This text is shown below {{msg-mw|sportsteams-network-top-fans}}, above the user avatars and on the right side (for LTR languages) of the {{msg-mw|sportsteams-network-top-fans-week}} message.",
-	"sportsteams-network-articles": "Header message on network pages (e.g. <code>Special:FanHome?sport_id=1&team_id=1</code>).\nParameters:\n* $1 is the team/network namem e.g. \"New York Mets\"",
+	"sportsteams-network-articles": "Header message on network pages (e.g. <code>Special:FanHome?sport_id=1&team_id=1</code>).\nParameters:\n* $1 is the team/network name, e.g. \"New York Mets\"",
 	"sportsteams-network-write-article": "Link text for a link pointing to <code>Special:CreateBlogPost</code>, provided by the [[mw:Extension:BlogPage|BlogPage extension]]; shown on network pages (e.g. <code>Special:FanHome?sport_id=1&team_id=1</code>)",
 	"sportsteams-network-main-page": "Button text for a button which will take the user to the wiki's Main Page. This button, together with the accompanying {{msg-mw|sportsteams-network-your-profile}} button, is shown on various SportsTeams special pages after performing an action like joining a network or leaving it, etc.",
 	"sportsteams-network-your-profile": "Button text for a button which will take the user to their own profile (user page). This button, together with the accompanying {{msg-mw|sportsteams-network-main-page}} button, is shown on various SportsTeams special pages after performing an action like joining a network or leaving it, etc.",
