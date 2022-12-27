@@ -5,9 +5,14 @@
 		]
 	},
 	"sportsteams-network-friends-col": "Prijatelji: $1",
+	"sportsteams-network-remove-me": "Odstrani me",
+	"sportsteams-logo-current-image": "Trenutna slika",
 	"sportsteams-team-manager-saved": "Ekipa je shranjena.",
+	"sportsteams-team-manager-view-sports": "Prikaži športe",
 	"sportsteams-profile-button-add": "dodaj",
 	"sportsteams-profile-button-cancel": "Prekliči",
+	"sportsteams-profile-view-all": "Prikaži vse",
+	"sportsteams-time-seconds": "{{PLURAL:$1|eno sekundo|$1 sekundama|$1 sekundami}}",
 	"sportsteams-profile-characters-remaining": "{{PLURAL:$1|Na voljo je še 1 znak|Na voljo sta še 2 znaka|Na voljo so še $1 znaki|Na voljo je še $1 znakov}}",
 	"sportsteams-profile-characters-remaining-hack": "Na voljo je (so) še $1 znak(i)"
 }
