@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"MuratTheTurkish"
+			"MuratTheTurkish",
+			"Rapsar"
 		]
 	},
 	"sportsteams-desc": "Ağ işlevselliği sağlar",
@@ -100,7 +101,7 @@
 	"sportsteams-team-manager-teamname": "takım adı",
 	"sportsteams-team-manager-team": "takım",
 	"sportsteams-team-manager-add-replace-logo": "logoyu ekle/değiştir",
-	"sportsteams-team-manager-edit": "düzenle",
+	"sportsteams-team-manager-edit": "değiştir",
 	"sportsteams-team-manager-add-team": "takım ekle",
 	"sportsteams-team-manager-db-is-empty": "Veritabanında spor yok. Bir tane oluştur!",
 	"sportsteams-team-manager-sport-name": "spor adı",
