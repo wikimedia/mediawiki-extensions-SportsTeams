@@ -1,9 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alnokta",
+			"Meno25",
+			"OsamaK",
 			"محمد أحمد عبد الفتاح"
 		]
 	},
+	"user-profile-sports-sport": "رياضة",
+	"user-profile-sports-title": "عدل رياضاتك وفرقك المفضلة",
+	"user-profile-sports-notloggedintitle": "أوه!",
+	"user-profile-sports-notloggedintext": "ينبغي أن تكون مسجل الدخول لتعديل ملفك.",
+	"user-profile-sports-teamremoved": "أزيل فريقك",
+	"user-profile-sports-teamsaved": "فرقك تم حفظها",
+	"user-profile-sports-addmore": "أضف المزيد من الرياضات/الأندية",
 	"sportsteams-network-info": "معلومات الشبكة",
 	"sportsteams-network-write-article": "كتابة مقالة",
 	"sportsteams-network-main-page": "الصفحة الرئيسية",

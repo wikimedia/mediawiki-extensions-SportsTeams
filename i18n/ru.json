@@ -2,9 +2,18 @@
 	"@metadata": {
 		"authors": [
 			"Kareyac",
-			"Okras"
+			"Lockal",
+			"Okras",
+			"Александр Сигачёв"
 		]
 	},
+	"user-profile-sports-sport": "Спорт",
+	"user-profile-sports-title": "Редактирование ваших любимых видов спорта и команд",
+	"user-profile-sports-notloggedintitle": "Опа!",
+	"user-profile-sports-notloggedintext": "Вы должны представиться, чтобы редактировать ваш профиль.",
+	"user-profile-sports-teamremoved": "Ваши команды были удалены",
+	"user-profile-sports-teamsaved": "Ваши команды были сохранены",
+	"user-profile-sports-addmore": "Добавить ещё видов спорта или команд",
 	"sportsteams-profile-button-add": "добавить",
 	"sportsteams-profile-button-cancel": "отмена"
 }

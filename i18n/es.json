@@ -2,10 +2,20 @@
 	"@metadata": {
 		"authors": [
 			"Ciencia Al Poder",
+			"Crazymadlover",
 			"DiegoAmbrocio",
+			"Imre",
+			"Mor",
 			"Mpayansilva"
 		]
 	},
+	"user-profile-sports-sport": "Deporte",
+	"user-profile-sports-title": "Editar sus deportes y equipos favoritos",
+	"user-profile-sports-notloggedintitle": "Woops!",
+	"user-profile-sports-notloggedintext": "Tienes que iniciar sesión para editar tu perfil.",
+	"user-profile-sports-teamremoved": "Se ha eliminado tu equipo",
+	"user-profile-sports-teamsaved": "Tus equipos han sido grabados",
+	"user-profile-sports-addmore": "Agregar más deportes/equipos",
 	"sportsteams-add-button": "añadir",
 	"sportsteams-no-articles": "No hay artículos.",
 	"sportsteams-remove-as-friend": "Remover amigo",

@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"EugeneZelenko",
+			"Jim-by",
+			"Red Winged Duck"
+		]
+	},
+	"user-profile-sports-sport": "Спорт",
+	"user-profile-sports-title": "Рэдагаваньне Вашых улюбёных відаў спорту і камандаў",
+	"user-profile-sports-notloggedintitle": "Ой!",
+	"user-profile-sports-notloggedintext": "Вам неабходна ўвайсьці ў сыстэму, каб рэдагаваць Ваш профіль.",
+	"user-profile-sports-teamremoved": "Ваша каманда была выдалена",
+	"user-profile-sports-teamsaved": "Вашы каманды былі захаваныя",
+	"user-profile-sports-addmore": "Дадаць болей відаў спорту/камандаў"
+}

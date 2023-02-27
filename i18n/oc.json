@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cedric31"
+		]
+	},
+	"user-profile-sports-sport": "Espòrt",
+	"user-profile-sports-title": "Editatz vòstres espòrts favorits e vòstras equipas preferidas",
+	"user-profile-sports-notloggedintitle": "Op !",
+	"user-profile-sports-notloggedintext": "Vos cal èsser en sesilha per editar vòstre perfil.",
+	"user-profile-sports-teamremoved": "Vòstra equipa es estada levada.",
+	"user-profile-sports-teamsaved": "Vòstras equipas son estadas salvadas",
+	"user-profile-sports-addmore": "Apondre mai d'espòrts o d'equipas esportivas"
+}

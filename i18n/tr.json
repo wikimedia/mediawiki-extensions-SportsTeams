@@ -2,12 +2,20 @@
 	"@metadata": {
 		"authors": [
 			"MuratTheTurkish",
-			"Rapsar"
+			"Rapsar",
+			"Vito Genovese"
 		]
 	},
 	"sportsteams-desc": "Ağ işlevselliği sağlar",
 	"topnetworks": "Ağ İstatistikleri",
 	"similarfans": "Benzer Hayranlar",
+	"user-profile-sports-sport": "Spor",
+	"user-profile-sports-title": "Favori sporlarınızı ve takımlarınızı düzenleyin",
+	"user-profile-sports-notloggedintitle": "Hay aksi!",
+	"user-profile-sports-notloggedintext": "Profilinizi değiştirebilmek için oturum açmış olmalısınız.",
+	"user-profile-sports-teamremoved": "Ekibiniz kaldırıldı",
+	"user-profile-sports-teamsaved": "Ekibiniz kaydedildi",
+	"user-profile-sports-addmore": "Daha fazla spor/takım ekle",
 	"sportsteamsmanager": "Spor Takımlarını Yönet",
 	"sportsteams-add-button": "ekle",
 	"sportsteams-articles-votes": "{{PLURAL:$1|oylama|oylamalar}}",

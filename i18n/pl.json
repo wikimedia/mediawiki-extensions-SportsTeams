@@ -1,8 +1,18 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jack Phoenix"
+			"Jack Phoenix",
+			"Jwitos",
+			"Sp5uhe",
+			"ToSter"
 		]
 	},
+	"user-profile-sports-sport": "Sport",
+	"user-profile-sports-title": "Określ swoje ulubione dyscypliny sportowe oraz drużyny",
+	"user-profile-sports-notloggedintitle": "Ups!",
+	"user-profile-sports-notloggedintext": "Musisz się zalogować, aby edytować profil.",
+	"user-profile-sports-teamremoved": "Drużyna została usunięta",
+	"user-profile-sports-teamsaved": "Drużyny zostały zapisane",
+	"user-profile-sports-addmore": "Dodaj więcej dyscyplin lub drużyn",
 	"sportsteams-profile-view-all": "Pokaż wszystko"
 }

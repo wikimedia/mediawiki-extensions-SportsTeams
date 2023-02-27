@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Eduardo Addad de Oliveira",
+			"Eduardo.mps",
 			"Eduardoaddad",
 			"McDutchie",
 			"Tks4Fish"
@@ -10,6 +11,13 @@
 	"sportsteams-desc": "Fornece funcionalidade de rede",
 	"topnetworks": "Estáticas da rede",
 	"similarfans": "Fãs similares",
+	"user-profile-sports-sport": "Esporte",
+	"user-profile-sports-title": "Edite os seus esportes e equipes favoritas",
+	"user-profile-sports-notloggedintitle": "Oooops!",
+	"user-profile-sports-notloggedintext": "Você precisa estar autenticado para editar seu perfil.",
+	"user-profile-sports-teamremoved": "Seu time foi removido",
+	"user-profile-sports-teamsaved": "Seus times foram salvos",
+	"user-profile-sports-addmore": "Adicionar mais esportes/times",
 	"sportsteamsmanager": "Gerenciar equipes de esportes",
 	"sportsteams-add-button": "adicionar",
 	"sportsteams-articles-votes": "{{PLURAL:$1|voto|votos}}",

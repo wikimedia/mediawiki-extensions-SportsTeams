@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kaustubh"
+		]
+	},
+	"user-profile-sports-sport": "खेळ",
+	"user-profile-sports-title": "तुमच्या आवडीचे खेळ तसेच संघ संपादित करा",
+	"user-profile-sports-notloggedintitle": "बापरे!",
+	"user-profile-sports-notloggedintext": "तुम्ही प्रोफाइल बदलण्यासाठी प्रवेश केलेला असणे आवश्यक आहे.",
+	"user-profile-sports-teamremoved": "तुमचा संघ काढण्यात आलेला आहे",
+	"user-profile-sports-teamsaved": "तुमचा संघ जतन करण्यात आलेला आहे",
+	"user-profile-sports-addmore": "आणखी खेळ/संघ वाढवा"
+}

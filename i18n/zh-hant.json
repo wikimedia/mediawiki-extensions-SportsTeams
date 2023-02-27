@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly",
+			"Liangent",
+			"Mark85296341"
+		]
+	},
+	"user-profile-sports-sport": "運動",
+	"user-profile-sports-notloggedintitle": "哎呀！",
+	"user-profile-sports-notloggedintext": "您必須登入以更改個人檔案。",
+	"user-profile-sports-teamremoved": "您的團隊已被移除",
+	"user-profile-sports-teamsaved": "已儲存您的團隊。",
+	"user-profile-sports-addmore": "加入更多體育/團隊"
+}

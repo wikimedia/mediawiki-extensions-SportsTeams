@@ -1,8 +1,16 @@
 {
 	"@metadata": {
 		"authors": [
-			"Just Sayori"
+			"Just Sayori",
+			"Woraponboonkerd"
 		]
 	},
+	"user-profile-sports-sport": "กีฬา",
+	"user-profile-sports-title": "แก้ไขประเภทกีฬาและทีมที่คุณชอบ",
+	"user-profile-sports-notloggedintitle": "อุ๊ย!",
+	"user-profile-sports-notloggedintext": "คุณต้องลงชื่อเข้าใช้เพื่อที่จะแก้ไขโปรไฟล์ของคุณ",
+	"user-profile-sports-teamremoved": "ทีมของคุณได้ถูกลบแล้ว",
+	"user-profile-sports-teamsaved": "ทีมของคุณได้ถูกบันทึกแล้ว",
+	"user-profile-sports-addmore": "เพิ่มกีฬา/ทีมอีก",
 	"sportsteams-network-complete-list": "รายชื่อแบบสมบูรณ์"
 }

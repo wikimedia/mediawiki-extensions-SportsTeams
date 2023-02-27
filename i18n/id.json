@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Farras"
+		]
+	},
+	"user-profile-sports-sport": "Olahraga",
+	"user-profile-sports-title": "Sunting olahraga dan tim yang Anda sukai",
+	"user-profile-sports-notloggedintitle": "Ups!",
+	"user-profile-sports-notloggedintext": "Anda harus masuk log untuk menyunting profil Anda.",
+	"user-profile-sports-teamremoved": "Tim Anda telah dihapus",
+	"user-profile-sports-teamsaved": "Tim Anda telah disimpan",
+	"user-profile-sports-addmore": "Tambahkan lebih banyak olahraga/tim"
+}

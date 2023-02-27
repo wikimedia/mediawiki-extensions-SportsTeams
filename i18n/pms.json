@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Borichèt",
+			"Dragonòt"
+		]
+	},
+	"user-profile-sports-sport": "Spòrt",
+	"user-profile-sports-title": "Modìfica tò spòrt e echip favorì",
+	"user-profile-sports-notloggedintitle": "Contacc!",
+	"user-profile-sports-notloggedintext": "A deuv esse intrà ant ël sistema për modifiché sò profil.",
+	"user-profile-sports-teamremoved": "Soa echip a l'é stàita gavà",
+	"user-profile-sports-teamsaved": "Toa echip a l'é stàita salvà",
+	"user-profile-sports-addmore": "Gionta pi spòrt/echip"
+}

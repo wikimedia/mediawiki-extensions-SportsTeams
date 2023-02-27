@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Helix84"
+		]
+	},
+	"user-profile-sports-sport": "Šport",
+	"user-profile-sports-title": "Upraviť obľúbené športy a tímy",
+	"user-profile-sports-notloggedintitle": "Ops!",
+	"user-profile-sports-notloggedintext": "Aby ste mohli upraviť svoj profil, musíte sa prhlásiť.",
+	"user-profile-sports-teamremoved": "Váš tím bol odstránený",
+	"user-profile-sports-teamsaved": "Vaše tímy boli pridané",
+	"user-profile-sports-addmore": "Pridať ďalšie športy/tímy"
+}

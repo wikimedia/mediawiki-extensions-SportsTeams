@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yekrats"
+		]
+	},
+	"user-profile-sports-sport": "Sporto",
+	"user-profile-sports-title": "Redakti viajn preferatajn sportojn kaj teamojn",
+	"user-profile-sports-notloggedintitle": "Ho ve!",
+	"user-profile-sports-notloggedintext": "Vi devas ensaluti por redakti vian profilon.",
+	"user-profile-sports-teamremoved": "Via teamo estis forigita",
+	"user-profile-sports-teamsaved": "Viaj teamoj estis konservitaj",
+	"user-profile-sports-addmore": "Aldoni pliajn sportojn/teamojn"
+}

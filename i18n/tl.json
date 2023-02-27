@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"AnakngAraw"
+		]
+	},
+	"user-profile-sports-sport": "Palakasan (isport)",
+	"user-profile-sports-title": "Baguhin ang kinagigiliwan mong mga palakasan (isports) at mga koponan",
+	"user-profile-sports-notloggedintitle": "Ay!",
+	"user-profile-sports-notloggedintext": "Dapat kang lumagda muna bago makagawa ng pagbabago sa iyong talaang pangkatangian.",
+	"user-profile-sports-teamremoved": "Tinanggal na ang mga koponan mo",
+	"user-profile-sports-teamsaved": "Sinagip na ang mga koponan mo",
+	"user-profile-sports-addmore": "Magdagdag pa ng mas maraming mga palakasan (isports)/mga koponan"
+}

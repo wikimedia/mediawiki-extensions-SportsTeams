@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"CERminator"
+		]
+	},
+	"user-profile-sports-sport": "Sport",
+	"user-profile-sports-title": "Uredite Vaše omiljene sportove i ekipe",
+	"user-profile-sports-notloggedintitle": "Ups!",
+	"user-profile-sports-notloggedintext": "Morate biti prijavljeni da biste uredili svoj profil.",
+	"user-profile-sports-teamremoved": "Vaša ekipa je uklonjena",
+	"user-profile-sports-teamsaved": "Vaše ekipa su spremljene",
+	"user-profile-sports-addmore": "Dodaj više sportova/ekipa"
+}

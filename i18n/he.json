@@ -3,10 +3,18 @@
 		"authors": [
 			"Amire80",
 			"Ex-Diktator",
+			"YaronSh",
 			"ישראל קלר",
 			"מגזין יהלום"
 		]
 	},
+	"user-profile-sports-sport": "ספורט",
+	"user-profile-sports-title": "ערכו את ענפי הספורט והקבוצות המועדפים עליכם",
+	"user-profile-sports-notloggedintitle": "אופס!",
+	"user-profile-sports-notloggedintext": "עליכם להיכנס לחשבון כדי לערוך את הפרופיל שלכם.",
+	"user-profile-sports-teamremoved": "קבוצותיכם הוסרו",
+	"user-profile-sports-teamsaved": "הקבוצות שלכם נשמרו",
+	"user-profile-sports-addmore": "הוספת עוד ענפי ספורט או קבוצות",
 	"sportsteams-add-button": "הוספה",
 	"sportsteams-your-friend": "החבר שלך",
 	"sportsteams-prev": "קודמת",

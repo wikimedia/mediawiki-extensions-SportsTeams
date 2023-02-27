@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Avjoska"
+		]
+	},
+	"user-profile-sports-sport": "Sport",
+	"user-profile-sports-notloggedintitle": "Ups!",
+	"user-profile-sports-notloggedintext": "Profiili redigeerimiseks pead olema sisse loginud."
+}

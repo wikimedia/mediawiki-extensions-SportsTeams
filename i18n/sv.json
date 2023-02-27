@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"M.M.S.",
 			"McDutchie",
 			"Sabelöga",
 			"WikiPhoenix"
@@ -9,6 +10,13 @@
 	"sportsteams-desc": "Tillhandahåller nätverksfunktionalitet",
 	"topnetworks": "Nätverksstatistik",
 	"similarfans": "Liknande fans",
+	"user-profile-sports-sport": "Sport",
+	"user-profile-sports-title": "Redigera information om dina favoritsporter och favoritlag",
+	"user-profile-sports-notloggedintitle": "Oops!",
+	"user-profile-sports-notloggedintext": "Du måste vara inloggad för att redigera din profil.",
+	"user-profile-sports-teamremoved": "Ditt lag har tagits bort",
+	"user-profile-sports-teamsaved": "Dina lag har sparats",
+	"user-profile-sports-addmore": "Lägg till mera sporter/lag",
 	"sportsteamsmanager": "Hantera sportlag",
 	"sportsteams-add-button": "lägg till",
 	"sportsteams-articles-votes": "{{PLURAL:$1|röst|röster}}",

@@ -2,10 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"A2y4",
-			"Ajeje Brazorf"
+			"Ajeje Brazorf",
+			"Aotake",
+			"Azeha"
 		]
 	},
 	"topnetworks": "ネットワーク統計",
+	"user-profile-sports-sport": "スポーツ",
+	"user-profile-sports-title": "応援しているスポーツとチームを編集する",
+	"user-profile-sports-notloggedintitle": "おっと！",
+	"user-profile-sports-notloggedintext": "プロフィールを編集するにはログインする必要があります。",
+	"user-profile-sports-teamremoved": "登録チームを削除しました",
+	"user-profile-sports-teamsaved": "チームを登録しました",
+	"user-profile-sports-addmore": "スポーツ/チームをもっと追加",
 	"sportsteams-network-articles": "$1記事",
 	"sportsteams-network-main-page": "メインページ",
 	"sportsteams-network-your-profile": "あなたのプロフィール",

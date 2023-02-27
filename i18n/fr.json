@@ -1,7 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"Crochet.david",
 			"Florian COLLIN",
+			"Grondin",
+			"PieRRoMaN",
 			"Thibaut120094",
 			"Verdy p",
 			"Wladek92"
@@ -10,6 +13,13 @@
 	"sportsteams-desc": "Fournit des fonctionnalités de mise en réseau",
 	"topnetworks": "Statistiques du réseau",
 	"similarfans": "Fans similaires",
+	"user-profile-sports-sport": "Sport",
+	"user-profile-sports-title": "Modifiez vos sports et équipes favoris",
+	"user-profile-sports-notloggedintitle": "Houla !",
+	"user-profile-sports-notloggedintext": "Vous devez être connecté pour modifier votre profil.",
+	"user-profile-sports-teamremoved": "Vos équipes ont été retirées.",
+	"user-profile-sports-teamsaved": "Vos équipes ont été sauvegardées",
+	"user-profile-sports-addmore": "Ajouter plus de sports ou d’équipes",
 	"sportsteamsmanager": "Gérer les équipes sportives",
 	"sportsteams-add-button": "ajouter",
 	"sportsteams-articles-votes": "{{PLURAL:$1|vote|votes}}",

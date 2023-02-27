@@ -1,10 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kizule"
+			"Kizule",
+			"Milicevic01",
+			"Михајло Анђелковић"
 		]
 	},
 	"topnetworks": "Статистике мреже",
+	"user-profile-sports-sport": "Спорт",
+	"user-profile-sports-title": "Измените Ваше омиљеен спортове и тимове",
+	"user-profile-sports-notloggedintitle": "Упс!",
+	"user-profile-sports-notloggedintext": "Морате бити улоговани да бисте изменили Ваш профил.",
+	"user-profile-sports-teamremoved": "Ваши тимови су уклоњени",
+	"user-profile-sports-teamsaved": "Ваши тимови су снимљени",
+	"user-profile-sports-addmore": "Додајте још спортова/тимова",
 	"sportsteams-no-articles": "Нема чланака.",
 	"sportsteams-network-main-page": "Главна страна",
 	"sportsteams-network-your-profile": "Ваш профил",

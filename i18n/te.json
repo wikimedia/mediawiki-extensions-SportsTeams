@@ -1,11 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
-			"Chaduvari"
+			"Chaduvari",
+			"Veeven"
 		]
 	},
 	"topnetworks": "నెట్‌వర్కు గణాంకాలు",
 	"similarfans": "పోలిన అభిమానులు",
+	"user-profile-sports-sport": "క్రీడ",
+	"user-profile-sports-title": "మీ కిష్టమైన ఆటలను, జట్టులను సరిదిద్దండి",
+	"user-profile-sports-notloggedintitle": "అయ్యో!",
+	"user-profile-sports-notloggedintext": "మీ ప్రొఫైలును సరిదిద్దాలంటే మీరు లాగినై ఉండాలి.",
+	"user-profile-sports-teamremoved": "మీ జట్టును తీసేసాం",
+	"user-profile-sports-teamsaved": "మీ జట్టులను భద్రపరచాం",
+	"user-profile-sports-addmore": "మరిన్ని ఆటలను/జట్టులను చేర్చండి",
 	"sportsteamsmanager": "క్రీడా జట్లను నిర్వహించండి",
 	"sportsteams-add-button": "చేర్చు",
 	"sportsteams-articles-votes": "{{PLURAL:$1|వోటు|వోట్లు}}",
