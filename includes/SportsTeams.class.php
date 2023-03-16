@@ -299,7 +299,7 @@ class SportsTeams {
 	 *                      medium-large and 'l' for large
 	 * @return string Full <img> tag
 	 */
-	public static function getLogo( $sport_id, $team_id = 0, $size ) {
+	public static function getLogo( $sport_id, $team_id, $size ) {
 		global $wgUploadPath;
 
 		if ( $sport_id > 0 && $team_id == 0 ) {
