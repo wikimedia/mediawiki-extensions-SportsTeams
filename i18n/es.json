@@ -3,16 +3,27 @@
 		"authors": [
 			"Ciencia Al Poder",
 			"DiegoAmbrocio",
-			"Mpayansilva"
+			"Mpayansilva",
+			"Crazymadlover",
+			"Imre",
+			"Mor",
+			"No se"
 		]
 	},
+	"sportsteams-desc": "Proporciona funcionalidad de red.",
+	"topnetworks": "Estadísticas de la red",
 	"sportsteams-add-button": "añadir",
 	"sportsteams-no-articles": "No hay artículos.",
 	"sportsteams-remove-as-friend": "Remover amigo",
 	"sportsteams-next": "siguiente",
+	"sportsteams-network-fan-display": "{{PLURAL:$3|Mostrando $1 de <a href=\"$2\">$3</a> Fan|Mostrando $1 de <a href=\"$2\">$3</a> Fans}}",
 	"sportsteams-network-latest-thoughts": "Últimas opiniones",
 	"sportsteams-network-all-thoughts": "Todas las opiniones",
 	"sportsteams-network-main-page": "Página principial",
+	"sportsteams-top-network-sports": "Deportes",
+	"sportsteams-top-network-teams": "Equipos",
+	"sportsteams-top-network-least": "El menos",
+	"sportsteams-top-network-most": "El más",
 	"sportsteams-top-network-team-title-least-sports": "Deportes menos populares",
 	"sportsteams-top-network-most-popular": "Más popular",
 	"sportsteams-logo-images-below": "Abajo están las imágenes suyas que serán usadas en el sitio",
