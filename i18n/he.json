@@ -64,5 +64,7 @@
 	"sportsteams-profile-networks": "רשתות",
 	"sportsteams-profile-ago": "לפני $1",
 	"sportsteams-time-days": "{{PLURAL:$1|יום|יומיים|$1 ימים}}",
+	"sportsteams-time-hours": "{{PLURAL:$1|שעה|שעתיים|$1 שעות}}",
+	"sportsteams-time-minutes": "{{PLURAL:$1|דקה|$1 דקות}}",
 	"sportsteams-time-seconds": "{{PLURAL:$1|שניה אחת|$1 שניות}}"
 }
