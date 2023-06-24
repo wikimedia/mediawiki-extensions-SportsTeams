@@ -146,7 +146,6 @@
 	"sportsteams-signup-thought": "Label message shown on <code>Special:CreateAccount</code>, allowing the user to post a thought (a tweet-like short message) on the sport team's fan page, provided they've first chosen their favorite sport and then their favorite team associated with that sport",
 	"action-sportsteamsmanager": "{{doc-action|sportsteamsmanager}}",
 	"right-sportsteamsmanager": "{{doc-right|sportsteamsmanager}}",
-	"apihelp-sportsteams-description": "{{doc-apihelp-description|sportsteams}}",
 	"apihelp-sportsteams-summary": "{{doc-apihelp-summary|sportsteams}}",
 	"apihelp-sportsteams-param-sportId": "{{doc-apihelp-param|sportsteams|sportId}}",
 	"apihelp-sportsteams-example-1": "{{doc-apihelp-example|sportsteams}}"
