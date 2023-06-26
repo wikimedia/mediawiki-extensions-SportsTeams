@@ -142,7 +142,6 @@
 	"sportsteams-signup-thought": "Bize bu takım hakkında bir fikir verin",
 	"action-sportsteamsmanager": "yeni ağ ekle",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Ağları yönet]]",
-	"apihelp-sportsteams-description": "Veritabanından belirli bir spor için takımları getirmek için API.",
 	"apihelp-sportsteams-summary": "Veritabanından belirli bir spor için takımları getirmek için API.",
 	"apihelp-sportsteams-param-sportId": "Söz konusu sporun benzersiz tanımlayıcısı (numarası).",
 	"apihelp-sportsteams-example-1": "3 numaralı sporun altındaki adları ve takımları alın."

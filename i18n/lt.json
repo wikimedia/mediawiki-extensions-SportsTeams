@@ -140,7 +140,6 @@
 	"sportsteams-signup-thought": "Papasakokite apie tą komandą",
 	"action-sportsteamsmanager": "pridėti naujų tinklų",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Valdyti tinklus]]",
-	"apihelp-sportsteams-description": "API tam tikros sporto šakos komandoms iš duomenų bazės gauti.",
 	"apihelp-sportsteams-summary": "API tam tikros sporto šakos komandoms iš duomenų bazės gauti.",
 	"apihelp-sportsteams-param-sportId": "Unikalus atitinkamos sporto šakos identifikatorius (numeris).",
 	"apihelp-sportsteams-example-1": "Gauti pavadinimus ir komandas pagal sporto šaką #3."

@@ -140,7 +140,6 @@
 	"sportsteams-signup-thought": "Dice nos lo que tu pensa de iste equipa",
 	"action-sportsteamsmanager": "adder nove retes",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Gerer retes]]",
-	"apihelp-sportsteams-description": "API pro obtener le equipas in un sport fornite del base de datos.",
 	"apihelp-sportsteams-summary": "API pro obtener le equipas in un sport fornite del base de datos.",
 	"apihelp-sportsteams-param-sportId": "Identificator unic (numero) del sport in question.",
 	"apihelp-sportsteams-example-1": "Obtener le nomines e equipas del sport № 3."

@@ -140,7 +140,6 @@
 	"sportsteams-signup-thought": "Кажете ни мисла за таа екипа",
 	"action-sportsteamsmanager": "додавање на нови мрежи",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Раководење со мрежи]]",
-	"apihelp-sportsteams-description": "Извршник за добивање на екипите за даден спорт од базата.",
 	"apihelp-sportsteams-summary": "Извршник за добивање на екипите за даден спорт од базата.",
 	"apihelp-sportsteams-param-sportId": "Единствена назанка (број) на дадениот спорт.",
 	"apihelp-sportsteams-example-1": "Дај називи на екипите од спортот бр. 3."

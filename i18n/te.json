@@ -140,7 +140,6 @@
 	"sportsteams-signup-thought": "ఆ జట్టు గురించి మీ అభిప్రాయాన్ని చెప్పండి",
 	"action-sportsteamsmanager": "కొత్త నెట్‌వర్కులను చేర్చు",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|నెట్‌వర్కులను నిర్వహించడం]]",
-	"apihelp-sportsteams-description": "డేటాబేసు నుండి ఇచ్చిన క్రీడకు సంబంధించిన జట్లను తెచ్చే API.",
 	"apihelp-sportsteams-summary": "డేటాబేసు నుండి ఇచ్చిన క్రీడకు సంబంధించిన జట్లను తెచ్చే API.",
 	"apihelp-sportsteams-param-sportId": "ప్రస్తుత క్రీడకు చెందిన విశిష్ట గుర్తింపు (సంఖ్య)",
 	"apihelp-sportsteams-example-1": "#3 క్రీడకు చెందిన పేర్లను జట్లనూ పొందండి."

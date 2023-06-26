@@ -141,7 +141,6 @@
 	"sportsteams-signup-thought": "Povejte nam kaj o tej ekipi",
 	"action-sportsteamsmanager": "dodaj nova omrežja",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Upravljanje omrežij]]",
-	"apihelp-sportsteams-description": "API za pridobivanje ekip za določen šport iz podatkovne zbirke.",
 	"apihelp-sportsteams-summary": "API za pridobivanje ekip za določen šport iz podatkovne zbirke.",
 	"apihelp-sportsteams-param-sportId": "Enolični identifikator (številka) zadevnega športa.",
 	"apihelp-sportsteams-example-1": "Pridobitev imen in ekip pod športom št. 3."

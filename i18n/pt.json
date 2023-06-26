@@ -142,7 +142,6 @@
 	"sportsteams-signup-thought": "Dê-nos uma opinião sobre essa equipe",
 	"action-sportsteamsmanager": "adicionar grupos novos",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Administrar grupos de adeptos]]",
-	"apihelp-sportsteams-description": "API para obter as equipas de um determinado desporto da base de dados.",
 	"apihelp-sportsteams-summary": "API para obter as equipas de um determinado desporto da base de dados.",
 	"apihelp-sportsteams-param-sportId": "Identificador (número) único do desporto em questão.",
 	"apihelp-sportsteams-example-1": "Obter os nomes e equipas relacionados com o desporto n.º 3."

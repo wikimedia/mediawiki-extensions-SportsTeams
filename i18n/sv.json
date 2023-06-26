@@ -144,7 +144,6 @@
 	"sportsteams-signup-thought": "Berätta en tanke om detta lag",
 	"action-sportsteamsmanager": "lägg till nya nätverk",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Hantera nätverk]]",
-	"apihelp-sportsteams-description": "API för att hämta lagen för en angiven sport från databasen.",
 	"apihelp-sportsteams-summary": "API för att hämta lagen för en angiven sport från databasen.",
 	"apihelp-sportsteams-param-sportId": "Unik identifierare (siffra) för sporten som gäller.",
 	"apihelp-sportsteams-example-1": "Hämta namnen och lagen för sport nr. 3."

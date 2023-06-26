@@ -140,7 +140,6 @@
 	"sportsteams-signup-thought": "Fortell oss en tanke om laget",
 	"action-sportsteamsmanager": "legge til nye nettverk",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Behandle nettverk]]",
-	"apihelp-sportsteams-description": "API for å hente lagene for en gitt idrett fra databasen.",
 	"apihelp-sportsteams-summary": "API for å hente lagene for en gitt idrett fra databasen.",
 	"apihelp-sportsteams-param-sportId": "Unik identifikator (tall) for idretten det gjelder.",
 	"apihelp-sportsteams-example-1": "Hent navn og lag under idrett #3."

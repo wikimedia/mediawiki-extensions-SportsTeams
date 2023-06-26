@@ -147,7 +147,6 @@
 	"sportsteams-signup-thought": "Dites nous ce que vous pensez de cette équipe",
 	"action-sportsteamsmanager": "ajouter de nouveaux réseaux",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Gérer les réseaux]]",
-	"apihelp-sportsteams-description": "API pour récupérer les équipes dans un sport donné depuis la base de données.",
 	"apihelp-sportsteams-summary": "API pour récupérer les équipes dans un sport donné depuis la base de données.",
 	"apihelp-sportsteams-param-sportId": "Identifiant unique (numéro) du sport en question.",
 	"apihelp-sportsteams-example-1": "Obtenez les noms et les équipes du sport nº 3."

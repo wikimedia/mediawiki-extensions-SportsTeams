@@ -143,7 +143,6 @@
 	"sportsteams-signup-thought": "Розкажіть нам про цю команду",
 	"action-sportsteamsmanager": "додати нові мережі",
 	"right-sportsteamsmanager": "[[Special:SportsTeamsManager|Управління мережами]]",
-	"apihelp-sportsteams-description": "API для отримання команд з даного виду спорту з бази даних.",
 	"apihelp-sportsteams-summary": "API для отримання команд з даного виду спорту з бази даних.",
 	"apihelp-sportsteams-param-sportId": "Унікальний ідентифікатор (номер) виду спорту, про який йдеться.",
 	"apihelp-sportsteams-example-1": "Отримайте назви та команди під видом спорту #3."
