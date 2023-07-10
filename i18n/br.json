@@ -1,14 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Fohanno"
+			"Fohanno",
+			"Huñvreüs"
 		]
 	},
 	"user-profile-sports-sport": "Sport",
 	"user-profile-sports-title": "Aozañ ho sportoù hag ho skipailhoù gwellañ-karet",
 	"user-profile-sports-notloggedintitle": "Hopola !",
 	"user-profile-sports-notloggedintext": "Ret eo deoc'h bezañ kevreet evit aozañ ho profil.",
-	"user-profile-sports-teamremoved": "Lamet eo bet ho skipailh",
+	"user-profile-sports-teamremoved": "Lamet eo bet ho skipailhoù",
 	"user-profile-sports-teamsaved": "Enrollet eo bet ho skipailhoù",
 	"user-profile-sports-addmore": "Ouzhpennañ muioc'h a sportoù / skipailhoù"
 }
