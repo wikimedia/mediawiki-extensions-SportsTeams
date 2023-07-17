@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Piano1forte2"
+		]
+	},
+	"sportsteams-error-no-sports-message": "There are no sports in the database so you cannot update your favourite teams.\nPlease ask an admin or someone else with the 'sportsteamsmanager' user right to [[Special:SportsTeamsManager|add some sports]].",
+	"sportsteams-updatefavoriteteams-favorite": "Favourite #$1",
+	"sportsteams-signup-select": "Select your Favourite Team or Sport"
+}
