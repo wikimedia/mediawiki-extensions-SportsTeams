@@ -60,6 +60,7 @@
 	"sportsteams-network-no-need-join": "אין צורך להצטרף שוב!",
 	"sportsteams-network-join-named-network": "להצטרף לרשת אוהדי $1",
 	"sportsteams-network-join-are-you-sure": "באמת להצטרף לרשת אוהדי '''$1'''?",
+	"sportsteams-network-alt-logo": "סמל",
 	"sportsteams-network-network-fans": "אוהדי $1",
 	"sportsteams-network-back-to-network": "< חזרה לדף הרשת של $1",
 	"sportsteams-network-num-fans": "לקבוצת $1 יש {{PLURAL:$2|אוהד אחד|$1 אוהדים}}.",
