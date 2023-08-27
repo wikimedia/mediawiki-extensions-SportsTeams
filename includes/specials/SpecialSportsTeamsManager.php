@@ -49,6 +49,13 @@ class SportsTeamsManager extends SpecialPage {
 		$out->addModuleStyles( 'ext.sportsTeams.manager' );
 
  		if ( $request->wasPosted() ) {
+			// Security (anti-CSRF check) first!
+			if ( !$user->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
+				$out->addWikiMsg( 'sessionfailure' );
+				$out->addReturnTo( $this->getPageTitle() );
+				return;
+			}
+
 			// Handle the creation of a new sport here
 			if ( $request->getVal( 'method' ) == 'createsport' ) {
 				$st = new SportsTeams( $user );
@@ -210,6 +217,7 @@ class SportsTeamsManager extends SpecialPage {
 		$form .= '<tr>
 				<td colspan="2">
 					<input type="hidden" name="method" value="' . $method . '" />
+					<input type="hidden" name="wpEditToken" value="' . htmlspecialchars( $this->getUser()->getEditToken(), ENT_QUOTES ) . '" />
 					<input type="submit" class="site-button" value="' . $msg . '" size="20" />
 					<input type="button" class="site-button" value="' . $this->msg( 'cancel' )->escaped() . '" size="20" onclick="history.go(-1)" />
 				</td>
@@ -366,6 +374,7 @@ class SportsTeamsManager extends SpecialPage {
 		$form .= '<tr>
 				<td colspan="2">
 					<input type="hidden" name="id" value="' . (int)$id . '" />
+					<input type="hidden" name="wpEditToken" value="' . htmlspecialchars( $this->getUser()->getEditToken(), ENT_QUOTES ) . '" />
 					<input type="submit" class="site-button" value="' . $msg . '" size="20" />
 					<input type="button" class="site-button" value="' . $this->msg( 'cancel' )->escaped() . '" size="20" onclick="history.go(-1)" />
 				</td>

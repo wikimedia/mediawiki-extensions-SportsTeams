@@ -175,6 +175,13 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		// If the request was POSTed, add/delete teams accordingly
 		if ( $request->wasPosted() ) {
+			// But first, the anti-CSRF check!
+			if ( !$user->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
+				$out->addWikiMsg( 'sessionfailure' );
+				$out->addReturnTo( $this->getPageTitle() );
+				return;
+			}
+
 			$s = new SportsTeams( $user );
 
 			if ( $request->getVal( 'action' ) == 'delete' ) {
@@ -248,23 +255,26 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 			$output .= $this->getSportsDropdown();
 		}
 
+		$tokenField = Html::hidden( 'wpEditToken', $user->getEditToken() );
+
 		$output .= '<form action="" name="sports" method="post">
 			<input type="hidden" value="" name="favorites" />
 			<input type="hidden" value="save" name="action" />';
+		$output .= $tokenField;
 
 		if ( count( $favorites ) > 0 ) {
 			$output .= '<input type="button" class="profile-update-button" id="update-favorite-teams-add-more-button" value="' .
 				$this->msg( 'user-profile-sports-addmore' )->escaped() . '" />';
 		}
 
-		$output .= '<input type="button" class="profile-update-button" value="' .
+		$output .= '<input type="submit" class="profile-update-button" value="' .
 			$this->msg( 'user-profile-update-button' )->escaped() . '" id="update-favorite-teams-save-button" />
 			</form>
 			<form action="" name="sports_remove" method="post">
 				<input type="hidden" value="delete" name="action" />
 				<input type="hidden" value="" name="s_id" />
-				<input type="hidden" value="" name="t_id" />
-			</form>
+				<input type="hidden" value="" name="t_id" />' . $tokenField .
+			'</form>
 			<!--
 				Epic hack time! Here used to be some inline JS to set UpdateFavoriteTeams.fav_count but as of
 				MediaWiki 1.17 (first ResourceLoader MW), we can\'t do that so instead we have to resort to this
