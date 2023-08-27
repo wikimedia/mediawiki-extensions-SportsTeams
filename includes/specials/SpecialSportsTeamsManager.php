@@ -210,7 +210,7 @@ class SportsTeamsManager extends SpecialPage {
 		$form .= '<tr>
 				<td colspan="2">
 					<input type="hidden" name="method" value="' . $method . '" />
-					<input type="button" class="site-button" value="' . $msg . '" size="20" onclick="document.sportsteamsmanager.submit()" />
+					<input type="submit" class="site-button" value="' . $msg . '" size="20" />
 					<input type="button" class="site-button" value="' . $this->msg( 'cancel' )->escaped() . '" size="20" onclick="history.go(-1)" />
 				</td>
 			</tr>
@@ -366,7 +366,7 @@ class SportsTeamsManager extends SpecialPage {
 		$form .= '<tr>
 				<td colspan="2">
 					<input type="hidden" name="id" value="' . (int)$id . '" />
-					<input type="button" class="site-button" value="' . $msg . '" size="20" onclick="document.sportsteamsmanager.submit()" />
+					<input type="submit" class="site-button" value="' . $msg . '" size="20" />
 					<input type="button" class="site-button" value="' . $this->msg( 'cancel' )->escaped() . '" size="20" onclick="history.go(-1)" />
 				</td>
 			</tr>
