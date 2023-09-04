@@ -65,7 +65,7 @@ class SportsTeamsUserProfile {
 
 				// Originally the following two lines of code were not present and
 				// thus $user_updates was always undefined
-				$s = new UserStatus( $user_profile->profileOwner );
+				$s = new UserStatus( $user_profile->viewingUser );
 				$user_updates = $s->getStatusMessages(
 					$user_profile->profileOwner->getActorId(),
 					$fav['sport_id'],
@@ -139,7 +139,16 @@ class SportsTeamsUserProfile {
 	public static function showLatestThought( $user_profile ) {
 		$out = $user_profile->getContext()->getOutput();
 
-		$s = new UserStatus( $user_profile->profileOwner );
+		// It seems so, so, *so* counter-intuitive to have to initialize the UesrStatus class
+		// with the *viewing* user, not the profile owner, passed to it, yet it seems to be
+		// necessary to get the "do you agree?" links work as intended, i.e. if you pass
+		// $user_profile->profileOwner to the UserStatus constructor, the alreadyvoted crap in
+		// UserStatus#getStatusMessages returns 0 even for cases where it should return 1,
+		// and calling that method with the viewing user's actor ID also seems even more counter-
+		// intuitive, plus literally against what the docs say.
+		// I guess that at the end of the day, you could read this code as "as viewingUser, I want to
+		// see profileOwner's status updates" and that works for me.
+		$s = new UserStatus( $user_profile->viewingUser );
 		$user_update = $s->getStatusMessages( $user_profile->profileOwner->getActorId(), 0, 0, 1, 1 );
 		$user_update = ( !empty( $user_update[0] ) ? $user_update[0] : [] );
 

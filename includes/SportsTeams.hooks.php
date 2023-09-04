@@ -104,6 +104,12 @@ class SportsTeamsHooks {
 				$s->addFavorite( $sport_id, $team_id );
 
 				if ( $thought ) {
+					// @todo FIXME: *technically speaking* passing $user
+					// to the UserStatus constructor IS wrong, /but/
+					// it doesn't matter right now because we're only
+					// calling addStatus() here. If we were to call e.g.
+					// getStatusMessages(), then it WOULD matter and it
+					// 100% WOULD result in a bug.
 					$b = new UserStatus( $user );
 					$m = $b->addStatus( $sport_id, $team_id, $thought );
 				}
