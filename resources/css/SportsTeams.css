@@ -159,16 +159,16 @@ span.user-status-delete-link a {
 /** Register Buttons **/
 .register-buttons button, .editButtons button {
 	margin: 0px 5px 0px 0px;
-    background-color: #f5f5f5;
-    border: 1px solid #dedede;
-    border-top: 1px solid #eee;
-    border-left: 1px solid #eee;
-    font-size: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    color: #565656;
-    cursor: pointer;
-    padding: 3px 5px 3px 5px;
+	background-color: #f5f5f5;
+	border: 1px solid #dedede;
+	border-top: 1px solid #eee;
+	border-left: 1px solid #eee;
+	font-size: 12px;
+	text-decoration: none;
+	font-weight: bold;
+	color: #565656;
+	cursor: pointer;
+	padding: 3px 5px 3px 5px;
 }
 
 .register-buttons img, .editButtons img {
