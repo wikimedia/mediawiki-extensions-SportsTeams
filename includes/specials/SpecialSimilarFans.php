@@ -95,7 +95,7 @@ class SimilarFans extends SpecialPage {
 					<div class="relationship-actions">';
 
 				$pipeList = [];
-				if ( in_array( $fan['actor'], $friends ) ) {
+				if ( in_array( $fan['user_id'], $friends ) ) {
 					$pipeList[] = $linkRenderer->makeLink(
 						$rr,
 						$this->msg( 'sportsteams-remove-as-friend' )->text(),
@@ -103,7 +103,7 @@ class SimilarFans extends SpecialPage {
 						[ 'user' => $loopUser->getText() ]
 					);
 				}
-				if ( in_array( $fan['actor'], $foes ) ) {
+				if ( in_array( $fan['user_id'], $foes ) ) {
 					$pipeList[] = $linkRenderer->makeLink(
 						$rr,
 						$this->msg( 'sportsteams-remove-as-foe' )->text(),
@@ -112,7 +112,7 @@ class SimilarFans extends SpecialPage {
 					);
 				}
 				if ( $fan['user_name'] != $user->getName() ) {
-					if ( !in_array( $fan['actor'], $relationships ) ) {
+					if ( !in_array( $fan['user_id'], $relationships ) ) {
 						$pipeList[] = $linkRenderer->makeLink(
 							$ar,
 							$this->msg( 'sportsteams-add-as-friend' )->text(),
