@@ -241,7 +241,6 @@ class SportsTeamsUserProfile {
 			'";</script>';
 		}
 
-		// @phan-suppress-next-line SecurityCheck-XSS False positive due to $user_update['text'] or $user_update['id'] usage
 		$out->addHTML( $output );
 	}
 

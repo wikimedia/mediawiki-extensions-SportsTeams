@@ -296,7 +296,6 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '</div>';
 		$output .= '<div class="visualClear"></div>';
 
-		// @phan-suppress-next-line SecurityCheck-XSS It's technically a "real" issue as long as 'sportsteams-network-fan-display' accepts HTML
 		$out->addHTML( $output );
 	}
 
