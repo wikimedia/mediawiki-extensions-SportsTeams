@@ -24,6 +24,8 @@ class TopNetworks extends SpecialPage {
 	public function execute( $par ) {
 		global $wgUploadPath;
 
+		$this->setHeaders();
+
 		// Variables
 		$request = $this->getRequest();
 		$out = $this->getOutput();

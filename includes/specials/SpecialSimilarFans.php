@@ -20,6 +20,8 @@ class SimilarFans extends SpecialPage {
 		$user = $this->getUser();
 		$linkRenderer = $this->getLinkRenderer();
 
+		$this->setHeaders();
+
 		/**
 		 * Redirect non-logged in users to Login Page
 		 * It will automatically return them to the SimilarFans page

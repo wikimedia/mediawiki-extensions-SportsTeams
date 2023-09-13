@@ -40,6 +40,8 @@ class FanHome extends UnlistedSpecialPage {
 		$user = $this->getUser();
 		$linkRenderer = $this->getLinkRenderer();
 
+		$this->setHeaders();
+
 		if ( $user->isRegistered() ) {
 			$this->friends = $this->getRelationships( 1 );
 			$this->foes = $this->getRelationships( 2 );

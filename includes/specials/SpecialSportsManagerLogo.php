@@ -37,6 +37,15 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 */
 	public function execute( $par ) {
 		$this->team_id = $this->getRequest()->getInt( 'id', $par );
+
+		// Don't use setHeaders() b/c this special page has no proper title
+		// $this->setHeaders();
+
+		// Set the robot policies, etc.
+		$out = $this->getOutput();
+		$out->setArticleRelated( false );
+		$out->setRobotPolicy( 'noindex,nofollow' );
+
 		$this->initLogo();
 		$this->executeLogo();
 	}

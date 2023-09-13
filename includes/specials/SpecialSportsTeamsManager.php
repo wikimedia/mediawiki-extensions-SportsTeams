@@ -28,6 +28,8 @@ class SportsTeamsManager extends SpecialPage {
 		$request = $this->getRequest();
 		$user = $this->getUser();
 
+		$this->setHeaders();
+
 		// If the user isn't allowed to access this page, display an error
 		if ( !$user->isAllowed( 'sportsteamsmanager' ) ) {
 			throw new PermissionsError( 'sportsteamsmanager' );

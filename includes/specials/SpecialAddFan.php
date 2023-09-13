@@ -25,6 +25,8 @@ class AddFan extends UnlistedSpecialPage {
 
 		$output = '';
 
+		$this->setHeaders();
+
 		/**
 		 * Get query string variables
 		 */

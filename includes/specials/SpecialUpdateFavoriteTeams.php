@@ -133,6 +133,8 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$request = $this->getRequest();
 		$user = $this->getUser();
 
+		$this->setHeaders();
+
 		// This is like core Special:Preferences, so you need to be logged in
 		// to use this special page
 		if ( !$user->isRegistered() ) {
