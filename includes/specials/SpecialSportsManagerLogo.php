@@ -110,9 +110,22 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		/** Various rights checks */
-		if ( !$user->isAllowed( 'upload' ) || $user->getBlock() ) {
-			throw new ErrorPageError( 'uploadnologin', 'uploadnologintext' );
+		if ( !$user->isAllowed( 'upload' ) ) {
+			throw new PermissionsError( 'upload' );
 		}
+
+		// Check blocks
+		$block = $user->getBlock();
+		if ( $block || $user->isBlockedFromUpload() ) {
+			throw new UserBlockedError(
+				// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
+				$block,
+				$user,
+				$this->getLanguage(),
+				$this->getRequest()->getIP()
+			);
+		}
+
 		$this->checkReadOnly();
 
 		/** Check if the image directory is writable, this is a common mistake */
