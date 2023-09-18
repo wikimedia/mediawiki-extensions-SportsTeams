@@ -564,11 +564,18 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	private function uploadError( $error ) {
 		$out = $this->getOutput();
 		$sub = $this->msg( 'uploadwarning' )->escaped();
+
 		$out->addHTML( "<h2>{$sub}</h2>\n" );
 		$out->addHTML( "<h4 class=\"error\">{$error}</h4>\n" );
+
+		$action = htmlspecialchars( $this->getPageTitle()->getLocalURL( 'action=submit' ) );
+
 		$out->addHTML(
-			'<br /><input type="button" onclick="javascript:history.go(-1)" value="' .
-				$this->msg( 'sportsteams-logo-go-back' )->escaped() . '" />'
+			'<br />
+			<form id="uploaderror" method="post" enctype="multipart/form-data" action="' . $action . '">
+				<input type="submit" onclick="javascript:history.go(-1)" value="' .
+				$this->msg( 'sportsteams-logo-go-back' )->escaped() . '" />
+			</form>'
 		);
 	}
 
@@ -594,8 +601,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		$out->addHTML( "<h2>{$sub}</h2>\n" );
 		$out->addHTML( "<ul class=\"warning\">{$warning}</ul><br />\n" );
 
-		$titleObj = SpecialPage::getTitleFor( 'Upload' );
-		$action = htmlspecialchars( $titleObj->getLocalURL( 'action=submit' ) );
+		$action = htmlspecialchars( $this->getPageTitle()->getLocalURL( 'action=submit' ) );
 
 		if ( $wgUseCopyrightUpload ) {
 			$copyright = "
@@ -620,7 +626,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 			<tr>
 				<td align=\"right\">
-					<input tabindex=\"2\" type=\"button\" onclick=\"javascript:history.go(-1)\" value=\"" . $this->msg( 'sportsteams-logo-back' )->escaped() . '" />
+					<input tabindex=\"2\" type=\"submit\" onclick=\"javascript:history.go(-1)\" value=\"" . $this->msg( 'sportsteams-logo-back' )->escaped() . '" />
 				</td>
 
 			</tr>
