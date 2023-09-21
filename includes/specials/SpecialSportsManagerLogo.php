@@ -46,6 +46,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		$out->setArticleRelated( false );
 		$out->setRobotPolicy( 'noindex,nofollow' );
 
+		$this->checkPermissions();
+
 		$this->initLogo();
 		$this->executeLogo();
 	}
