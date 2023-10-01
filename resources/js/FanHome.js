@@ -242,7 +242,8 @@ $( function() {
 		} );
 
 		// Voting links
-		$( 'body' ).on( 'click', '.vote-status-link', function() {
+		$( 'body' ).on( 'click', '.vote-status-link', function ( e ) {
+			e.preventDefault();
 			FanHome.voteStatus( $( this ).data( 'message-id' ), 1 );
 		} );
 
