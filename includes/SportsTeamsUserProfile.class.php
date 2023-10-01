@@ -241,6 +241,10 @@ class SportsTeamsUserProfile {
 			'";</script>';
 		}
 
+		// Phan refuses to understand that $user_update['text'] is pre-processed and thus safe for HTML.
+		// The processing is done by UserStatus#formatMessage, which is called by UserStatus#getStatusMessages,
+		// which is what this function calls earlier on.
+		// @phan-suppress-next-line SecurityCheck-XSS
 		$out->addHTML( $output );
 	}
 

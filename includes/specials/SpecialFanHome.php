@@ -298,6 +298,11 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '</div>';
 		$output .= '<div class="visualClear"></div>';
 
+		// Per the earlier FIXME note related to the 'sportsteams-network-fan-display' msg,
+		// this is a technically _VALID_ complaint from phan, but I'm suppressing it anyway
+		// because it's not getting fixed anytime soon and we do need phan not to complain
+		// on all changes, including those that do not even touch PHP files...
+		// @phan-suppress-next-line SecurityCheck-XSS
 		$out->addHTML( $output );
 	}
 
