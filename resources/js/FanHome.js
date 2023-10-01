@@ -3,8 +3,8 @@
  * individual network
  *
  * Status update stuff is the same that can be found at
- * /extensions/UserStatus/UserStatus.js, but in addition to that code, there's
- * also some code for Google Maps integration.
+ * /extensions/UserStatus/resources/js/UserStatus.js, but in addition to that code, there's
+ * also some now commented-out code for Google Maps integration.
  *
  * @file
  */
@@ -91,11 +91,12 @@ var FanHome = {
 					.parent().hide( 1000 );
 			} );
 		}
-	},
+	}
 
 	/**
 	 * Generates markers for the higher zoom levels
 	 */
+	/*
 	createTopMarker: function( point, caption, map ) {
 		var marker = new GMarker( point );
 		marker.map = map;
@@ -159,8 +160,8 @@ var FanHome = {
 		icon.image = "'" + __team_image__ + "'";
 
 		// once we get shadows un-comment this and set the right shadow
-		/* icon.shadow = 'http://www.eecs.tufts.edu/~adatta02/shadow-34_l.png';
-		icon.shadowSize = new GSize( 100, 50 ); */
+		// icon.shadow = 'http://www.eecs.tufts.edu/~adatta02/shadow-34_l.png';
+		// icon.shadowSize = new GSize( 100, 50 );
 
 		icon.iconSize = new GSize( 50, ( 50 * iconImage.height ) / iconImage.width );
 		icon.iconAnchor = new GPoint( 50, ( 50 * iconImage.height ) / iconImage.width >> 1 );
@@ -220,6 +221,7 @@ var FanHome = {
 
 		return marker;
 	}
+	*/
 };
 
 $( function() {

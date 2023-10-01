@@ -113,8 +113,13 @@ class FanHome extends UnlistedSpecialPage {
 		// DON'T FORGET TO CHANGE KEY WHEN YOU CHANGE DOMAINS
 		// @note The Google Maps JavaScript API v2 is deprecated and will be turned off on April 7, 2020.
 		// See https://developers.google.com/maps/documentation/javascript/v2/v2tov3 for migration notes.
-		$out->addScript( "<script src=\"http://maps.google.com/maps?file=api&amp;v=2.x&amp;key={$wgSportsTeamsGoogleAPIKey}\" type=\"text/javascript\"></script>" );
-		$out->addScript( $this->getMap() );
+		// It's now late 2023, soon enough 2024 and Google Maps JS API v2 is dead and thus we're getting
+		// JS errors on Special:FanHome due to that. "Fixing" these for now by commenting out the maps stuff.
+		// Once someone ports this to a newer version of said API or better yet, a different FOSS one,
+		// they should (in addition to the below two lines) also uncomment the "Network location map" section
+		// a bit further down this file. --ashley, 1 October 2023
+		// $out->addScript( "<script src=\"http://maps.google.com/maps?file=api&amp;v=2.x&amp;key={$wgSportsTeamsGoogleAPIKey}\" type=\"text/javascript\"></script>" );
+		// $out->addScript( $this->getMap() );
 
 		// If the user is a member of this network, visually indicate that and
 		// offer a link for leaving the network; otherwise if they're a logged-in
@@ -236,12 +241,14 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<div class="fan-right">';
 
 		// Network location map
+		/*
 		$output .= '<div class="fan-map">';
 		$output .= '<h1 class="network-page-title">' .
 			$this->msg( 'sportsteams-network-fan-locations' )->escaped() . '</h1>';
 		$output .= '<div class="gMap" id="gMap"></div>
 			<div class="gMapInfo" id="gMapInfo"></div>';
 		$output .= '</div>';
+		*/
 
 		// Top network fans
 		$output .= '<div class="top-fans">';
