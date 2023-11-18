@@ -12,7 +12,7 @@
 }
 
 .relationship-item {
-	border: 1px solid #D7DEE8;
+	border: 1px solid #d7dee8;
 	padding: 7px;
 	float: left;
 	margin: 0px 15px 15px 0px;
@@ -95,7 +95,7 @@
 }
 
 .red-text {
-	color: red !important;
+	color: #f00f !important;
 }
 
 /* Relationship Requests */
@@ -119,11 +119,11 @@
 .relationship-request-title {
 	font-size: 1.2em;
 	font-weight: bold;
-	color: #285C98
+	color: #285c98;
 }
 
 .relationship-request-message {
-	color: #999999;
+	color: #999;
 	font-size: 1.1em;
 	font-weight: bold;
 }
@@ -137,15 +137,15 @@
 }
 
 .relationship-request-button {
-	background-color: #78BA5D;
-	border: 1px solid #6B6B6B;
-	color: #ffffff;
+	background-color: #78ba5d;
+	border: 1px solid #6b6b6b;
+	color: #fff;
 	font-size: 12px;
 	padding: 3px;
 }
 
 .relationship-request-confirm {
-	color: #999999;
+	color: #999;
 	font-size: 1.1em;
 	font-weight: bold;
 }
@@ -153,11 +153,12 @@
 /** User Networks **/
 /* [x] (delete thought) links on Special:FanHome */
 span.user-status-delete-link a {
-	color: #ff0000;
+	color: #f00;
 }
 
 /** Register Buttons **/
-.register-buttons button, .editButtons button {
+.register-buttons button,
+.editButtons button {
 	margin: 0px 5px 0px 0px;
 	background-color: #f5f5f5;
 	border: 1px solid #dedede;
@@ -171,22 +172,23 @@ span.user-status-delete-link a {
 	padding: 3px 5px 3px 5px;
 }
 
-.register-buttons img, .editButtons img {
+.register-buttons img,
+.editButtons img {
 	vertical-align: middle;
 }
 
 .network-request-button {
-	background-color: #78BA5D;
-	border: 1px solid #6B6B6B;
-	color: #ffffff;
+	background-color: #78ba5d;
+	border: 1px solid #6b6b6b;
+	color: #fff;
 	font-size: 11pt;
 	padding: 5px;
 	margin: 10px 5px 10px 0px;
 }
 
 .network-page-title {
-	border-bottom: 1px solid #DCDCDC;
-	color: #333333;
+	border-bottom: 1px solid #dcdcdc;
+	color: #333;
 	font-size: 16px;
 	font-weight: bold;
 	padding: 0px 0px 3px;
@@ -199,15 +201,16 @@ span.user-status-delete-link a {
 .fan-top-left {
 	float: left;
 	width: 250px;
-	background-color: #F2F4F7;
-	border: 1px solid #D7DEE8;
+	background-color: #f2f4f7;
+	border: 1px solid #d7dee8;
 	margin: 0px 20px 0px 0px;
 	padding: 10px;
 	height: 151px;
 }
 
-.fan-top-left h1, .fan-top-right h1 {
-	color: #333333;
+.fan-top-left h1,
+.fan-top-right h1 {
+	color: #333;
 	font-size: 16px;
 	font-weight: bold;
 	margin: 0px 0px 10px 0px;
@@ -216,8 +219,8 @@ span.user-status-delete-link a {
 .fan-top-right {
 	float: left;
 	width: 670px;
-	background-color: #F2F4F7;
-	border: 1px solid #D7DEE8;
+	background-color: #f2f4f7;
+	border: 1px solid #d7dee8;
 	margin: 0px 0px 0px 0px;
 	padding: 10px;
 	height: 151px;
@@ -285,7 +288,7 @@ span.user-status-delete-link a {
 }
 
 .network-info-left img {
-	border: 1px solid #D7DEE8;
+	border: 1px solid #d7dee8;
 }
 
 .network-info-left p {
@@ -305,9 +308,9 @@ span.user-status-delete-link a {
 }
 
 .network-articles .listpageItem {
-	margin: 0px 0px 10px 0px;
-	padding: 0px 0px 0px 0px;
 	border-bottom: none;
+	margin: 0px 0px 5px 0px !important;
+	padding: 0px !important;
 }
 
 .network-articles .showdetails a {
@@ -340,8 +343,8 @@ span.user-status-delete-link a {
 	width: 200px;
 	height: 100px;
 	z-index: 100;
-	background-color: #F2F4F7;
-	border: 1px solid #D7DEE8;
+	background-color: #f2f4f7;
+	border: 1px solid #d7dee8;
 	padding: 10px;
 }
 
@@ -351,7 +354,7 @@ span.user-status-delete-link a {
 }
 
 .map-avatar-image img {
-	border: 1px solid #D7DEE8;
+	border: 1px solid #d7dee8;
 }
 
 .map-avatar-info {
@@ -365,8 +368,8 @@ span.user-status-delete-link a {
 }
 
 .profile-on {
-	background-color: #FFFB9B;
-	border: 1px solid #FDC745;
+	background-color: #fffb9b;
+	border: 1px solid #fdc745;
 	font-weight: bold;
 	padding: 1px 5px 1px 5px;
 }
@@ -383,7 +386,6 @@ span.user-status-delete-link a {
 	font-size: 13px;
 	font-weight: bold;
 	color: #797979;
-	font-weight: bold;
 	margin: 0px 5px 0px 0px;
 }
 
@@ -416,13 +418,15 @@ span.user-status-delete-link a {
 	width: 580px;
 }
 
-.user-status-row img, .user-status-row-bottom img, .user-status-row-top img {
+.user-status-row img,
+.user-status-row-bottom img,
+.user-status-row-top img {
 	vertical-align: middle;
 	margin: 0px 10px 0px 10px;
 }
 
 .user-status-date {
-	color: #bbbbbb;
+	color: #bbb;
 	font-size: 10px;
 	font-weight: bold;
 	margin: 0px 0px 0px 0px;
@@ -432,15 +436,10 @@ span.user-status-delete-link a {
 	font-size: 13px;
 }
 
-.network-articles .listpageItem {
-	border-bottom: none;
-	margin: 0px 0px 5px 0px !important;
-	padding: 0px !important;
-}
-
 .listpages-item {
 	margin-top: 5px !important;
 }
+
 .listpages-item a {
 	font-size: 12px !important;
 }
@@ -495,7 +494,7 @@ span.user-status-delete-link a {
 }
 
 .top-networks-navigation h1 {
-	color: #333333;
+	color: #333;
 	padding: 0px 0px 3px 0px;
 	border-bottom: 1px solid #dcdcdc;
 	font-size: 16px;
@@ -516,7 +515,7 @@ span.user-status-delete-link a {
 
 /** Used by Special:(Add|Remove)Fans, moved from Games' main CSS file **/
 .give-gift-message {
-	color: #999999;
+	color: #999;
 	font-size: 1.1em;
 	font-weight: bold;
 	margin: 0px 0px 20px 0px;
@@ -529,7 +528,7 @@ span.user-status-delete-link a {
 .request-message { /* @todo FIXME/CHECKME: this is probably unused, I think */
 	clear: both;
 	margin: 10px 0px 10px 0px;
-	color: #999999;
+	color: #999;
 	font-size: 1.1em;
 	font-weight: bold;
 }
@@ -540,9 +539,9 @@ span.user-status-delete-link a {
 }
 
 .give-gift-buttons input {
-	background-color: #38903C;
-	border: 1px solid #6B6B6B;
-	color: #ffffff;
+	background-color: #38903c;
+	border: 1px solid #6b6b6b;
+	color: #fff;
 	font-size: 12px;
 	padding: 3px;
 }

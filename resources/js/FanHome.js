@@ -11,14 +11,14 @@
 var FanHome = {
 	posted: 0,
 
-	voteStatus: function( id, vote ) {
+	voteStatus: function ( id, vote ) {
 		( new mw.Api() ).postWithToken( 'csrf', {
 			action: 'userstatus',
 			what: 'votestatus',
 			us_id: id,
 			vote: vote,
 			format: 'json'
-		} ).done( function( data ) {
+		} ).done( function ( data ) {
 			$( '#user-status-vote-' + id ).text( data.userstatus.result );
 		} );
 	},
@@ -27,11 +27,11 @@ var FanHome = {
 	 * Detect whether the enter key was pressed and if so, submit the status
 	 * update.
 	 *
-	 * @param e Event
-	 * @return Boolean: false if enter was pressed and the status update was
-	 *                  added, true in most other cases
+	 * @param {Event} e
+	 * @return {boolean} False if enter was pressed and the status update was added,
+	 * true in most other cases
 	 */
-	detEnter: function( e ) {
+	detEnter: function ( e ) {
 		var keycode;
 
 		if ( window.event ) {
@@ -50,7 +50,7 @@ var FanHome = {
 		}
 	},
 
-	addStatus: function() {
+	addStatus: function () {
 		var statusUpdateText = document.getElementById( 'user_status_text' ).value;
 		if ( statusUpdateText && !FanHome.posted ) {
 			FanHome.posted = 1;
@@ -63,7 +63,7 @@ var FanHome = {
 				text: encodeURIComponent( statusUpdateText ),
 				count: __updates_show__,
 				format: 'json'
-			} ).done( function( data ) {
+			} ).done( function ( data ) {
 				document.getElementById( 'network-updates' ).innerHTML = data.userstatus.result;
 				FanHome.posted = 0;
 				document.getElementById( 'user_status_text' ).value = '';
@@ -71,15 +71,15 @@ var FanHome = {
 		}
 	},
 
-	deleteMessage: function( id ) {
+	deleteMessage: function ( id ) {
 		if ( confirm( 'Are you sure you want to delete this thought?' ) ) {
 			( new mw.Api() ).postWithToken( 'csrf', {
 				action: 'userstatus',
 				what: 'deletestatus',
 				us_id: id,
 				format: 'json'
-			} ).done( function( data ) {
-				//window.location = __user_status_link__;
+			} ).done( function ( data ) {
+				// window.location = __user_status_link__;
 				// Just remove the DOM node, no need to take the user to
 				// Special:UserStatus, IMO
 				// I wanted to use .remove() here to remove the DOM node too,
@@ -224,16 +224,16 @@ var FanHome = {
 	*/
 };
 
-$( function() {
+$( function () {
 	// Add handlers specific to Special:FanHome
 	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'FanHome' ) {
 		// Handle the case when the user presses the Enter key
-		$( 'body' ).on( 'keypress', '#user_status_text', function( event ) {
+		$( 'body' ).on( 'keypress', '#user_status_text', function ( event ) {
 			FanHome.detEnter( event );
 		} );
 
 		// Handle clicks on the "add status" button
-		$( 'body' ).on( 'click', '#add-status-btn', function() {
+		$( 'body' ).on( 'click', '#add-status-btn', function () {
 			FanHome.addStatus();
 		} );
 

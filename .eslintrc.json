@@ -3,5 +3,13 @@
 	"extends": [
 		"wikimedia/client-es5",
 		"wikimedia/mediawiki"
-	]
+	],
+	"rules": {
+		"camelcase": "off",
+		"eqeqeq": "off",
+		"no-alert": "off",
+		"no-implicit-globals": "off",
+		"no-undef": "off",
+		"no-unused-vars": "off"
+	}
 }

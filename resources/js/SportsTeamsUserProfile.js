@@ -5,15 +5,18 @@ var SportsTeamsUserProfile = {
 	/**
 	 * This is called when you click on the "Do you agree?" link on someone
 	 * else's user profile's status update message
+	 *
+	 * @param {number} id
+	 * @param {boolean} vote
 	 */
-	voteStatus: function( id, vote ) {
+	voteStatus: function ( id, vote ) {
 		( new mw.Api() ).postWithToken( 'csrf', {
 			action: 'userstatus',
 			what: 'votestatus',
 			us_id: id,
 			vote: vote,
 			format: 'json'
-		} ).done( function( data ) {
+		} ).done( function ( data ) {
 			SportsTeamsUserProfile.posted = 0;
 			var $node = $( '#status-update a.profile-vote-status-link' );
 			// Add the "1 Person Agrees"/"X People Agree" text after the date
@@ -27,13 +30,13 @@ var SportsTeamsUserProfile = {
 	 * Detect whether the user pressed the Enter key and in that case, post
 	 * the message.
 	 *
-	 * @param {Event}
-	 * @param {Number}
-	 * @param {Number} Sport identifier
-	 * @param {Number} Team identifier
-	 * @return Boolean
+	 * @param {Event} e
+	 * @param {number} num
+	 * @param {number} sport_id
+	 * @param {number} team_id
+	 * @return {boolean}
 	 */
-	detEnter: function( e, num, sport_id, team_id ) {
+	detEnter: function ( e, num, sport_id, team_id ) {
 		var keycode;
 
 		if ( window.event ) {
@@ -52,14 +55,18 @@ var SportsTeamsUserProfile = {
 		}
 	},
 
-	closeMessageBox: function( num ) {
+	closeMessageBox: function ( num ) {
 		$( '#status-update-box-' + num ).hide( 1000 );
 	},
 
 	/**
 	 * Show the box for adding a status message from the user profile.
+	 *
+	 * @param {number} num
+	 * @param {number} sport_id
+	 * @param {number} team_id
 	 */
-	showMessageBox: function( num, sport_id, team_id ) {
+	showMessageBox: function ( num, sport_id, team_id ) {
 		if ( SportsTeamsUserProfile.lastBox ) {
 			$( '#status-update-box-' + SportsTeamsUserProfile.lastBox ).hide( 2000 );
 		}
@@ -75,25 +82,25 @@ var SportsTeamsUserProfile = {
 			id: 'status_text',
 			value: '',
 			maxlength: 150
-		} ).on( 'keypress', function( event ) {
+		} ).on( 'keypress', function ( event ) {
 			SportsTeamsUserProfile.detEnter( event, num, sport_id, team_id );
-		} ).on( 'keyup', function() {
+		} ).on( 'keyup', function () {
 			SportsTeamsUserProfile.limitText();
 		} );
 
 		addButton = $( '<input/>' ).attr( {
 			type: 'button',
-			'class': 'site-button',
+			class: 'site-button',
 			value: addMsg
-		} ).on( 'click', function( event ) {
+		} ).on( 'click', function ( event ) {
 			SportsTeamsUserProfile.addMessage( num, sport_id, team_id );
 		} );
 
 		closeButton = $( '<input/>' ).attr( {
 			type: 'button',
-			'class': 'site-button',
+			class: 'site-button',
 			value: cancelMsg
-		} ).on( 'click', function( event ) {
+		} ).on( 'click', function ( event ) {
 			SportsTeamsUserProfile.closeMessageBox( num );
 		} );
 
@@ -125,7 +132,7 @@ var SportsTeamsUserProfile = {
 	 * Show the "X characters left" message when the user is typing a status
 	 * update.
 	 */
-	limitText: function() {
+	limitText: function () {
 		var len = 150 - document.getElementById( 'status_text' ).value.length;
 		if ( len < 0 ) {
 			var statusText = document.getElementById( 'status_text' );
@@ -135,7 +142,7 @@ var SportsTeamsUserProfile = {
 		$( '#status-letter-count' ).html(
 			// In an ideal world, this would work (and the manual erroneously
 			// claims that it does):
-			//mw.message( 'sportsteams-profile-characters-remaining', len ).text()
+			// mw.message( 'sportsteams-profile-characters-remaining', len ).text()
 			// But it doesn't. It shows the raw PLURAL and all, the only thing
 			// that works is the character counting. So, hacks it is, then!
 			mw.msg( 'sportsteams-profile-characters-remaining-hack', len )
@@ -144,8 +151,12 @@ var SportsTeamsUserProfile = {
 
 	/**
 	 * Add a status message from the user profile.
+	 *
+	 * @param {number} num
+	 * @param {number} sport_id
+	 * @param {number} team_id
 	 */
-	addMessage: function( num, sport_id, team_id ) {
+	addMessage: function ( num, sport_id, team_id ) {
 		var statusUpdateText = document.getElementById( 'status_text' ).value;
 		if ( statusUpdateText && !SportsTeamsUserProfile.posted ) {
 			SportsTeamsUserProfile.posted = 1;
@@ -159,7 +170,7 @@ var SportsTeamsUserProfile = {
 				text: encodeURIComponent( statusUpdateText ),
 				count: 10,
 				format: 'json'
-			} ).done( function( data ) {
+			} ).done( function ( data ) {
 				SportsTeamsUserProfile.posted = 0;
 
 				if ( document.getElementById( 'status-update' ) === null ) {
@@ -190,9 +201,9 @@ var SportsTeamsUserProfile = {
 	}
 };
 
-$( function() {
+$( function () {
 	// "Add thought" link on your own profile
-	$( 'span.status-message-add a' ).on( 'click', function() {
+	$( 'span.status-message-add a' ).on( 'click', function () {
 		var $that = $( this );
 		SportsTeamsUserProfile.showMessageBox(
 			$that.data( 'order' ),
@@ -202,7 +213,7 @@ $( function() {
 	} );
 
 	// "Agree" links on other users' profiles
-	$( 'a.profile-vote-status-link' ).on( 'click', function( e ) {
+	$( 'a.profile-vote-status-link' ).on( 'click', function ( e ) {
 		e.preventDefault();
 		SportsTeamsUserProfile.voteStatus( $( this ).data( 'status-update-id' ), 1 );
 	} );

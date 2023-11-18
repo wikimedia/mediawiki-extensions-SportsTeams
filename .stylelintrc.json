@@ -1,0 +1,11 @@
+{
+	"extends": "stylelint-config-wikimedia",
+	"rules": {
+		"declaration-no-important": null,
+		"declaration-property-unit-disallowed-list": null,
+		"declaration-property-value-disallowed-list": null,
+		"length-zero-no-unit": null,
+		"no-descending-specificity": null,
+		"selector-max-id": null
+	}
+}
