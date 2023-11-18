@@ -18,6 +18,7 @@ class ViewFans extends UnlistedSpecialPage {
 	 * Show the special page
 	 *
 	 * @param string|null $par Parameter passed to the special page, if any [unused]
+	 * @return bool|void
 	 */
 	public function execute( $par ) {
 		global $wgUploadPath;
@@ -56,7 +57,7 @@ class ViewFans extends UnlistedSpecialPage {
 					"\" onclick=\"window.location='" .
 					htmlspecialchars( Title::makeTitle( NS_USER, $user->getName() )->getFullURL() ) . "'\"/>";
 			}
-		  	$output .= '</div>';
+			$output .= '</div>';
 			$out->addHTML( $output );
 			return false;
 		}
@@ -179,7 +180,7 @@ class ViewFans extends UnlistedSpecialPage {
 						[ 'user' => $fan['user_name'] ]
 					);
 					$output .= $this->getLanguage()->pipeList( $pipeList );
-					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
+					// $output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
 					$output .= $this->msg( 'word-separator' )->escaped();
 					$output .= '<div class="visualClear"></div>';
 				}
@@ -225,9 +226,9 @@ class ViewFans extends UnlistedSpecialPage {
 
 			for ( $i = 1; $i <= $numofpages; $i++ ) {
 				if ( $i == $page ) {
-				    $output .= ( $i . ' ' );
+					$output .= ( $i . ' ' );
 				} else {
-				    $output .= $linkRenderer->makeLink(
+					$output .= $linkRenderer->makeLink(
 						$pt,
 						(string)$i,
 						[],
@@ -259,6 +260,10 @@ class ViewFans extends UnlistedSpecialPage {
 		$out->addHTML( $output );
 	}
 
+	/**
+	 * @param int $rel_type
+	 * @return int
+	 */
 	private function getRelationships( $rel_type ) {
 		$rel = new UserRelationship( $this->getUser() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );

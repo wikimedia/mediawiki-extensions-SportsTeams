@@ -182,8 +182,7 @@ class SportsTeamsUserProfile {
 			if (
 				$user_profile->viewingUser->getActorId() == $user_update['actor'] &&
 				$user_update['plus_count'] > 0
-			)
-			{
+			) {
 				$vote_count = wfMessage(
 					'sportsteams-profile-num-agree'
 				)->numParams(

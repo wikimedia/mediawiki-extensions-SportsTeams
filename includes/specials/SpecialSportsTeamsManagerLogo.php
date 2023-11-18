@@ -14,10 +14,23 @@ use Wikimedia\AtEase\AtEase;
  * @ingroup Extensions
  */
 class SportsTeamsManagerLogo extends UnlistedSpecialPage {
-	public $mUploadFile, $mUploadDescription, $mIgnoreWarning;
-	public $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
-	public $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
-	public $mOname, $mSessionKey, $mWatchthis, $mStashed, $mDestFile;
+	public $mUploadFile;
+	public $mUploadDescription;
+	public $mIgnoreWarning;
+	public $mUploadSaveName;
+	public $mUploadTempName;
+	public $mUploadSize;
+	public $mUploadOldVersion;
+	public $mUploadCopyStatus;
+	public $mUploadSource;
+	public $mReUpload;
+	public $mAction;
+	public $mUpload;
+	public $mOname;
+	public $mSessionKey;
+	public $mWatchthis;
+	public $mStashed;
+	public $mDestFile;
 	public $mTokenOk;
 	public $teamLogosUploadDirectory;
 	public $fileExtensions;
@@ -61,7 +74,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			return;
 		}
 		$this->team_id            = $request->getInt( 'id' );
-		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning');
+		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning' );
 		$this->mReUpload          = $request->getCheck( 'wpReUpload' );
 		$this->mUpload            = $request->getCheck( 'wpUpload' );
 
@@ -84,14 +97,14 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			$this->mUploadTempName   = $data['mUploadTempName'];
 			$this->mUploadSize       = $data['mUploadSize'];
 			$this->mOname            = $data['mOname'];
-			$this->mStashed	 	 = true;
+			$this->mStashed	 	     = true;
 		} else {
 			/**
 			 * Check for a newly uploaded file.
 			 */
 			$this->mUploadTempName = $request->getFileTempname( 'wpUploadFile' );
 			$file = new WebRequestUpload( $request, 'wpUploadFile' );
-			$this->mUploadSize = $file->getSize();
+			$this->mUploadSize     = $file->getSize();
 			$this->mOname          = $request->getFileName( 'wpUploadFile' );
 			$this->mSessionKey     = false;
 			$this->mStashed        = false;
@@ -162,6 +175,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	/**
 	 * Really do the upload
 	 * Checks are made in SpecialUpload::execute()
+	 *
+	 * @return mixed
 	 */
 	private function processUpload() {
 		/**
@@ -182,7 +197,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		 * We'll want to blacklist against *any* 'extension', and use
 		 * only the final one for the whitelist.
 		 */
-		list( $partname, $ext ) = UploadBase::splitExtensions( $basename );
+		[ $partname, $ext ] = UploadBase::splitExtensions( $basename );
 		if ( count( $ext ) ) {
 			$finalExt = $ext[count( $ext ) - 1];
 		} else {
@@ -211,7 +226,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			// @phan-suppress-next-line SecurityCheck-PathTraversal False positive
 			$veri = $this->verify( $this->mUploadTempName, $finalExt );
 
-			if ( !$veri->isGood() ) { // it's a wiki error...
+			if ( !$veri->isGood() ) {
+				// it's a wiki error...
 				return $this->uploadError( $this->getOutput()->parseAsInterface( $veri->getWikiText() ) );
 			}
 		}
@@ -276,9 +292,10 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	function createThumbnail( $imageSrc, $ext, $imgDest, $thumbWidth ) {
 		global $wgUseImageMagick, $wgImageMagickConvertCommand;
 
-		list( $origWidth, $origHeight, $typeCode ) = getimagesize( $imageSrc );
+		[ $origWidth, $origHeight, $typeCode ] = getimagesize( $imageSrc );
 
-		if ( $wgUseImageMagick ) { // ImageMagick is enabled
+		// ImageMagick is enabled
+		if ( $wgUseImageMagick ) {
 			if ( $origWidth < $thumbWidth ) {
 				$thumbWidth = $origWidth;
 			}
@@ -311,7 +328,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 					$this->teamLogosUploadDirectory . '/' . $imgDest . '.png'
 				);
 			}
-		} else { // ImageMagick is not enabled, so fall back to PHP's GD library
+			// ImageMagick is not enabled, so fall back to PHP's GD library
+		} else {
 			// Get the image size, used in calculations later.
 			switch ( $typeCode ) {
 				case '1':
@@ -378,9 +396,10 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * @param string $saveName Unused
 	 * @param string $tempName Full path to the temporary file
 	 * @param string $ext File extension
+	 * @return int
 	 */
 	function saveUploadedFile( $saveName, $tempName, $ext ) {
-	 	$this->createThumbnail( $tempName, $ext, $this->team_id . '_l', 100 );
+		$this->createThumbnail( $tempName, $ext, $this->team_id . '_l', 100 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_m', 50 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_s', 25 );
 
@@ -388,7 +407,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		if ( $ext == 'JPG' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.jpg' ) ) {
 			$type = 2;
 		}
-		if ( $ext == 'GIF' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id. '_l.gif' ) ) {
+		if ( $ext == 'GIF' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.gif' ) ) {
 			$type = 1;
 		}
 		if ( $ext == 'PNG' && is_file( $this->teamLogosUploadDirectory . '/' . $this->team_id . '_l.png' ) ) {
@@ -501,6 +520,8 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 	/**
 	 * Show some text and linkage on successful upload.
+	 *
+	 * @param int $status
 	 */
 	private function showSuccess( $status ) {
 		global $wgUploadPath;
@@ -661,11 +682,11 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 			$source = "
 	<td align='right' nowrap='nowrap'>" . $this->msg( 'filestatus' )->escaped() . "</td>
 	<td><input tabindex='3' type='text' name=\"wpUploadCopyStatus\" value=\"" .
-	htmlspecialchars( $this->mUploadCopyStatus ). "\" size='40' /></td>
+			htmlspecialchars( $this->mUploadCopyStatus ) . "\" size='40' /></td>
 	</tr><tr>
-	<td align='right'>". $this->msg( 'filesource' )->escaped() . "</td>
+	<td align='right'>" . $this->msg( 'filesource' )->escaped() . "</td>
 	<td><input tabindex='4' type='text' name='wpUploadSource' value=\"" .
-	htmlspecialchars( $this->mUploadSource ). "\" style='width:100px' /></td>
+			htmlspecialchars( $this->mUploadSource ) . "\" style='width:100px' /></td>
 	";
 		}
 
@@ -726,7 +747,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 
 			# check mime type blacklist
 			global $wgMimeTypeBlacklist;
-			if ( !is_null( $wgMimeTypeBlacklist )
+			if ( $wgMimeTypeBlacklist !== null
 				&& UploadBase::checkFileExtension( $mime, $wgMimeTypeBlacklist ) ) {
 				return Status::newFatal( 'badfiletype', htmlspecialchars( $mime ) );
 			}

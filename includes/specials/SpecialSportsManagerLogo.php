@@ -14,10 +14,23 @@ use Wikimedia\AtEase\AtEase;
  * @ingroup Extensions
  */
 class SportsManagerLogo extends UnlistedSpecialPage {
-	public $mUploadFile, $mUploadDescription, $mIgnoreWarning;
-	public $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
-	public $mUploadCopyStatus, $mUploadSource, $mReUpload, $mAction, $mUpload;
-	public $mOname, $mSessionKey, $mWatchthis, $mStashed, $mDestFile;
+	public $mUploadFile;
+	public $mUploadDescription;
+	public $mIgnoreWarning;
+	public $mUploadSaveName;
+	public $mUploadTempName;
+	public $mUploadSize;
+	public $mUploadOldVersion;
+	public $mUploadCopyStatus;
+	public $mUploadSource;
+	public $mReUpload;
+	public $mAction;
+	public $mUpload;
+	public $mOname;
+	public $mSessionKey;
+	public $mWatchthis;
+	public $mStashed;
+	public $mDestFile;
 	public $mTokenOk;
 	public $uploadDirectory;
 	public $fileExtensions;
@@ -62,7 +75,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		$this->team_id            = $request->getInt( 'id' );
-		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning');
+		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning' );
 		$this->mReUpload          = $request->getCheck( 'wpReUpload' );
 		$this->mUpload            = $request->getCheck( 'wpUpload' );
 
@@ -163,6 +176,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	/**
 	 * Really do the upload
 	 * Checks are made in SpecialUpload::execute()
+	 *
+	 * @return mixed
 	 */
 	private function processUpload() {
 		/**
@@ -183,7 +198,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		 * We'll want to blacklist against *any* 'extension', and use
 		 * only the final one for the whitelist.
 		 */
-		list( $partname, $ext ) = UploadBase::splitExtensions( $basename );
+		[ $partname, $ext ] = UploadBase::splitExtensions( $basename );
 		if ( count( $ext ) ) {
 			$finalExt = $ext[count( $ext ) - 1];
 		} else {
@@ -205,14 +220,15 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 
 		/**
 		 * Look at the contents of the file; if we can recognize the
-		 * type but it's corrupt or data of the wrong type, we should
+		 * type, but it's corrupt or data of the wrong type, we should
 		 * probably not accept it.
 		 */
 		if ( !$this->mStashed ) {
 			// @phan-suppress-next-line SecurityCheck-PathTraversal False positive
 			$veri = $this->verify( $this->mUploadTempName, $finalExt );
 
-			if ( !$veri->isGood() ) { // it's a wiki error...
+			if ( !$veri->isGood() ) {
+				// it's a wiki error...
 				return $this->uploadError( $this->getOutput()->parseAsInterface( $veri->getWikiText() ) );
 			}
 		}
@@ -277,9 +293,10 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	function createThumbnail( $imageSrc, $ext, $imgDest, $thumbWidth ) {
 		global $wgUseImageMagick, $wgImageMagickConvertCommand;
 
-		list( $origWidth, $origHeight, $typeCode ) = getimagesize( $imageSrc );
+		[ $origWidth, $origHeight, $typeCode ] = getimagesize( $imageSrc );
 
-		if ( $wgUseImageMagick ) { // ImageMagick is enabled
+		// ImageMagick is enabled
+		if ( $wgUseImageMagick ) {
 			if ( $origWidth < $thumbWidth ) {
 				$thumbWidth = $origWidth;
 			}
@@ -310,7 +327,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 					' ' . $this->uploadDirectory . '/' . $imgDest . '.png'
 				);
 			}
-		} else { // ImageMagick is not enabled, so fall back to PHP's GD library
+			// ImageMagick is not enabled, so fall back to PHP's GD library
+		} else {
 			// Get the image size, used in calculations later.
 			switch ( $typeCode ) {
 				case '1':
@@ -377,9 +395,10 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 * @param string $saveName Unused
 	 * @param string $tempName Full path to the temporary file
 	 * @param string $ext File extension
+	 * @return int
 	 */
 	function saveUploadedFile( $saveName, $tempName, $ext ) {
-	 	$this->createThumbnail( $tempName, $ext, $this->team_id . '_l', 100 );
+		$this->createThumbnail( $tempName, $ext, $this->team_id . '_l', 100 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_m', 50 );
 		$this->createThumbnail( $tempName, $ext, $this->team_id . '_s', 25 );
 
@@ -406,7 +425,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 		if ( $ext != 'GIF' ) {
 			if ( is_file( $this->uploadDirectory . '/' . $this->team_id . '_s.gif' ) ) {
-				unlink( $this->uploadDirectory . '/' . $this->team_id . '_s.gif');
+				unlink( $this->uploadDirectory . '/' . $this->team_id . '_s.gif' );
 			}
 			if ( is_file( $this->uploadDirectory . '/' . $this->team_id . '_m.gif' ) ) {
 				unlink( $this->uploadDirectory . '/' . $this->team_id . '_m.gif' );
@@ -618,7 +637,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 * Displays the main upload form, optionally with a highlighted
 	 * error message up at the top.
 	 *
-	 * @param $msg String: error message as HTML
+	 * @param string $msg Error message as HTML
 	 */
 	private function mainUploadForm( $msg = '' ) {
 		global $wgUseCopyrightUpload, $wgUploadPath;
@@ -639,12 +658,12 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			$source = "
 	<td align='right' nowrap='nowrap'>" . $this->msg( 'filestatus' )->escaped() . "</td>
 	<td><input tabindex='3' type='text' name=\"wpUploadCopyStatus\" value=\"" .
-	htmlspecialchars( $this->mUploadCopyStatus ). "\" size='40' /></td>
+			htmlspecialchars( $this->mUploadCopyStatus ) . "\" size='40' /></td>
 	</tr><tr>
 	<td align='right'>" . $this->msg( 'filesource' )->escaped() . "</td>
 	<td><input tabindex='4' type='text' name='wpUploadSource' value=\"" .
-	htmlspecialchars( $this->mUploadSource ). "\" style='width:100px' /></td>
-	" ;
+			htmlspecialchars( $this->mUploadSource ) . "\" style='width:100px' /></td>
+	";
 		}
 
 		$team_logo = SportsTeams::getSportLogo( $this->team_id, 'l' );
@@ -696,7 +715,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 
 			# check mime type blacklist
 			global $wgMimeTypeBlacklist;
-			if ( !is_null( $wgMimeTypeBlacklist )
+			if ( $wgMimeTypeBlacklist !== null
 				&& UploadBase::checkFileExtension( $mime, $wgMimeTypeBlacklist ) ) {
 				return Status::newFatal( 'badfiletype', htmlspecialchars( $mime ) );
 			}

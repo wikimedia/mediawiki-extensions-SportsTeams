@@ -1,7 +1,5 @@
 <?php
-/**
- * @file
- */
+
 class SportsTeamsHooks {
 
 	/**
@@ -10,8 +8,8 @@ class SportsTeamsHooks {
 	 * Based on GPL-licensed code from [[mw:Extension:CCAgreement]] by Josef
 	 * Martiňák.
 	 *
-	 * @param OutputPage $out
-	 * @param Skin $skin
+	 * @param OutputPage &$out
+	 * @param Skin &$skin
 	 */
 	public static function addSportsTeamsToSignupPage( &$out, &$skin ) {
 		$title = $out->getTitle();

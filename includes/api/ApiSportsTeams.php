@@ -17,6 +17,8 @@ class ApiSportsTeams extends ApiBase {
 	 * That function was referenced by ../LoginReg/SpecialUserRegister.php and
 	 * SpecialUpdateProfile_Sports.php.
 	 * Said function was originally located in UserProfile/UserProfile_AjaxFunctions.php
+	 *
+	 * @return bool
 	 */
 	public function execute() {
 		$user = $this->getUser();
@@ -62,9 +64,7 @@ class ApiSportsTeams extends ApiBase {
 		return true;
 	}
 
-	/**
-	 * @return array
-	 */
+	/** @inheritDoc */
 	public function getAllowedParams() {
 		return [
 			'sportId' => [
@@ -74,6 +74,7 @@ class ApiSportsTeams extends ApiBase {
 		];
 	}
 
+	/** @inheritDoc */
 	public function getExamplesMessages() {
 		return [
 			'action=sportsteams&sportId=3' => 'apihelp-sportsteams-example-1'

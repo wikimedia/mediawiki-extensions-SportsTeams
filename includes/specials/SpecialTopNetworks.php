@@ -291,6 +291,7 @@ class TopNetworks extends SpecialPage {
 		return $output;
 	}
 
+	/** @inheritDoc */
 	protected function getGroupName() {
 		return 'wiki';
 	}

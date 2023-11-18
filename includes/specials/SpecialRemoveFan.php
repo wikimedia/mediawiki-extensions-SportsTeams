@@ -17,6 +17,7 @@ class RemoveFan extends UnlistedSpecialPage {
 	 * Show the special page
 	 *
 	 * @param string|null $par Parameter passed to the special page, if any [unused]
+	 * @return bool|void
 	 */
 	public function execute( $par ) {
 		$out = $this->getOutput();
@@ -94,7 +95,7 @@ class RemoveFan extends UnlistedSpecialPage {
 			 */
 			if ( !SportsTeams::isFan( $user, $sport_id, $team_id ) ) {
 				$out->setPageTitle( $this->msg( 'sportsteams-network-not-member', $name )->text() );
-				//$output .= '<div class="relationship-request-message">' . $this->msg( 'sportsteams-network-no-need-join' )->escaped() . '</div>';
+				// $output .= '<div class="relationship-request-message">' . $this->msg( 'sportsteams-network-no-need-join' )->escaped() . '</div>';
 				$output .= '<div class="relationship-request-buttons">';
 				$output .= '<input type="button" class="site-button" value="' .
 					$this->msg( 'sportsteams-network-main-page' )->escaped() .

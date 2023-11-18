@@ -50,7 +50,7 @@ class SportsTeamsManager extends SpecialPage {
 		// Add CSS
 		$out->addModuleStyles( 'ext.sportsTeams.manager' );
 
- 		if ( $request->wasPosted() ) {
+		if ( $request->wasPosted() ) {
 			// Security (anti-CSRF check) first!
 			if ( !$user->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
 				$out->addWikiMsg( 'sessionfailure' );
@@ -70,11 +70,11 @@ class SportsTeamsManager extends SpecialPage {
 					);
 				}
 				return;
-			} elseif ( // also handle the case where someone wants to edit a *sport*
+			} elseif (
+				// also handle the case where someone wants to edit a *sport*
 				$request->getVal( 'method' ) == 'editsport' &&
 				$request->getVal( 'sport_id' )
-			)
-			{
+			) {
 				$st = new SportsTeams( $user );
 				$id = $st->editSport(
 					$request->getInt( 'sport_id' ),
@@ -133,8 +133,7 @@ class SportsTeamsManager extends SpecialPage {
 				} elseif (
 					$request->getVal( 'method' ) == 'editsport' &&
 					$sport_id
-				)
-				{
+				) {
 					$out->addHTML(
 						$this->displayCreateSportForm( $sport_id )
 					);
@@ -183,7 +182,7 @@ class SportsTeamsManager extends SpecialPage {
 					$this->msg( 'sportsteams-team-manager-sport-name' )->escaped() .
 				'</td>
 				<td width="695">
-					<input type="text" size="45" class="createbox" name="sport_name" value="' . htmlspecialchars( $sportNameValue, ENT_QUOTES ) .'" />
+					<input type="text" size="45" class="createbox" name="sport_name" value="' . htmlspecialchars( $sportNameValue, ENT_QUOTES ) . '" />
 				</td>
 			</tr>
 			';
@@ -312,7 +311,8 @@ class SportsTeamsManager extends SpecialPage {
 		if ( $id ) {
 			$team = SportsTeams::getTeam( $id );
 		} else {
-			$team = [ 'id' => '', 'name' => '' ]; // prevent notices
+			// prevent notices
+			$team = [ 'id' => '', 'name' => '' ];
 		}
 
 		$form .= '<form action="" method="post" enctype="multipart/form-data" name="sportsteamsmanager">';

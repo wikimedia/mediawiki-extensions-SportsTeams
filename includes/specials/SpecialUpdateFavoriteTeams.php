@@ -10,7 +10,7 @@
  */
 class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
-	public $favorite_counter = 1;
+	public int $favorite_counter = 1;
 
 	/**
 	 * Constructor -- set up the new special page
@@ -19,6 +19,9 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		parent::__construct( 'UpdateFavoriteTeams' );
 	}
 
+	/**
+	 * @return array
+	 */
 	private function getFavorites() {
 		$dbr = wfGetDB( DB_REPLICA );
 
@@ -42,11 +45,16 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		return $favorites;
 	}
 
+	/**
+	 * @param string|int $selected_sport_id
+	 * @param string|int $selected_team_id
+	 * @return string
+	 */
 	private function getSportsDropdown( $selected_sport_id = 0, $selected_team_id = 0 ) {
 		global $wgExtensionAssetsPath;
 
 		$favCount = (int)$this->favorite_counter;
-		// Set surrent sport dropdown - show first one, or saved team
+		// Set current sport dropdown - show first one, or saved team
 		if ( $favCount == 1 || $selected_sport_id > 0 ) {
 			$style = 'display: block;';
 		} else {
@@ -127,8 +135,6 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 	 * @param string|null $par Parameter passed to the special page, if any
 	 */
 	public function execute( $par ) {
-		global $wgExtensionsAssetsPath;
-
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$user = $this->getUser();
@@ -282,7 +288,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				MediaWiki 1.17 (first ResourceLoader MW), we can\'t do that so instead we have to resort to this
 				ugly hack here.
 			-->
-			<div id="fav_count" style="display:none;">' . ( ( count( $favorites ) ) ? count( $favorites ) : 1 ) .'</div>
+			<div id="fav_count" style="display:none;">' . ( ( count( $favorites ) ) ? count( $favorites ) : 1 ) . '</div>
 			</div>
 		</div>';
 

@@ -17,6 +17,7 @@ class AddFan extends UnlistedSpecialPage {
 	 * Show the special page
 	 *
 	 * @param string|null $par Parameter passed to the special page, if any [unused]
+	 * @return bool|void
 	 */
 	public function execute( $par ) {
 		$out = $this->getOutput();

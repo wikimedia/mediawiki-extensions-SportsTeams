@@ -14,8 +14,11 @@ use MediaWiki\MediaWikiServices;
 
 class FanHome extends UnlistedSpecialPage {
 
-	public $friends, $foes, $relationships, $network_count,
-		$friends_network_count;
+	public $friends;
+	public $foes;
+	public $relationships;
+	public $network_count;
+	public $friends_network_count;
 
 	/** @var string Sport or sport team name, e.g. "Cheerleading" */
 	public $network;
@@ -30,11 +33,10 @@ class FanHome extends UnlistedSpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the special page or null
+	 * @param mixed $par Parameter passed to the special page or null
+	 * @return bool|void
 	 */
 	public function execute( $par ) {
-		global $wgSportsTeamsGoogleAPIKey;
-
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$user = $this->getUser();
@@ -232,6 +234,7 @@ class FanHome extends UnlistedSpecialPage {
 		}
 		$output .= '<div id="network-updates">';
 		$output .= $s->displayStatusMessages(
+			// phpcs:ignore MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment
 			0, $sport_id, $team_id, $updates_show, 1/*$page*/
 		);
 		$output .= '</div>';
@@ -286,7 +289,8 @@ class FanHome extends UnlistedSpecialPage {
 		$output .= '<h1 class="network-page-title">' .
 			$this->msg( 'sportsteams-network-articles', $this->network )->escaped() . '</h1>';
 		$output .= '<p class="fan-network-sub-text">';
-		if ( class_exists( 'BlogPage' ) ) { // @todo CHECKME: is there any point in this check?
+		// @todo CHECKME: is there any point in this check?
+		if ( class_exists( 'BlogPage' ) ) {
 			$createBlogPage = SpecialPage::getTitleFor( 'CreateBlogPost' );
 			$output .= $linkRenderer->makeLink(
 				$createBlogPage,
@@ -321,6 +325,8 @@ class FanHome extends UnlistedSpecialPage {
 	 * - The team logos need some shadows.
 	 * - The Google Maps Geocoder produces weird results sometimes:
 	 * ie: New York, California geocodes to somewhere in CA instead of failing.
+	 *
+	 * @return string
 	 */
 	function getMap() {
 		global $wgUploadPath;
@@ -345,13 +351,13 @@ class FanHome extends UnlistedSpecialPage {
 		// prevent Database::makeList from chocking up in the DB call a few lines
 		// below...
 		$actorIDs = [ 0 ];
-		$fanLocations = []; // stores the locations on the map
-		$fanStates = []; // stores the states along with the fans from that state
+		// stores the locations on the map
+		$fanLocations = [];
+		// stores the states along with the fans from that state
+		$fanStates = [];
 
 		$markerCode = '';
-
 		$output = '';
-
 		$fans = SportsTeams::getUsersByFavorite( $sport_id, $team_id, 7, 0 );
 
 		// go through all the fans for this network
@@ -416,7 +422,8 @@ class FanHome extends UnlistedSpecialPage {
 					$loc = $country;
 					$topLoc = $country;
 				}
-			} else { // if they are non-US then geocode by city, country
+			} else {
+				// if they are non-US then geocode by city, country
 				if ( strlen( $city ) > 0 && strlen( $country ) > 0 ) {
 					$loc = $city . ', ' . $country;
 					$topLoc = $country;
@@ -473,7 +480,13 @@ class FanHome extends UnlistedSpecialPage {
 
 		}
 
-		// helper function to compare the $fanStates objects
+		/**
+		 * Helper function to compare the $fanStates objects
+		 *
+		 * @param array $a
+		 * @param array $b
+		 * @return int
+		 */
 		function cmpFanStates( $a, $b ) {
 			if ( $a['user_id'] < $b['user_id'] ) {
 				return 1;
@@ -614,7 +627,8 @@ window.loadMap = function () {
 			<div class="visualClear"></div>';
 			}
 		}
-		$html .= '</div>'; // .listpages-container
+		// .listpages-container
+		$html .= '</div>';
 
 		return $html;
 	}
@@ -653,12 +667,19 @@ window.loadMap = function () {
 		return $voteCount;
 	}
 
+	/**
+	 * @param int $rel_type
+	 * @return mixed
+	 */
 	private function getRelationships( $rel_type ) {
 		$rel = new UserRelationship( $this->getUser() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}
 
+	/**
+	 * @return string
+	 */
 	private function getTopFans() {
 		$lang = $this->getLanguage();
 		$request = $this->getRequest();

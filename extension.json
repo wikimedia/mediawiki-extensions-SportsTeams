@@ -49,8 +49,8 @@
 		"SportsTeamsAlias": "includes/SportsTeams.alias.php"
 	},
 	"AutoloadClasses": {
-		"SportsTeams": "includes/SportsTeams.class.php",
-		"SportsTeamsUserProfile": "includes/SportsTeamsUserProfile.class.php",
+		"SportsTeams": "includes/SportsTeams.php",
+		"SportsTeamsUserProfile": "includes/SportsTeamsUserProfile.php",
 		"AddFan": "includes/specials/SpecialAddFan.php",
 		"FanHome": "includes/specials/SpecialFanHome.php",
 		"RemoveFan": "includes/specials/SpecialRemoveFan.php",
@@ -62,7 +62,7 @@
 		"UpdateFavoriteTeams": "includes/specials/SpecialUpdateFavoriteTeams.php",
 		"ViewFans": "includes/specials/SpecialViewFans.php",
 		"ApiSportsTeams": "includes/api/ApiSportsTeams.php",
-		"SportsTeamsHooks": "includes/SportsTeams.hooks.php"
+		"SportsTeamsHooks": "includes/SportsTeamsHooks.php"
 	},
 	"ResourceModules": {
 		"ext.sportsTeams": {

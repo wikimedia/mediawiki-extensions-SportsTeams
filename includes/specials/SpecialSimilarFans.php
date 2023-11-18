@@ -13,6 +13,7 @@ class SimilarFans extends SpecialPage {
 	 * Show the special page
 	 *
 	 * @param string|null $par Parameter passed to the special page, if any [unused]
+	 * @return bool|void
 	 */
 	public function execute( $par ) {
 		$lang = $this->getLanguage();
@@ -64,9 +65,9 @@ class SimilarFans extends SpecialPage {
 
 		$out->setPageTitle( $this->msg( 'sportsteams-similar-fans' )->text() );
 
-		//$output .= '<div class="friend-links">';
-		//$output .= "<a href=\"{$homepage_title->getFullURL()}&sport_id={$sport_id}&team_id={$team_id}\">< Back to Network Home</a>";
-		//$output .= '</div>';
+		// $output .= '<div class="friend-links">';
+		// $output .= "<a href=\"{$homepage_title->getFullURL()}&sport_id={$sport_id}&team_id={$team_id}\">< Back to Network Home</a>";
+		// $output .= '</div>';
 
 		/* Show total fan count */
 		$output .= '<div class="relationship-count">' .
@@ -134,15 +135,13 @@ class SimilarFans extends SpecialPage {
 						[],
 						[ 'user' => $fan['user_name'] ]
 					);
-					//$output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
+					// $output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
 					$output .= $lang->pipeList( $pipeList );
 					$output .= $this->msg( 'word-separator' )->escaped();
 					$output .= '<div class="visualClear"></div>';
 				}
 				$output .= '</div>';
-
 				$output .= '<div class="visualClear"></div></div>';
-
 				$output .= '</div>';
 
 				if ( $x == count( $fans ) || $x != 1 && $x % $per_row == 0 ) {
@@ -204,12 +203,17 @@ class SimilarFans extends SpecialPage {
 		$out->addHTML( $output );
 	}
 
+	/**
+	 * @param int $rel_type
+	 * @return int
+	 */
 	private function getRelationships( $rel_type ) {
 		$rel = new UserRelationship( $this->getUser() );
 		$relationships = $rel->getRelationshipIDs( $rel_type );
 		return $relationships;
 	}
 
+	/** @inheritDoc */
 	protected function getGroupName() {
 		return 'users';
 	}
