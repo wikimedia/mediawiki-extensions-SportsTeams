@@ -634,13 +634,12 @@ class SportsTeams {
 			$actorIds[] = $friend->r_actor_relation;
 		}
 
-		if ( !empty( $actorIds ) ) {
+		if ( $actorIds ) {
 			$ourWhere = array_merge(
 				$where,
 				// @see https://www.mediawiki.org/wiki/Special:Code/MediaWiki/92016#c19527
 				[ 'sf_actor' => $actorIds ]
 			);
-			// @phan-suppress-next-line SecurityCheck-SQLInjection Taint-check doesn't fully understand array_merge
 			$count = (int)$dbr->selectField(
 				'sport_favorite',
 				'COUNT(*) AS the_count',
@@ -675,7 +674,7 @@ class SportsTeams {
 			$teamIds[] = $teamId->sf_team_id;
 		}
 
-		if ( !empty( $teamIds ) ) {
+		if ( $teamIds ) {
 			$count = (int)$dbr->selectField(
 				'sport_favorite',
 				'COUNT(*) AS the_count',

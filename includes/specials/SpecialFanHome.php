@@ -602,7 +602,7 @@ window.loadMap = function () {
 		}
 
 		$html = '<div class="listpages-container">';
-		if ( empty( $articles ) ) {
+		if ( !$articles ) {
 			$html .= $this->msg( 'sportsteams-no-articles' )->escaped();
 		} else {
 			foreach ( $articles as $article ) {

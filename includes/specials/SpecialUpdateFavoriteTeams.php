@@ -154,7 +154,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		$sports = SportsTeams::getSports();
 		// Error message when there are no sports in the database
-		if ( empty( $sports ) ) {
+		if ( !$sports ) {
 			$out->setPageTitle( $this->msg( 'sportsteams-error-no-sports-title' ) );
 			$out->addWikiMsg( 'sportsteams-error-no-sports-message' );
 			return;

@@ -87,7 +87,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 
 		$this->mAction            = $request->getVal( 'action' );
 		$this->mSessionKey        = $request->getInt( 'wpSessionKey' );
-		if ( !empty( $this->mSessionKey ) && isset( $_SESSION['wsUploadData'][$this->mSessionKey] ) ) {
+		if ( $this->mSessionKey && isset( $_SESSION['wsUploadData'][$this->mSessionKey] ) ) {
 			/**
 			 * Confirming a temporarily stashed upload.
 			 * We don't want path names to be forged, so we keep
@@ -183,7 +183,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		/**
 		 * If there was no filename or a zero size given, give up quick.
 		 */
-		if ( trim( $this->mOname ) == '' || empty( $this->mUploadSize ) ) {
+		if ( trim( $this->mOname ) == '' || !$this->mUploadSize ) {
 			return $this->mainUploadForm( '<li>' . $this->msg( 'emptyfile' )->escaped() . '</li>' );
 		}
 

@@ -18,7 +18,7 @@ class SportsTeamsHooks {
 		if ( $title->isSpecial( 'CreateAccount' ) ) {
 			$sports = SportsTeams::getSports();
 			// ...*and* we have some sports & teams configured
-			if ( !empty( $sports ) ) {
+			if ( $sports ) {
 				$bodyText = $out->getHTML();
 
 				$output = '<div>
