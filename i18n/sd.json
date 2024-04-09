@@ -4,5 +4,7 @@
 			"Mehtab ahmed"
 		]
 	},
-	"sportsteams-team-manager-edit": "سنواريو"
+	"sportsteams-team-manager-edit": "سنواريو",
+	"sportsteams-profile-ago": "$1 اڳ",
+	"sportsteams-time-minutes": "{{PLURAL:$1|ھڪ منٽ|$1 منٽ}}"
 }
