@@ -6,7 +6,8 @@
 			"Jack Phoenix",
 			"Lakejason0",
 			"Liangent",
-			"StarrySky"
+			"StarrySky",
+			"沈澄心"
 		]
 	},
 	"user-profile-sports-sport": "运动",
@@ -36,6 +37,12 @@
 	"sportsteams-network-main-page": "首页",
 	"sportsteams-network-your-profile": "用户资料",
 	"sportsteams-top-network-sports": "体育",
+	"sportsteams-top-network-least": "最少",
+	"sportsteams-top-network-most": "最多",
+	"sportsteams-logo-size-large": "大",
+	"sportsteams-logo-size-medium": "中",
+	"sportsteams-logo-size-small": "小",
+	"sportsteams-logo-go-back": "返回",
 	"sportsteams-team-manager-edit": "编辑",
 	"sportsteams-profile-ago": "$1前"
 }
