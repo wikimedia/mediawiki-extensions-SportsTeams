@@ -10,6 +10,7 @@
 	"user-profile-sports-notloggedintext": "Profiili redigeerimiseks pead olema sisse loginud.",
 	"sportsteams-add-button": "lisa",
 	"sportsteams-woops": "Ups!",
+	"sportsteams-network-write-article": "Kirjuta artikkel",
 	"sportsteams-network-points": "{{PLURAL:$1|Üks punkt|$1 punkti}}",
 	"sportsteams-profile-button-add": "lisa",
 	"sportsteams-profile-button-cancel": "loobu",
