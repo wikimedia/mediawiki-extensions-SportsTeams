@@ -6,7 +6,8 @@
 			"Dr-Taher",
 			"Meno25",
 			"OsamaK",
-			"محمد أحمد عبد الفتاح"
+			"محمد أحمد عبد الفتاح",
+			"FiberAhmed"
 		]
 	},
 	"sportsteams-desc": "يوفر وظائف الشبكات",
@@ -52,7 +53,7 @@
 	"sportsteams-network-complete-list": "القائمة الكاملة",
 	"sportsteams-network-articles": "$1 مقالة",
 	"sportsteams-network-write-article": "كتابة مقالة",
-	"sportsteams-network-main-page": "الصفحة الرئيسية",
+	"sportsteams-network-main-page": "الصفحة الرئيسة",
 	"sportsteams-network-your-profile": "ملفك الشخصي",
 	"sportsteams-network-points": "{{PLURAL:$1| نقطة واحدة | $1 نقطة}}",
 	"sportsteams-network-clicktozoom": "(انقر للتكبير)",
