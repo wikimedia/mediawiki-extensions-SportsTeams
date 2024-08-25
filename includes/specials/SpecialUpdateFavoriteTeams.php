@@ -209,7 +209,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				// Clear user cache
 				SportsTeams::clearUserCache( $user );
 
-				$dbw = wfGetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_PRIMARY );
 				// Reset old favorites
 				$res = $dbw->delete(
 					'sport_favorite',

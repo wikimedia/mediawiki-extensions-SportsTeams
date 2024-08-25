@@ -84,7 +84,7 @@ class SportsTeamsManager extends SpecialPage {
 			}
 
 			if ( !( $request->getInt( 'id' ) ) ) {
-				$dbw = wfGetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_PRIMARY );
 				$dbw->insert(
 					'sport_team',
 					[
@@ -102,7 +102,7 @@ class SportsTeamsManager extends SpecialPage {
 				);
 			} else {
 				$id = $request->getInt( 'id' );
-				$dbw = wfGetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_PRIMARY );
 				$dbw->update(
 					'sport_team',
 					[

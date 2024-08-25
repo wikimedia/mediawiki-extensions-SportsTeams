@@ -67,7 +67,7 @@ class TopNetworks extends SpecialPage {
 		$out->addModuleStyles( 'ext.sportsTeams' );
 
 		// Database handler
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_PRIMARY );
 
 		// Teams
 		$res = $dbr->select(

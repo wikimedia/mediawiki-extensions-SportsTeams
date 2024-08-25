@@ -382,7 +382,7 @@ class FanHome extends UnlistedSpecialPage {
 		}
 
 		// Get the info about the fans; only select fans that have country info
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_PRIMARY );
 		$res = $dbr->select(
 			'user_profile',
 			[
