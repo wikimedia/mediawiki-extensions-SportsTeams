@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+
 /**
  * The messages used by this special page are provided by SocialProfile's
  * UserProfile, since this file used to be originally a part of UserProfile and
@@ -23,7 +26,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 	 * @return array
 	 */
 	private function getFavorites() {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 
 		$res = $dbr->select(
 			'sport_favorite',
@@ -209,7 +212,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				// Clear user cache
 				SportsTeams::clearUserCache( $user );
 
-				$dbw = wfGetDB( DB_PRIMARY );
+				$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 				// Reset old favorites
 				$res = $dbw->delete(
 					'sport_favorite',

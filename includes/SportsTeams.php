@@ -32,7 +32,7 @@ class SportsTeams {
 	 * @return int
 	 */
 	public function addSport( $sport_name, $sport_order = '' ) {
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		$dbw->insert(
 			'sport',
@@ -54,7 +54,7 @@ class SportsTeams {
 	 * @param string $sport_order
 	 */
 	public function editSport( $sport_id, $sport_name, $sport_order = '' ) {
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		$dbw->update(
 			'sport',
@@ -73,7 +73,7 @@ class SportsTeams {
 	 * @return array
 	 */
 	public static function getSports() {
-		$dbr = wfGetDB( DB_PRIMARY );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		$res = $dbr->select(
 			'sport',
@@ -101,7 +101,7 @@ class SportsTeams {
 	 * @return array Array containing each team's name and internal ID number
 	 */
 	public static function getTeams( $sportId ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 
 		$res = $dbr->select(
 			'sport_team',
@@ -131,7 +131,7 @@ class SportsTeams {
 	 * @return array
 	 */
 	public static function getTeam( $teamId ) {
-		$dbr = wfGetDB( DB_PRIMARY );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		$res = $dbr->select(
 			'sport_team',
@@ -161,7 +161,7 @@ class SportsTeams {
 	 * @return array
 	 */
 	public static function getSport( $sportId ) {
-		$dbr = wfGetDB( DB_PRIMARY );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		$res = $dbr->select(
 			'sport',
@@ -210,7 +210,7 @@ class SportsTeams {
 	public function addFavorite( $sport_id, $team_id ) {
 		if ( $this->user->isRegistered() ) {
 			if ( !self::isFan( $this->user, $sport_id, $team_id ) ) {
-				$dbw = wfGetDB( DB_PRIMARY );
+				$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 				$dbw->insert(
 					'sport_favorite',
 					[
@@ -255,7 +255,7 @@ class SportsTeams {
 			wfDebugLog( 'SportsTeams', "Got favorite teams for actor ID {$actorId} from cache" );
 			$favs = $data;
 		} else {
-			$dbr = wfGetDB( DB_PRIMARY );
+			$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 			wfDebugLog( 'SportsTeams', "Got favorite teams for actor ID {$actorId} from DB" );
 
 			$res = $dbr->select(
@@ -385,7 +385,7 @@ class SportsTeams {
 		//	wfDebugLog( 'SportsTeams', "Got favorite teams for {$user_id} from cache" );
 		//	$favs = $data;
 		//} else {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$where = $options = [];
 
 		if ( $limit > 0 ) {
@@ -445,7 +445,7 @@ class SportsTeams {
 	 */
 	public function getSimilarUsers( $limit = 0, $page = 0 ) {
 		$actorId = $this->user->getActorId();
-		$dbr = wfGetDB( DB_PRIMARY );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		$offset = 0;
 		if ( $limit > 0 && $page ) {
@@ -499,7 +499,7 @@ class SportsTeams {
 	 * @return array
 	 */
 	public static function getUsersByPoints( $sport_id, $team_id, $limit, $page ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$where = $options = [];
 
 		if ( $limit > 0 ) {
@@ -573,7 +573,7 @@ class SportsTeams {
 			$where = [ 'sf_team_id' => $team_id ];
 		}
 
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$count = (int)$dbr->selectField(
 			'sport_favorite',
 			'COUNT(*) AS the_count',
@@ -591,7 +591,7 @@ class SportsTeams {
 	 * @return int
 	 */
 	public function getUserFavoriteTotal( $user ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$res = (int)$dbr->selectField(
 			'sport_favorite',
 			'COUNT(*) AS the_count',
@@ -620,7 +620,7 @@ class SportsTeams {
 			$where = [ 'sf_team_id' => $team_id ];
 		}
 
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 
 		$friends = $dbr->select(
 			'user_relationship',
@@ -660,7 +660,7 @@ class SportsTeams {
 	 * @return int
 	 */
 	public static function getSimilarUserCount( $user ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 
 		$teamIdQuery = $dbr->select(
 			'sport_favorite',
@@ -709,7 +709,7 @@ class SportsTeams {
 			$where['sf_team_id'] = $team_id;
 		}
 
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 
 		$row = $dbr->selectField(
 			'sport_favorite',
@@ -749,7 +749,7 @@ class SportsTeams {
 			];
 		}
 
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		// Get the order of team being deleted;
 		$order = (int)$dbw->selectField( 'sport_favorite', 'sf_order', $where, __METHOD__ );
