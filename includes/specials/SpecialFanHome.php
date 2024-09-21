@@ -382,7 +382,7 @@ class FanHome extends UnlistedSpecialPage {
 		}
 
 		// Get the info about the fans; only select fans that have country info
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 		$res = $dbr->select(
 			'user_profile',
 			[
@@ -567,7 +567,7 @@ window.loadMap = function () {
 			$articles = $data;
 		} else {
 			wfDebugLog( 'FanHome', 'Got network articles from DB' );
-			$dbr = wfGetDB( DB_REPLICA );
+			$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 			// Code sporked from Rob Church's NewestPages extension
 			$res = $dbr->select(
 				[ 'page', 'categorylinks' ],
@@ -653,7 +653,7 @@ window.loadMap = function () {
 			$voteCount = $data;
 		} else {
 			wfDebugLog( 'FanHome', "Got vote count for the page with ID {$id} from DB" );
-			$dbr = wfGetDB( DB_REPLICA );
+			$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 			$voteCount = (int)$dbr->selectField(
 				'Vote',
 				'COUNT(*) AS count',

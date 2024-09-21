@@ -7,6 +7,8 @@
  * @author Aaron Wright <aaron.wright@gmail.com>
  */
 
+use MediaWiki\MediaWikiServices;
+
 class TopNetworks extends SpecialPage {
 
 	/**
@@ -67,7 +69,7 @@ class TopNetworks extends SpecialPage {
 		$out->addModuleStyles( 'ext.sportsTeams' );
 
 		// Database handler
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		// Teams
 		$res = $dbr->select(
@@ -202,7 +204,7 @@ class TopNetworks extends SpecialPage {
 	 */
 	protected function getNavigationMenu( $direction, $type, $sport, $order, $adj ) {
 		$output = '';
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$pt = $this->getPageTitle();
 
 		// Navigation
