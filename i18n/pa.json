@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Cabal"
+			"Cabal",
+			"Kuldeepburjbhalaike"
 		]
 	},
-	"sportsteams-network-main-page": "ਮੁੱਢਲਾ ਵਰਕਾ",
+	"sportsteams-network-main-page": "ਮੁੱਖ ਸਫ਼ਾ",
 	"sportsteams-team-manager-add-replace-logo": "ਮਾਰਕਾ ਜੋੜੋ/ਬਦਲੋ"
 }
