@@ -447,7 +447,8 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		if ( $type <= 0 ) {
-			throw new FatalError( $this->msg( 'filecopyerror', $tempName, $stash )->escaped() );
+			// FIXME: This seems like the wrong error message, we have no parameter to pass
+			throw new FatalError( $this->msg( 'filecopyerror', $tempName, '' )->escaped() );
 		}
 
 		return $type;
