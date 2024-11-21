@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ajeje Brazorf"
+			"Ajeje Brazorf",
+			"GianAntonucci"
 		]
 	},
 	"sportsteams-add-button": "agghiunci",
@@ -12,7 +13,7 @@
 	"sportsteams-network-logo": "(Logo officiali)",
 	"sportsteams-network-friends-col": "Amici: $1",
 	"sportsteams-network-articles": "$1 vuci",
-	"sportsteams-network-main-page": "Pàggina principali",
+	"sportsteams-network-main-page": "Pàggina mastra",
 	"sportsteams-network-your-profile": "Lu tò prufilu",
 	"sportsteams-top-network-sports": "Sport",
 	"sportsteams-logo-size-small": "Nicu",
