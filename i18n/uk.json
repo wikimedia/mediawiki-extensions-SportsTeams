@@ -3,7 +3,8 @@
 		"authors": [
 			"DDPAT",
 			"Ice bulldog",
-			"McDutchie"
+			"McDutchie",
+			"Ата"
 		]
 	},
 	"sportsteams-desc": "Забезпечує функціональність мережі",
@@ -13,7 +14,7 @@
 	"user-profile-sports-title": "Редагуйте улюблені види спорту та команди",
 	"user-profile-sports-notloggedintitle": "Ой-ой!",
 	"user-profile-sports-notloggedintext": "Щоб редагувати свій профіль, ви повинні увійти в систему.",
-	"user-profile-sports-teamremoved": "Вашу команду вилучено",
+	"user-profile-sports-teamremoved": "Ваші команди вилучено",
 	"user-profile-sports-teamsaved": "Ваші команди збережені",
 	"user-profile-sports-addmore": "Додайте більше видів спорту/команд",
 	"sportsteamsmanager": "Управління спортивними командами",
