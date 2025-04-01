@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"AguzulH",
 			"Ayour2002",
 			"Lhoussine AIT TAYFST"
 		]
@@ -19,7 +20,7 @@
 	"sportsteams-network-articles": "$1 Imgradn",
 	"sportsteams-network-main-page": "Tasna n usnubg",
 	"sportsteams-network-your-profile": "Tasna nk",
-	"sportsteams-network-clicktozoom": "(Add afad ad tzoomit)",
+	"sportsteams-network-clicktozoom": "(Add afad ad tzumit)",
 	"sportsteams-network-now-member": "Tgit yad agmam n $1!",
 	"sportsteams-network-already-member": "Tgit yad agmam n $1!",
 	"sportsteams-top-network-sports": "Tunnunin",
