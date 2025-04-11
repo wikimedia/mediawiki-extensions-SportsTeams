@@ -4,6 +4,9 @@
  *
  * @file
  */
+
+use MediaWiki\Title\Title;
+
 class RemoveFan extends UnlistedSpecialPage {
 
 	/**

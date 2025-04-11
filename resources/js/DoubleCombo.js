@@ -61,12 +61,8 @@ $( function () {
 		}
 	} );
 
-	// Signup page stuff (Special:UserLogin/signup on MW 1.26 and older,
-	// Special:CreateAccount on MW 1.27+)
-	if (
-		mw.config.get( 'wgCanonicalSpecialPageName' ) === 'Userlogin' ||
-		mw.config.get( 'wgCanonicalSpecialPageName' ) === 'CreateAccount'
-	) {
+	// Signup page stuff (Special:CreateAccount on MW 1.27+)
+	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'CreateAccount' ) {
 		$( 'select#sport_1' ).on( 'change', function () {
 			var $val = $( this ).val();
 			document.cookie = 'sports_sid=' + $val;

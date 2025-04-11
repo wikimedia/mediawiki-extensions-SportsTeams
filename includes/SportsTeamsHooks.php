@@ -21,39 +21,70 @@ class SportsTeamsHooks {
 			if ( $sports ) {
 				$bodyText = $out->getHTML();
 
-				$output = '<div>
-					<label for="sport_1">' .
+				// Favorite sport selector
+				$output = '<div class="mw-htmlform-field-HTMLInfoField cdx-field">
+	<div class="cdx-label">
+		<label class="cdx-label__label">
+			<span class="cdx-label__label__text">' .
 				wfMessage( 'sportsteams-signup-select' )->escaped() .
-			'</label>
-				<select name="sport_1" id="sport_1">
-					<option value="0">-</option>';
+			'</span>
+		</label>
+	</div>
+</div>';
+				$output .= '<div class="mw-htmlform-field-HTMLSelectField cdx-field">
+	<div class="cdx-field__control">
+		<select name="sport_1" id="sport_1" class="cdx-select">
+				<option value="0">-</option>';
 
 				// Build sport option HTML
 				foreach ( $sports as $sport ) {
 					$output .= '<option value="' . htmlspecialchars( $sport['id'] ) . '">' . htmlspecialchars( $sport['name'] ) . "</option>\n";
 				}
 
+				// Close the favorite sport selector stuff
 				$output .= '</select>
-			</div>
-			<div>
-				<label for="team_1">' .
-					wfMessage( 'sportsteams-signup-team' )->escaped() .
-				'</label>
-				<select name="team_1" id="team_1">
-					<option value="0">-</option>
-				</select>
-			</div>
-			<div>
-				<label for="thought">' .
-					wfMessage( 'sportsteams-signup-thought' )->escaped() .
-				'</label>
-				<!-- <input tabindex="6" class="lr-input" type="text" id="thought" name="thought" /> -->
-				<!--
-					Standard input looks a tad bit too small, IMO.
-					The maximum length is after all 150 characters, not 50 or so, and thus it should be visually obvious.
-				-->
-				<textarea tabindex="6" class="lr-input" id="thought" name="thought" maxlength="150" style="width: 150%; height: 80px;"></textarea>
-			</div>';
+	</div>
+</div>';
+
+				// Team selector (will be dynamically populated by DoubleCombo.js)
+				$output .= '<div class="mw-htmlform-field-HTMLInfoField cdx-field">
+	<div class="cdx-label">
+		<label class="cdx-label__label">
+			<span class="cdx-label__label__text">' .
+				wfMessage( 'sportsteams-signup-team' )->escaped() .
+			'</span>
+		</label>
+	</div>
+</div>
+<div class="mw-htmlform-field-HTMLSelectField cdx-field">
+	<div class="cdx-field__control">
+		<select name="team_1" id="team_1" class="cdx-select">
+				<option value="0">-</option>
+			</select>
+	</div>
+</div>';
+
+				// "Tell us a thought about that team" (textarea)
+				$output .= '<div class="mw-htmlform-field-HTMLInfoField cdx-field">
+	<div class="cdx-label">
+		<label class="cdx-label__label">
+			<span class="cdx-label__label__text">' .
+				wfMessage( 'sportsteams-signup-thought' )->escaped() .
+			'</span>
+		</label>
+	</div>
+</div>
+<div class="mw-htmlform-field-HTMLTextField cdx-field">
+	<div class="cdx-field__control">
+		<div class="cdx-text-area">
+			<!--
+				Standard input looks a tad bit too small, IMO.
+				The maximum length is after all 150 characters, not 50 or so, and thus it should be visually obvious.
+			-->
+			<textarea tabindex="6" id="thought" name="thought" size="150" class="lr-input cdx-text-input__input" maxlength="150" style="width: 150%; height: 80px;"></textarea>
+		</div>
+	</div>
+</div>';
 
 				// This is needed to prevent the duplication of the form (:P)
 				// and also for injecting our custom HTML into the right place
@@ -61,8 +92,8 @@ class SportsTeamsHooks {
 
 				// Append the sport/team selector to the output
 				$bodyText = preg_replace(
-					'/<div class=\"mw-htmlform-field-HTMLSubmitField mw-ui-vform-field\">/',
-					$output . '<div class="mw-htmlform-field-HTMLSubmitField mw-ui-vform-field">',
+					'/<div class=\"mw-htmlform-field-HTMLSubmitField cdx-field\">/',
+					$output . '<div class="mw-htmlform-field-HTMLSubmitField cdx-field">',
 					$bodyText
 				);
 

@@ -1,6 +1,6 @@
 {
 	"name": "SportsTeams",
-	"version": "3.7.0",
+	"version": "3.8.0",
 	"author": [
 		"Aaron Wright",
 		"Ashish Datta",
@@ -9,7 +9,7 @@
 	],
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.35.3"
+		"MediaWiki": ">= 1.43.0"
 	},
 	"url": "https://www.mediawiki.org/wiki/Extension:SportsTeams",
 	"descriptionmsg": "sportsteams-desc",
