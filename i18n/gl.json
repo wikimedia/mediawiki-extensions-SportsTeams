@@ -1,14 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toliño"
+			"Toliño",
+			"Xosecalvo"
 		]
 	},
 	"user-profile-sports-sport": "Deporte",
 	"user-profile-sports-title": "Editar os seus deportes e equipos favoritos",
 	"user-profile-sports-notloggedintitle": "Ups!",
 	"user-profile-sports-notloggedintext": "Debe acceder ao sistema para editar o seu perfil.",
-	"user-profile-sports-teamremoved": "O seu equipo foi eliminado",
+	"user-profile-sports-teamremoved": "Os seus equipos foron eliminados",
 	"user-profile-sports-teamsaved": "Os seus equipos foron gardados",
 	"user-profile-sports-addmore": "Engadir máis deportes/equipos"
 }
