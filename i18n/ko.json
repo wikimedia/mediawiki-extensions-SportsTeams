@@ -1,12 +1,16 @@
 {
 	"@metadata": {
 		"authors": [
+			"YeBoy371",
 			"Ykhwong"
 		]
 	},
 	"topnetworks": "네트워크 통계",
 	"similarfans": "비슷한 팬",
+	"user-profile-sports-sport": "스포츠",
+	"user-profile-sports-notloggedintitle": "이런!",
 	"sportsteams-add-button": "추가",
+	"sportsteams-articles-votes": "{{PLURAL:$1|표}}",
 	"sportsteams-no-articles": "문서 없음.",
 	"sportsteams-similar-fans": "비슷한 팬",
 	"sportsteams-your-friend": "내 친구",
@@ -76,6 +80,7 @@
 	"sportsteams-profile-ago": "$1 전",
 	"sportsteams-time-days": "{{PLURAL:$1|1일|$1일}}",
 	"sportsteams-time-hours": "{{PLURAL:$1|1시간|$1시간}}",
+	"sportsteams-time-minutes": "{{PLURAL:$1|1분|$1분}}",
 	"sportsteams-time-seconds": "{{PLURAL:$1|1초|$1초}}",
 	"sportsteams-profile-num-agree": "{{PLURAL:$1|한 명이 동의합니다|$1명이 동의합니다}}",
 	"sportsteams-profile-characters-remaining": "{{PLURAL:$1|1자|$1자 남음}}",
