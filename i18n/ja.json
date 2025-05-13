@@ -4,7 +4,8 @@
 			"A2y4",
 			"Ajeje Brazorf",
 			"Aotake",
-			"Azeha"
+			"Azeha",
+			"YeBoy371"
 		]
 	},
 	"topnetworks": "ネットワーク統計",
@@ -15,6 +16,9 @@
 	"user-profile-sports-teamremoved": "登録チームを削除しました",
 	"user-profile-sports-teamsaved": "チームを登録しました",
 	"user-profile-sports-addmore": "スポーツ/チームをもっと追加",
+	"sportsteams-add-button": "追加",
+	"sportsteams-articles-votes": "{{PLURAL:$1|票}}",
+	"sportsteams-woops": "おっと！",
 	"sportsteams-network-articles": "$1記事",
 	"sportsteams-network-main-page": "メインページ",
 	"sportsteams-network-your-profile": "あなたのプロフィール",
