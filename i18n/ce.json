@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"sportsteams-network-main-page": "Коьрта агӀо",
+	"sportsteams-top-network-sports": "Спорт",
+	"sportsteams-top-network-teams": "Командаш",
+	"sportsteams-logo-size-large": "Йоккха",
+	"sportsteams-logo-size-medium": "Йукъара",
+	"sportsteams-logo-size-small": "Жима",
+	"sportsteams-logo-go-back": "Йуханехьа",
+	"sportsteams-logo-back": "Йуха",
+	"sportsteams-team-manager-sport": "спорт",
+	"sportsteams-team-manager-teamname": "командан цӀе",
+	"sportsteams-team-manager-team": "команда",
+	"sportsteams-team-manager-edit": "нисйан",
+	"sportsteams-profile-button-add": "тӀетоха",
+	"sportsteams-profile-button-cancel": "йухайаккха",
+	"sportsteams-profile-ago": "$1 хьалха",
+	"sportsteams-time-days": "{{PLURAL:$1|цхьа де|$1 де}}",
+	"sportsteams-time-hours": "{{PLURAL:$1|цхьа сахьт|$1 сахьт}}",
+	"sportsteams-time-minutes": "{{PLURAL:$1|цхьа минот|$1 минот}}",
+	"sportsteams-time-seconds": "{{PLURAL:$1|цхьа секунд|$1 секунд}}",
+	"sportsteams-signup-team": "Команда"
+}
