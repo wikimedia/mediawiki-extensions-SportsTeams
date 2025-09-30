@@ -8,7 +8,8 @@
 			"Liangent",
 			"StarrySky",
 			"沈澄心",
-			"Peterxy12"
+			"Peterxy12",
+			"Libamidi"
 		]
 	},
 	"sportsteams-desc": "提供网络功能",
@@ -83,8 +84,8 @@
 	"sportsteams-top-network-least-popular": "最不受欢迎",
 	"sportsteams-top-network-most-pop-by-sport": "最受歡迎的體育",
 	"sportsteams-top-network-least-pop-by-sport": "最不受歡迎的體育",
-	"sportsteams-top-network-most-team-title": "最受歡迎的隊伍",
-	"sportsteams-top-network-least-team-title": "最不受歡迎的隊伍",
+	"sportsteams-top-network-most-team-title": "最受欢迎的$1队伍",
+	"sportsteams-top-network-least-team-title": "最不受欢迎的$1队伍",
 	"sportsteams-logo-size-large": "大",
 	"sportsteams-logo-size-medium": "中",
 	"sportsteams-logo-size-small": "小",
