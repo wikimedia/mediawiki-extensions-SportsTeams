@@ -16,22 +16,14 @@ use Wikimedia\AtEase\AtEase;
  * @ingroup Extensions
  */
 class SportsManagerLogo extends UnlistedSpecialPage {
-	public $mUploadFile;
-	public $mUploadDescription;
-	public $mIgnoreWarning;
 	public $mUploadSaveName;
 	public $mUploadTempName;
 	public $mUploadSize;
-	public $mUploadOldVersion;
 	public $mUploadCopyStatus;
 	public $mUploadSource;
-	public $mReUpload;
 	public $mAction;
 	public $mUpload;
 	public $mOname;
-	public $mSessionKey;
-	public $mWatchthis;
-	public $mStashed;
 	public $mDestFile;
 	public $mTokenOk;
 	public $uploadDirectory;
@@ -77,41 +69,19 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		$this->team_id            = $request->getInt( 'id' );
-		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning' );
-		$this->mReUpload          = $request->getCheck( 'wpReUpload' );
 		$this->mUpload            = $request->getCheck( 'wpUpload' );
 
-		$this->mUploadDescription = $request->getText( 'wpUploadDescription' );
 		$this->mUploadCopyStatus  = $request->getText( 'wpUploadCopyStatus' );
 		$this->mUploadSource      = $request->getText( 'wpUploadSource' );
-		$this->mWatchthis         = $request->getBool( 'wpWatchthis' );
-		wfDebug( __METHOD__ . ": watchthis is: '$this->mWatchthis'\n" );
 
 		$this->mAction            = $request->getVal( 'action' );
-		$this->mSessionKey        = $request->getInt( 'wpSessionKey' );
-		if ( $this->mSessionKey && isset( $_SESSION['wsUploadData'][$this->mSessionKey] ) ) {
-			/**
-			 * Confirming a temporarily stashed upload.
-			 * We don't want path names to be forged, so we keep
-			 * them in the session on the server and just give
-			 * an opaque key to the user agent.
-			 */
-			$data = $_SESSION['wsUploadData'][$this->mSessionKey];
-			$this->mUploadTempName   = $data['mUploadTempName'];
-			$this->mUploadSize       = $data['mUploadSize'];
-			$this->mOname            = $data['mOname'];
-			$this->mStashed	 	 = true;
-		} else {
-			/**
-			 * Check for a newly uploaded file.
-			 */
-			$this->mUploadTempName = $request->getFileTempname( 'wpUploadFile' );
-			$file = new WebRequestUpload( $request, 'wpUploadFile' );
-			$this->mUploadSize = $file->getSize();
-			$this->mOname          = $request->getFileName( 'wpUploadFile' );
-			$this->mSessionKey     = false;
-			$this->mStashed        = false;
-		}
+		/**
+		 * Check for a newly uploaded file.
+		 */
+		$this->mUploadTempName = $request->getFileTempname( 'wpUploadFile' );
+		$file = new WebRequestUpload( $request, 'wpUploadFile' );
+		$this->mUploadSize = $file->getSize();
+		$this->mOname = $request->getFileName( 'wpUploadFile' );
 
 		// If it was posted check for the token (no remote POST'ing with user credentials)
 		$token = $request->getVal( 'wpEditToken' );
@@ -160,10 +130,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			return;
 		}
 
-		if ( $this->mReUpload ) {
-			$this->unsaveUploadedFile();
-			$this->mainUploadForm();
-		} elseif ( $this->mAction == 'submit' || $this->mUpload ) {
+		if ( $this->mAction == 'submit' || $this->mUpload ) {
 			if ( $this->mTokenOk ) {
 				$this->processUpload();
 			} else {
@@ -225,48 +192,34 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		 * type, but it's corrupt or data of the wrong type, we should
 		 * probably not accept it.
 		 */
-		if ( !$this->mStashed ) {
-			// @phan-suppress-next-line SecurityCheck-PathTraversal False positive
-			$veri = $this->verify( $this->mUploadTempName, $finalExt );
+		// @phan-suppress-next-line SecurityCheck-PathTraversal False positive
+		$veri = $this->verify( $this->mUploadTempName, $finalExt );
 
-			if ( !$veri->isGood() ) {
-				// it's a wiki error...
-				return $this->uploadError( $this->getOutput()->parseAsInterface( $veri->getWikiText() ) );
-			}
+		if ( !$veri->isGood() ) {
+			// it's a wiki error...
+			return $this->uploadError( $this->getOutput()->parseAsInterface( $veri->getWikiText() ) );
 		}
 
 		/**
-		 * Check for non-fatal conditions
+		 * Check for wrong file type/too big/empty file
 		 */
-		if ( !$this->mIgnoreWarning ) {
-			$warning = '';
-
-			global $wgCheckFileExtensions;
-			if ( $wgCheckFileExtensions ) {
-				if ( !UploadBase::checkFileExtension( $finalExt, $this->fileExtensions ) ) {
-					$warning .= '<li>' . $this->msg( 'filetype-banned', htmlspecialchars( $fullExt ) )->escaped() . '</li>';
-				}
+		global $wgCheckFileExtensions;
+		if ( $wgCheckFileExtensions ) {
+			if ( !UploadBase::checkFileExtension( $finalExt, $this->fileExtensions ) ) {
+				return $this->uploadError( $this->msg( 'filetype-banned', htmlspecialchars( $fullExt ) )->escaped() );
 			}
+		}
 
-			global $wgUploadSizeWarning;
-			if ( $wgUploadSizeWarning && ( $this->mUploadSize > $wgUploadSizeWarning ) ) {
-				$lang = $this->getLanguage();
-				$wsize = $lang->formatSize( $wgUploadSizeWarning );
-				$asize = $lang->formatSize( $this->mUploadSize );
-				$warning .= '<li>' . $this->msg( 'large-file', $wsize, $asize )->escaped() . '</li>';
-			}
+		global $wgUploadSizeWarning;
+		if ( $wgUploadSizeWarning && ( $this->mUploadSize > $wgUploadSizeWarning ) ) {
+			$lang = $this->getLanguage();
+			$wsize = $lang->formatSize( $wgUploadSizeWarning );
+			$asize = $lang->formatSize( $this->mUploadSize );
+			return $this->uploadError( $this->msg( 'large-file', $wsize, $asize )->escaped() );
+		}
 
-			if ( $this->mUploadSize == 0 ) {
-				$warning .= '<li>' . $this->msg( 'emptyfile' )->escaped() . '</li>';
-			}
-
-			if ( $warning != '' ) {
-				/**
-				 * Stash the file in a temporary location; the user can choose
-				 * to let it through and we'll complete the upload then.
-				 */
-				return $this->uploadWarning( $warning );
-			}
+		if ( $this->mUploadSize == 0 ) {
+			return $this->uploadError( $this->msg( 'emptyfile' )->escaped() );
 		}
 
 		/**
@@ -479,47 +432,6 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	}
 
 	/**
-	 * Stash a file in a temporary directory for later processing,
-	 * and save the necessary descriptive info into the session.
-	 * Returns a key value which will be passed through a form
-	 * to pick up the path info on a later invocation.
-	 *
-	 * @return int
-	 */
-	private function stashSession() {
-		$stash = $this->saveTempUploadedFile(
-			$this->mUploadSaveName,
-			$this->mUploadTempName
-		);
-
-		if ( !$stash ) {
-			# Couldn't save the file.
-			return false;
-		}
-
-		$key = mt_rand( 0, 0x7fffffff );
-		$_SESSION['wsUploadData'][$key] = [
-			'mUploadTempName' => $stash,
-			'mUploadSize'     => $this->mUploadSize,
-			'mOname'          => $this->mOname
-		];
-
-		return $key;
-	}
-
-	/**
-	 * Remove a temporarily kept file stashed by saveTempUploadedFile().
-	 */
-	private function unsaveUploadedFile() {
-		AtEase::suppressWarnings();
-		$success = unlink( $this->mUploadTempName );
-		AtEase::restoreWarnings();
-		if ( !$success ) {
-			throw new FatalError( $this->msg( 'filedeleteerror', $this->mUploadTempName )->escaped() );
-		}
-	}
-
-	/**
 	 * Show some text and linkage on successful upload.
 	 */
 	private function showSuccess( int $status ) {
@@ -579,61 +491,6 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 				$this->msg( 'sportsteams-logo-go-back' )->escaped() . '" />
 			</form>'
 		);
-	}
-
-	/**
-	 * There's something wrong with this file, not enough to reject it
-	 * totally but we require manual intervention to save it for real.
-	 * Stash it away, then present a form asking to confirm or cancel.
-	 *
-	 * @param string $warning as HTML
-	 */
-	private function uploadWarning( $warning ) {
-		global $wgUseCopyrightUpload;
-
-		$out = $this->getOutput();
-
-		$this->mSessionKey = $this->stashSession();
-		if ( !$this->mSessionKey ) {
-			# Couldn't save file; an error has been displayed so let's go.
-			return;
-		}
-
-		$sub = $this->msg( 'uploadwarning' )->escaped();
-		$out->addHTML( "<h2>{$sub}</h2>\n" );
-		$out->addHTML( "<ul class=\"warning\">{$warning}</ul><br />\n" );
-
-		$action = htmlspecialchars( $this->getPageTitle()->getLocalURL( 'action=submit' ) );
-
-		if ( $wgUseCopyrightUpload ) {
-			$copyright = "
-	<input type='hidden' name='wpUploadCopyStatus' value=\"" . htmlspecialchars( $this->mUploadCopyStatus ) . "\" />
-	<input type='hidden' name='wpUploadSource' value=\"" . htmlspecialchars( $this->mUploadSource ) . "\" />
-	";
-		} else {
-			$copyright = '';
-		}
-
-		$out->addHTML( "
-	<form id='uploadwarning' method='post' enctype='multipart/form-data' action='$action'>
-		<input type='hidden' name='team_id' value=\"" . ( $this->team_id ) . "\" />
-		<input type='hidden' name='wpIgnoreWarning' value='1' />
-		<input type='hidden' name='wpSessionKey' value=\"" . htmlspecialchars( $this->mSessionKey ) . "\" />
-		<input type='hidden' name='wpUploadDescription' value=\"" . htmlspecialchars( $this->mUploadDescription ) . "\" />
-		<input type='hidden' name='wpDestFile' value=\"" . htmlspecialchars( $this->mDestFile ) . "\" />
-		<input type='hidden' name='wpWatchthis' value=\"" . intval( $this->mWatchthis ) . "\" />
-	{$copyright}
-	<table border='0'>
-		<tr>
-
-			<tr>
-				<td align='right'>
-					<input tabindex='2' type='submit' onclick=javascript:history.go(-1) value='" . $this->msg( 'sportsteams-logo-back' )->escaped() . "' />
-				</td>
-
-			</tr>
-		</tr>
-	</table></form>\n" );
 	}
 
 	/**
