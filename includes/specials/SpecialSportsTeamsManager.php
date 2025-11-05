@@ -48,7 +48,7 @@ class SportsTeamsManager extends SpecialPage {
 		}
 
 		// Set the page title
-		$out->setPageTitle( $this->msg( 'sportsteams-team-manager-title' ) );
+		$out->setPageTitle( $this->msg( 'sportsteams-team-manager-title' )->escaped() );
 
 		// Add CSS
 		$out->addModuleStyles( 'ext.sportsTeams.manager' );
