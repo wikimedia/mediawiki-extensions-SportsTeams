@@ -3,7 +3,8 @@
 		"authors": [
 			"MuratTheTurkish",
 			"Rapsar",
-			"Vito Genovese"
+			"Vito Genovese",
+			"SaldırganSincap"
 		]
 	},
 	"sportsteams-desc": "Ağ işlevselliği sağlar",
@@ -13,7 +14,7 @@
 	"user-profile-sports-title": "Favori sporlarınızı ve takımlarınızı düzenleyin",
 	"user-profile-sports-notloggedintitle": "Hay aksi!",
 	"user-profile-sports-notloggedintext": "Profilinizi değiştirebilmek için oturum açmış olmalısınız.",
-	"user-profile-sports-teamremoved": "Ekibiniz kaldırıldı",
+	"user-profile-sports-teamremoved": "Takımlarınız kaldırıldı",
 	"user-profile-sports-teamsaved": "Ekibiniz kaydedildi",
 	"user-profile-sports-addmore": "Daha fazla spor/takım ekle",
 	"sportsteamsmanager": "Spor Takımlarını Yönet",
