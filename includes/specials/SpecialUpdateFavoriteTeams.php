@@ -148,7 +148,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// This is like core Special:Preferences, so you need to be logged in
 		// to use this special page
 		if ( !$user->isRegistered() ) {
-			$out->setPageTitle( $this->msg( 'user-profile-sports-notloggedintitle' ) );
+			$out->setPageTitle( $this->msg( 'user-profile-sports-notloggedintitle' )->escaped() );
 			$out->addHTML( $this->msg( 'user-profile-sports-notloggedintext' )->escaped() );
 			return;
 		}
@@ -159,13 +159,13 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$sports = SportsTeams::getSports();
 		// Error message when there are no sports in the database
 		if ( !$sports ) {
-			$out->setPageTitle( $this->msg( 'sportsteams-error-no-sports-title' ) );
+			$out->setPageTitle( $this->msg( 'sportsteams-error-no-sports-title' )->escaped() );
 			$out->addWikiMsg( 'sportsteams-error-no-sports-message' );
 			return;
 		}
 
 		// Set the page title
-		$out->setPageTitle( $this->msg( 'user-profile-sports-title' ) );
+		$out->setPageTitle( $this->msg( 'user-profile-sports-title' )->escaped() );
 
 		// Add CSS (from SocialProfile), DoubleCombo.js and UpdateFavoriteTeams.js files to the page output
 		$out->addModuleStyles( [
