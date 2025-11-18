@@ -65,7 +65,7 @@ class SportsTeamsManager extends SpecialPage {
 			if ( $request->getVal( 'method' ) == 'createsport' ) {
 				$st = new SportsTeams( $user );
 				$id = $st->addSport( $request->getVal( 'sport_name' ) );
-				if ( isset( $id ) && $id > 0 ) {
+				if ( $id !== null && $id > 0 ) {
 					$out->addHTML(
 						'<span class="view-status">' .
 						$this->msg( 'sportsteams-team-manager-sport-created' )->escaped() .
@@ -170,7 +170,7 @@ class SportsTeamsManager extends SpecialPage {
 
 		// If we're editing a sport that already exists, preload its name into
 		// the text field
-		if ( isset( $id ) ) {
+		if ( $id !== null ) {
 			$sport = SportsTeams::getSport( $id );
 			$sportNameValue = ( isset( $sport['name'] ) ? $sport['name'] : '' );
 		}

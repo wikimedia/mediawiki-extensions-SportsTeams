@@ -18,7 +18,7 @@ var FanHome = {
 			us_id: id,
 			vote: vote,
 			format: 'json'
-		} ).done( function ( data ) {
+		} ).done( ( data ) => {
 			$( '#user-status-vote-' + id ).text( data.userstatus.result );
 		} );
 	},
@@ -32,7 +32,7 @@ var FanHome = {
 	 * true in most other cases
 	 */
 	detEnter: function ( e ) {
-		var keycode;
+		let keycode;
 
 		if ( window.event ) {
 			keycode = window.event.keyCode;
@@ -51,7 +51,7 @@ var FanHome = {
 	},
 
 	addStatus: function () {
-		var statusUpdateText = document.getElementById( 'user_status_text' ).value;
+		const statusUpdateText = document.getElementById( 'user_status_text' ).value;
 		if ( statusUpdateText && !FanHome.posted ) {
 			FanHome.posted = 1;
 
@@ -63,7 +63,7 @@ var FanHome = {
 				text: encodeURIComponent( statusUpdateText ),
 				count: __updates_show__,
 				format: 'json'
-			} ).done( function ( data ) {
+			} ).done( ( data ) => {
 				document.getElementById( 'network-updates' ).innerHTML = data.userstatus.result;
 				FanHome.posted = 0;
 				document.getElementById( 'user_status_text' ).value = '';
@@ -78,7 +78,7 @@ var FanHome = {
 				what: 'deletestatus',
 				us_id: id,
 				format: 'json'
-			} ).done( function ( data ) {
+			} ).done( ( data ) => {
 				// window.location = __user_status_link__;
 				// Just remove the DOM node, no need to take the user to
 				// Special:UserStatus, IMO
@@ -224,16 +224,16 @@ var FanHome = {
 	*/
 };
 
-$( function () {
+$( () => {
 	// Add handlers specific to Special:FanHome
 	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'FanHome' ) {
 		// Handle the case when the user presses the Enter key
-		$( 'body' ).on( 'keypress', '#user_status_text', function ( event ) {
+		$( 'body' ).on( 'keypress', '#user_status_text', ( event ) => {
 			FanHome.detEnter( event );
 		} );
 
 		// Handle clicks on the "add status" button
-		$( 'body' ).on( 'click', '#add-status-btn', function () {
+		$( 'body' ).on( 'click', '#add-status-btn', () => {
 			FanHome.addStatus();
 		} );
 

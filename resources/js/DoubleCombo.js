@@ -7,7 +7,7 @@
  * "Team" dropdown menu after the user has picked a sport from the "Sport"
  * dropdown menu.
  */
-var DoubleCombo = {
+const DoubleCombo = {
 	/**
 	 * @param {string} elementId Identifier of the <select> element to be populated w/ data
 	 * @param {number} sportId Sport identifier, used when calling the backend API module
@@ -19,12 +19,12 @@ var DoubleCombo = {
 				sportId: sportId,
 				format: 'json'
 			},
-			function ( data ) {
+			( data ) => {
 				// @todo FIXME: stupid check, data is always defined, maybe
 				// check for data.error (error message) -> if it's present,
 				// display the error text in an alert(), else build the opts
 				if ( data ) {
-					var opts = '';
+					let opts = '';
 					document.getElementById( elementId ).options.length = 0;
 					opts = data.sportsteams.result;
 
@@ -34,7 +34,7 @@ var DoubleCombo = {
 							.text( '-' )
 					);
 
-					for ( var x = 0; x <= opts.options.length - 1; x++ ) {
+					for ( let x = 0; x <= opts.options.length - 1; x++ ) {
 						$( '#' + elementId ).append(
 							$( '<option></option>' )
 								.attr( 'id', opts.options[ x ].id )
@@ -50,9 +50,9 @@ var DoubleCombo = {
 	}
 };
 
-$( function () {
+$( () => {
 	$( 'p.profile-update-unit-right select' ).on( 'change', function () {
-		var counter = $( this ).attr( 'id' ).replace( /sport_/, '' );
+		const counter = $( this ).attr( 'id' ).replace( /sport_/, '' );
 		// if the <option>'s value is 0 (i.e. the displayed text is "-"), don't
 		// even try updating things as it'll just die horribly with some obscure
 		// JS error about result being undefined
@@ -64,18 +64,18 @@ $( function () {
 	// Signup page stuff (Special:CreateAccount on MW 1.27+)
 	if ( mw.config.get( 'wgCanonicalSpecialPageName' ) === 'CreateAccount' ) {
 		$( 'select#sport_1' ).on( 'change', function () {
-			var $val = $( this ).val();
+			const $val = $( this ).val();
 			document.cookie = 'sports_sid=' + $val;
 			DoubleCombo.update( 'team_1', $val );
 		} );
 
 		$( 'select#team_1' ).on( 'change', function () {
-			var $val = $( this ).val();
+			const $val = $( this ).val();
 			document.cookie = 'sports_tid=' + $val;
 		} );
 
 		$( '#thought' ).on( 'change', function () {
-			var $val = $( this ).val();
+			const $val = $( this ).val();
 			document.cookie = 'thought=' + $val;
 		} );
 	}

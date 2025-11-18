@@ -26,9 +26,9 @@ var UpdateFavoriteTeams = {
 	},
 
 	saveTeams: function () {
-		var favs = '';
-		var sport_id, team_id;
-		for ( var x = 1; x <= UpdateFavoriteTeams.fav_count; x++ ) {
+		let favs = '';
+		let sport_id, team_id;
+		for ( let x = 1; x <= UpdateFavoriteTeams.fav_count; x++ ) {
 			if ( document.getElementById( 'sport_' + x ).value !== 0 ) {
 				sport_id = document.getElementById( 'sport_' + x ).value;
 				team_id = document.getElementById( 'team_' + x ).value;
@@ -42,7 +42,7 @@ var UpdateFavoriteTeams = {
 	}
 };
 
-$( function () {
+$( () => {
 	$( 'a.remove-link' ).on( 'click', function () {
 		UpdateFavoriteTeams.removeFan(
 			$( this ).data( 'selected-sport-id' ),
@@ -50,15 +50,15 @@ $( function () {
 		);
 	} );
 
-	$( 'p.profile-update-unit select' ).on( 'change', function () {
+	$( 'p.profile-update-unit select' ).on( 'change', () => {
 		UpdateFavoriteTeams.showNext();
 	} );
 
-	$( 'input#update-favorite-teams-add-more-button' ).on( 'click', function () {
+	$( 'input#update-favorite-teams-add-more-button' ).on( 'click', () => {
 		UpdateFavoriteTeams.showNext();
 	} );
 
-	$( 'input#update-favorite-teams-save-button' ).on( 'click', function () {
+	$( 'input#update-favorite-teams-save-button' ).on( 'click', () => {
 		UpdateFavoriteTeams.saveTeams();
 	} );
 

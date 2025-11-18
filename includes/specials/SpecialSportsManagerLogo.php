@@ -3,7 +3,6 @@
 use MediaWiki\Html\Html;
 use MediaWiki\Request\WebRequestUpload;
 use MediaWiki\Shell\Shell;
-use Wikimedia\AtEase\AtEase;
 
 /**
  * A special page to upload images for networks.
@@ -74,7 +73,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		$this->mUploadCopyStatus  = $request->getText( 'wpUploadCopyStatus' );
 		$this->mUploadSource      = $request->getText( 'wpUploadSource' );
 
-		$this->mAction            = $request->getVal( 'action' );
+		$this->mAction = $request->getVal( 'action' );
 		/**
 		 * Check for a newly uploaded file.
 		 */
@@ -192,7 +191,6 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		 * type, but it's corrupt or data of the wrong type, we should
 		 * probably not accept it.
 		 */
-		// @phan-suppress-next-line SecurityCheck-PathTraversal False positive
 		$veri = $this->verify( $this->mUploadTempName, $finalExt );
 
 		if ( !$veri->isGood() ) {

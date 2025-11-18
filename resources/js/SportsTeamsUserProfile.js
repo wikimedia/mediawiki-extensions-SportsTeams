@@ -16,9 +16,9 @@ var SportsTeamsUserProfile = {
 			us_id: id,
 			vote: vote,
 			format: 'json'
-		} ).done( function ( data ) {
+		} ).done( ( data ) => {
 			SportsTeamsUserProfile.posted = 0;
-			var $node = $( '#status-update a.profile-vote-status-link' );
+			const $node = $( '#status-update a.profile-vote-status-link' );
 			// Add the "1 Person Agrees"/"X People Agree" text after the date
 			$( '<span>' + data.userstatus.result + '</span>' ).insertAfter( $( 'span.user-status-date:first' ) );
 			// and hide the "Do you agree?" link
@@ -37,7 +37,7 @@ var SportsTeamsUserProfile = {
 	 * @return {boolean}
 	 */
 	detEnter: function ( e, num, sport_id, team_id ) {
-		var keycode;
+		let keycode;
 
 		if ( window.event ) {
 			keycode = window.event.keyCode;
@@ -71,7 +71,7 @@ var SportsTeamsUserProfile = {
 			$( '#status-update-box-' + SportsTeamsUserProfile.lastBox ).hide( 2000 );
 		}
 
-		var addMsg = mw.msg( 'sportsteams-profile-button-add' ),
+		let addMsg = mw.msg( 'sportsteams-profile-button-add' ),
 			cancelMsg = mw.msg( 'sportsteams-profile-button-cancel' ),
 			statusInput, addButton, closeButton, spacing;
 
@@ -82,9 +82,9 @@ var SportsTeamsUserProfile = {
 			id: 'status_text',
 			value: '',
 			maxlength: 150
-		} ).on( 'keypress', function ( event ) {
+		} ).on( 'keypress', ( event ) => {
 			SportsTeamsUserProfile.detEnter( event, num, sport_id, team_id );
-		} ).on( 'keyup', function () {
+		} ).on( 'keyup', () => {
 			SportsTeamsUserProfile.limitText();
 		} );
 
@@ -92,7 +92,7 @@ var SportsTeamsUserProfile = {
 			type: 'button',
 			class: 'site-button',
 			value: addMsg
-		} ).on( 'click', function ( event ) {
+		} ).on( 'click', ( event ) => {
 			SportsTeamsUserProfile.addMessage( num, sport_id, team_id );
 		} );
 
@@ -100,11 +100,11 @@ var SportsTeamsUserProfile = {
 			type: 'button',
 			class: 'site-button',
 			value: cancelMsg
-		} ).on( 'click', function ( event ) {
+		} ).on( 'click', ( event ) => {
 			SportsTeamsUserProfile.closeMessageBox( num );
 		} );
 
-		var br = '<br />',
+		const br = '<br />',
 			counter = '<span id="status-letter-count"></span>';
 		// EDGE CASE WARNING!
 		// This check, as well as the one below it, are here to prevent strange
@@ -133,9 +133,9 @@ var SportsTeamsUserProfile = {
 	 * update.
 	 */
 	limitText: function () {
-		var len = 150 - document.getElementById( 'status_text' ).value.length;
+		let len = 150 - document.getElementById( 'status_text' ).value.length;
 		if ( len < 0 ) {
-			var statusText = document.getElementById( 'status_text' );
+			const statusText = document.getElementById( 'status_text' );
 			document.getElementById( 'status_text' ).value = statusText.value.slice( 0, 150 );
 			len++;
 		}
@@ -157,7 +157,7 @@ var SportsTeamsUserProfile = {
 	 * @param {number} team_id
 	 */
 	addMessage: function ( num, sport_id, team_id ) {
-		var statusUpdateText = document.getElementById( 'status_text' ).value;
+		const statusUpdateText = document.getElementById( 'status_text' ).value;
 		if ( statusUpdateText && !SportsTeamsUserProfile.posted ) {
 			SportsTeamsUserProfile.posted = 1;
 			$( '#status-update' ).hide();
@@ -170,16 +170,16 @@ var SportsTeamsUserProfile = {
 				text: encodeURIComponent( statusUpdateText ),
 				count: 10,
 				format: 'json'
-			} ).done( function ( data ) {
+			} ).done( ( data ) => {
 				SportsTeamsUserProfile.posted = 0;
 
 				if ( document.getElementById( 'status-update' ) === null ) {
-					var theDiv2 = document.createElement( 'div' );
+					const theDiv2 = document.createElement( 'div' );
 					$( theDiv2 ).addClass( 'status-container' );
 					theDiv2.setAttribute( 'id', 'status-update' );
 					$( theDiv2 ).insertBefore( $( '#user-page-left' ).children( ':first' ) );
 
-					var theDiv = document.createElement( 'div' );
+					const theDiv = document.createElement( 'div' );
 					$( '<div>' )
 						.addClass( 'user-section-heading' )
 						.html(
@@ -201,10 +201,10 @@ var SportsTeamsUserProfile = {
 	}
 };
 
-$( function () {
+$( () => {
 	// "Add thought" link on your own profile
 	$( 'span.status-message-add a' ).on( 'click', function () {
-		var $that = $( this );
+		const $that = $( this );
 		SportsTeamsUserProfile.showMessageBox(
 			$that.data( 'order' ),
 			$that.data( 'sport-id' ),
