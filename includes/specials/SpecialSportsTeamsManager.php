@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 
 /**
@@ -331,13 +332,10 @@ class SportsTeamsManager extends SpecialPage {
 		$sports = SportsTeams::getSports();
 		foreach ( $sports as $sport ) {
 			$selected = '';
-			$form .= Xml::option(
-				$sport['name'],
-				$sport['id'],
-				(
-					$request->getInt( 'sport_id' ) == $sport['id'] ||
-					$sport['id'] == $team['sport_id']
-				)
+			$form .= Html::element(
+				'option',
+				[ 'value' => $sport['id'], 'selected' => $request->getInt( 'sport_id' ) == $sport['id'] || $sport['id'] == $team['sport_id'] ],
+				$sport['name']
 			);
 		}
 		$form .= '</select>

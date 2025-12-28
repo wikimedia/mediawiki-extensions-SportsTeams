@@ -69,7 +69,9 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 
 		$remove_link = '';
 		if ( $selected_sport_id || $selected_team_id ) {
-			$remove_link = "<a href=\"javascript:void(0)\" class=\"remove-link\" data-selected-sport-id=\"{$selected_sport_id}\" data-selected-team-id=\"{$selected_team_id}\">
+			$escapedSportId = htmlspecialchars( $selected_sport_id );
+			$escapedTeamId = htmlspecialchars( $selected_team_id );
+			$remove_link = "<a href=\"javascript:void(0)\" class=\"remove-link\" data-selected-sport-id=\"{$escapedSportId}\" data-selected-team-id=\"{$escapedTeamId}\">
 				<img src=\"{$wgExtensionAssetsPath}/SportsTeams/resources/images/closeIcon.gif\" border=\"0\"/>
 			</a>";
 		}
@@ -90,10 +92,10 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		// Build Sport Option HTML
 		$sports = SportsTeams::getSports();
 		foreach ( $sports as $sport ) {
-			$output .= Xml::option(
-				$sport['name'],
-				$sport['id'],
-				( $sport['id'] == $selected_sport_id )
+			$output .= Html::element(
+				'option',
+				[ 'value' => $sport['id'], 'selected' => ( $sport['id'] == $selected_sport_id ) ],
+				$sport['name']
 			);
 		}
 		$output .= '</select>';
@@ -110,10 +112,10 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		}
 
 		foreach ( $teams as $team ) {
-			$team_opts .= Xml::option(
-				$team['name'],
-				$team['id'],
-				( $team['id'] == $selected_team_id )
+			$team_opts .= Html::element(
+				'option',
+				[ 'value' => $team['id'], 'selected' => ( $team['id'] == $selected_team_id ) ],
+				$team['name']
 			);
 		}
 
@@ -253,8 +255,8 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 		$favorites = $this->getFavorites();
 		foreach ( $favorites as $favorite ) {
 			$output .= $this->getSportsDropdown(
-				htmlspecialchars( $favorite['sport_id'] ),
-				htmlspecialchars( $favorite['team_id'] )
+				$favorite['sport_id'],
+				$favorite['team_id']
 			);
 		}
 
