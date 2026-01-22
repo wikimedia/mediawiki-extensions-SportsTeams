@@ -326,10 +326,6 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 				imagepng( $tnImage, $imageSrc );
 			}
 
-			// Clean up.
-			imagedestroy( $fullImage );
-			imagedestroy( $tnImage );
-
 			// Copy the thumb
 			copy(
 				$imageSrc,
