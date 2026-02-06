@@ -1,7 +1,5 @@
 <?php
 
-use Wikimedia\AtEase\AtEase;
-
 /**
  * SportsTeams API module
  *
@@ -26,15 +24,7 @@ class ApiSportsTeams extends ApiBase {
 		// Get the request parameters
 		$params = $this->extractRequestParams();
 
-		AtEase::suppressWarnings();
 		$sportId = $params['sportId'];
-		AtEase::restoreWarnings();
-
-		// You only had one job...
-		// @phan-suppress-next-line PhanImpossibleTypeComparison
-		if ( !$sportId || $sportId === null || !is_numeric( $sportId ) ) {
-			$this->dieWithError( [ 'apierror-missingparam', 'sportId' ], 'missingparam' );
-		}
 
 		$dbr = $this->getDB();
 
