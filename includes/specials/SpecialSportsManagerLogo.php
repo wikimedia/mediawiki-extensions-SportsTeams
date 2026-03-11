@@ -395,6 +395,7 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 			}
 		}
 
+		// @phan-suppress-next-line PhanImpossibleValueComparison
 		if ( $type <= 0 ) {
 			// FIXME: This seems like the wrong error message, we have no parameter to pass
 			throw new FatalError( $this->msg( 'filecopyerror', $tempName, '' )->escaped() );
