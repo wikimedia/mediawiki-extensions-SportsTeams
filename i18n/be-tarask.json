@@ -4,7 +4,8 @@
 			"EugeneZelenko",
 			"Jim-by",
 			"Red Winged Duck",
-			"Renessaince"
+			"Renessaince",
+			"Ucukor"
 		]
 	},
 	"user-profile-sports-sport": "Спорт",
@@ -13,5 +14,6 @@
 	"user-profile-sports-notloggedintext": "Вам неабходна ўвайсьці ў сыстэму, каб рэдагаваць Ваш профіль.",
 	"user-profile-sports-teamremoved": "Вашыя каманды былі выдаленыя",
 	"user-profile-sports-teamsaved": "Вашы каманды былі захаваныя",
-	"user-profile-sports-addmore": "Дадаць болей відаў спорту/камандаў"
+	"user-profile-sports-addmore": "Дадаць болей відаў спорту/камандаў",
+	"sportsteams-team-manager-edit": "рэдагаваць"
 }
