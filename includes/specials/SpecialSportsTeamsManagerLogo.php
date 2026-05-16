@@ -33,7 +33,12 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 	 * Constructor -- set up the new special page
 	 */
 	public function __construct() {
-		parent::__construct( 'SportsTeamsManagerLogo', 'sportsteamsmanager' );
+		parent::__construct( 'SportsTeamsManagerLogo' );
+	}
+
+	/** @inheritDoc */
+	public function getRestriction(): string {
+		return 'sportsteamsmanager';
 	}
 
 	/**
