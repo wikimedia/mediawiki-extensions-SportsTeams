@@ -136,7 +136,7 @@
 	"sportsteams-time-seconds": "{{PLURAL:$1|1초|$1초}}",
 	"sportsteams-profile-num-agree": "{{PLURAL:$1|한 명이 동의합니다|$1명이 동의합니다}}",
 	"sportsteams-profile-characters-remaining": "{{PLURAL:$1|1자|$1자 남음}}",
-	"sportsteams-profile-characters-remaining-hack": "$1 캐릭터 남음",
+	"sportsteams-profile-characters-remaining-hack": "$1자 남음",
 	"sportsteams-signup-select": "좋아하는 팀이나 스포츠를 선택하세요",
 	"sportsteams-signup-team": "팀",
 	"sportsteams-signup-thought": "그 팀에 대한 생각을 말해주세요",
