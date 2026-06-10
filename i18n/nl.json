@@ -47,7 +47,7 @@
 	"sportsteams-network-fans-col": "Fans:",
 	"sportsteams-network-friends-col": "Vrienden: $1",
 	"sportsteams-network-fans": "Fans van $1",
-	"sportsteams-network-fan-display": "$1 van de <a href=\"$2\">$3</a> fan{{PLURAL:$3||s}} {{PLURAL:$1|wordt|worden}} getoond",
+	"sportsteams-network-fan-display": "$1 van de <a href=\"$2\">$3</a> fan{{PLURAL:$3||s}} {{PLURAL:$1|wordt|worden}} weergegeven",
 	"sportsteams-network-latest-thoughts": "Laatste meningen",
 	"sportsteams-network-all-thoughts": "Alle meningen",
 	"sportsteams-network-fan-locations": "Waar zijn de fans",
