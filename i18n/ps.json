@@ -64,6 +64,7 @@
 	"sportsteams-network-no-need-join": "بياځلي يوځای‌کېدو ته اړتيا نشته!",
 	"sportsteams-network-join-named-network": "د $1 مينه‌والو شبکې سره يوځای شئ",
 	"sportsteams-network-join-are-you-sure": "ايا تاسو ډاډه ياست چې غواړئ د  '''$1''' مينه‌والو شبکې سره يوځای شئ؟",
+	"sportsteams-network-alt-logo": "نښان",
 	"sportsteams-network-network-fans": "$1 مينه‌وال",
 	"sportsteams-network-back-to-network": "< بېرته د $1 شبکې مخ ته",
 	"sportsteams-network-num-fans": "$1، $2 {{PLURAL:$2|مينه‌وال}} لري.",
