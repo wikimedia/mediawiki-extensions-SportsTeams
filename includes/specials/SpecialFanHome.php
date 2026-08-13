@@ -10,8 +10,9 @@
  * @ingroup Extensions
  */
 
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
+use Wikimedia\ObjectCache\WANObjectCache;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 class FanHome extends UnlistedSpecialPage {
 
@@ -27,7 +28,10 @@ class FanHome extends UnlistedSpecialPage {
 	/**
 	 * Constructor -- set up the new special page
 	 */
-	public function __construct() {
+	public function __construct(
+		private readonly IConnectionProvider $dbProvider,
+		private readonly WANObjectCache $cache,
+	) {
 		parent::__construct( 'FanHome' );
 	}
 
@@ -383,7 +387,7 @@ class FanHome extends UnlistedSpecialPage {
 		}
 
 		// Get the info about the fans; only select fans that have country info
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		$dbr = $this->dbProvider->getPrimaryDatabase();
 		$res = $dbr->select(
 			'user_profile',
 			[
@@ -559,16 +563,15 @@ window.loadMap = function () {
 	 */
 	function getArticles() {
 		// Try cache first
-		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
-		$key = $cache->makeKey( 'fanhome', 'network-articles', 'six' );
-		$data = $cache->get( $key );
+		$key = $this->cache->makeKey( 'fanhome', 'network-articles', 'six' );
+		$data = $this->cache->get( $key );
 
 		if ( $data != '' ) {
 			wfDebugLog( 'FanHome', 'Got network articles from cache' );
 			$articles = $data;
 		} else {
 			wfDebugLog( 'FanHome', 'Got network articles from DB' );
-			$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+			$dbr = $this->dbProvider->getReplicaDatabase();
 			// Code sporked from Rob Church's NewestPages extension
 			$res = $dbr->select(
 				[ 'page', 'categorylinks' ],
@@ -599,7 +602,7 @@ window.loadMap = function () {
 			}
 
 			// Cache for 15 minutes
-			$cache->set( $key, $articles, 60 * 15 );
+			$this->cache->set( $key, $articles, 60 * 15 );
 		}
 
 		$html = '<div class="listpages-container">';
@@ -608,7 +611,7 @@ window.loadMap = function () {
 		} else {
 			foreach ( $articles as $article ) {
 				$titleObj = Title::makeTitle( NS_BLOG, $article['title'] );
-				$votes = self::getVotesForPage( $article['id'] );
+				$votes = $this->getVotesForPage( $article['id'] );
 				$html .= '<div class="listpages-item">
 				<div class="listpages-votebox">
 				<div class="listpages-votebox-number">' .
@@ -643,18 +646,17 @@ window.loadMap = function () {
 	 * @param int $id Page ID
 	 * @return int Amount of votes
 	 */
-	public static function getVotesForPage( $id ) {
+	private function getVotesForPage( $id ) {
 		// Try cache first
-		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
-		$key = $cache->makeKey( 'fanhome', 'vote', 'count' );
-		$data = $cache->get( $key );
+		$key = $this->cache->makeKey( 'fanhome', 'vote', 'count' );
+		$data = $this->cache->get( $key );
 
 		if ( $data != '' ) {
 			wfDebugLog( 'FanHome', "Got vote count for the page with ID {$id} from cache" );
 			$voteCount = $data;
 		} else {
 			wfDebugLog( 'FanHome', "Got vote count for the page with ID {$id} from DB" );
-			$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+			$dbr = $this->dbProvider->getReplicaDatabase();
 			$voteCount = (int)$dbr->selectField(
 				'Vote',
 				'COUNT(*) AS count',
@@ -662,7 +664,7 @@ window.loadMap = function () {
 				__METHOD__
 			);
 			// Cache for 15 minutes
-			$cache->set( $key, $voteCount, 60 * 15 );
+			$this->cache->set( $key, $voteCount, 60 * 15 );
 		}
 
 		return $voteCount;

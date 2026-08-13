@@ -1,7 +1,7 @@
 <?php
 
 use MediaWiki\Html\Html;
-use MediaWiki\MediaWikiServices;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 /**
  * The messages used by this special page are provided by SocialProfile's
@@ -19,7 +19,9 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 	/**
 	 * Constructor -- set up the new special page
 	 */
-	public function __construct() {
+	public function __construct(
+		private readonly IConnectionProvider $dbProvider,
+	) {
 		parent::__construct( 'UpdateFavoriteTeams' );
 	}
 
@@ -27,7 +29,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 	 * @return array
 	 */
 	private function getFavorites() {
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		$dbr = $this->dbProvider->getReplicaDatabase();
 
 		$res = $dbr->select(
 			'sport_favorite',
@@ -215,7 +217,7 @@ class UpdateFavoriteTeams extends UnlistedSpecialPage {
 				// Clear user cache
 				SportsTeams::clearUserCache( $user );
 
-				$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+				$dbw = $this->dbProvider->getPrimaryDatabase();
 				// Reset old favorites
 				$res = $dbw->delete(
 					'sport_favorite',

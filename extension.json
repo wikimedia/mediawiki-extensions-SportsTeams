@@ -27,14 +27,47 @@
 	],
 	"SpecialPages": {
 		"AddFan": "AddFan",
-		"FanHome": "FanHome",
+		"FanHome": {
+			"class": "FanHome",
+			"services": [
+				"ConnectionProvider",
+				"MainWANObjectCache"
+			]
+		},
 		"RemoveFan": "RemoveFan",
 		"SimilarFans": "SimilarFans",
-		"SportsManagerLogo": "SportsManagerLogo",
-		"SportsTeamsManager": "SportsTeamsManager",
-		"SportsTeamsManagerLogo": "SportsTeamsManagerLogo",
-		"TopNetworks": "TopNetworks",
-		"UpdateFavoriteTeams": "UpdateFavoriteTeams",
+		"SportsManagerLogo": {
+			"class": "SportsManagerLogo",
+			"services": [
+				"MimeAnalyzer",
+				"UploadVerification"
+			]
+		},
+		"SportsTeamsManager": {
+			"class": "SportsTeamsManager",
+			"services": [
+				"ConnectionProvider"
+			]
+		},
+		"SportsTeamsManagerLogo": {
+			"class": "SportsTeamsManagerLogo",
+			"services": [
+				"MimeAnalyzer",
+				"UploadVerification"
+			]
+		},
+		"TopNetworks": {
+			"class": "TopNetworks",
+			"services": [
+				"ConnectionProvider"
+			]
+		},
+		"UpdateFavoriteTeams": {
+			"class": "UpdateFavoriteTeams",
+			"services": [
+				"ConnectionProvider"
+			]
+		},
 		"ViewFans": "ViewFans"
 	},
 	"APIModules": {

@@ -3,6 +3,8 @@
 use MediaWiki\Html\Html;
 use MediaWiki\Request\WebRequestUpload;
 use MediaWiki\Shell\Shell;
+use MediaWiki\Upload\UploadVerification;
+use Wikimedia\Mime\MimeAnalyzer;
 
 /**
  * A special page to upload images for networks.
@@ -32,7 +34,10 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	/**
 	 * Constructor -- set up the new special page
 	 */
-	public function __construct() {
+	public function __construct(
+		private readonly MimeAnalyzer $mimeAnalyzer,
+		private readonly UploadVerification $uploadVerification,
+	) {
 		parent::__construct( 'SportsManagerLogo' );
 	}
 
@@ -562,15 +567,13 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 	 */
 	function verify( $tmpfile, $extension ) {
 		# magically determine mime type
-		$magic = \MediaWiki\MediaWikiServices::getInstance()->getMimeAnalyzer();
-		$mime = $magic->guessMimeType( $tmpfile, false );
-		$verify = \MediaWiki\MediaWikiServices::getInstance()->getUploadVerification();
+		$mime = $this->mimeAnalyzer->guessMimeType( $tmpfile, false );
 
 		# check mime type, if desired
 		global $wgVerifyMimeType;
 		if ( $wgVerifyMimeType ) {
 			# check mime type against file extension
-			if ( !$verify->verifyExtension( $mime, $extension ) ) {
+			if ( !$this->uploadVerification->verifyExtension( $mime, $extension ) ) {
 				return Status::newFatal( 'filetype-mime-mismatch', $extension, $mime );
 			}
 
@@ -583,14 +586,14 @@ class SportsManagerLogo extends UnlistedSpecialPage {
 		}
 
 		# check for HTML-ish code and JavaScript
-		if ( $verify->detectScript( $tmpfile, $mime, $extension ) ) {
+		if ( $this->uploadVerification->detectScript( $tmpfile, $mime, $extension ) ) {
 			return Status::newFatal( 'uploadscripted' );
 		}
 
 		/**
 		 * Scan the uploaded file for viruses
 		 */
-		$virus = $verify->detectVirus( $tmpfile );
+		$virus = $this->uploadVerification->detectVirus( $tmpfile );
 		if ( $virus ) {
 			return Status::newFatal( 'uploadvirus', htmlspecialchars( $virus ) );
 		}

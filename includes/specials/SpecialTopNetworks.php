@@ -7,14 +7,16 @@
  * @author Aaron Wright <aaron.wright@gmail.com>
  */
 
-use MediaWiki\MediaWikiServices;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 class TopNetworks extends SpecialPage {
 
 	/**
 	 * Constructor -- set up the new special page
 	 */
-	public function __construct() {
+	public function __construct(
+		private readonly IConnectionProvider $dbProvider,
+	) {
 		parent::__construct( 'TopNetworks' );
 	}
 
@@ -69,7 +71,7 @@ class TopNetworks extends SpecialPage {
 		$out->addModuleStyles( 'ext.sportsTeams' );
 
 		// Database handler
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		$dbr = $this->dbProvider->getPrimaryDatabase();
 
 		// Teams
 		$res = $dbr->select(
@@ -204,7 +206,7 @@ class TopNetworks extends SpecialPage {
 	 */
 	protected function getNavigationMenu( $direction, $type, $sport, $order, $adj ) {
 		$output = '';
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		$dbr = $this->dbProvider->getReplicaDatabase();
 		$pt = $this->getPageTitle();
 
 		// Navigation
