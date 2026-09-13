@@ -203,7 +203,8 @@ var SportsTeamsUserProfile = {
 
 $( () => {
 	// "Add thought" link on your own profile
-	$( 'span.status-message-add a' ).on( 'click', function () {
+	$( 'span.status-message-add a' ).on( 'click', function ( e ) {
+		e.preventDefault();
 		const $that = $( this );
 		SportsTeamsUserProfile.showMessageBox(
 			$that.data( 'order' ),

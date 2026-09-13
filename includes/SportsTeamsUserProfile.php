@@ -55,28 +55,21 @@ class SportsTeamsUserProfile {
 
 				$status_link = '';
 				if ( $user_profile->isOwner() ) {
-					$status_link = ' <span class="status-message-add"> - <a href="javascript:void(0);" data-order="' .
-						(int)$fav['order'] . '" data-sport-id="' . (int)$fav['sport_id'] .
-						'" data-team-id="' . (int)$fav['team_id'] . '" rel="nofollow">' .
-						wfMessage( 'sportsteams-profile-add-thought' )->escaped() . '</a></span>';
-				}
-
-				$network_update_message = '';
-
-				// Originally the following two lines of code were not present and
-				// thus $user_updates was always undefined
-				$s = new UserStatus( $user_profile->viewingUser );
-				$user_updates = $s->getStatusMessages(
-					$user_profile->profileOwner->getActorId(),
-					$fav['sport_id'],
-					$fav['team_id'],
-					1,
-					1
-				);
-
-				// Added empty() check
-				if ( !empty( $user_updates[$fav['sport_id'] . '-' . $fav['team_id']] ) ) {
-					$network_update_message = $user_updates[$fav['sport_id'] . '-' . $fav['team_id']];
+					// Build the full link for no-JS users
+					// For JS users, the JS will prevent them from navigating away from their profile page
+					// and allow them to add a status update from their profile right away
+					$specialPageLink = $linkRenderer->makeKnownLink(
+						$homepage_title,
+						wfMessage( 'sportsteams-profile-add-thought' )->text(),
+						[
+							'data-order' => (int)$fav['order'],
+							'data-sport-id' => (int)$fav['sport_id'],
+							'data-team-id' => (int)$fav['team_id'],
+							'rel' => 'nofollow'
+						],
+						[ 'sport_id' => $fav['sport_id'], 'team_id' => $fav['team_id'] ]
+					);
+					$status_link = ' <span class="status-message-add"> - ' . $specialPageLink . '</span>';
 				}
 
 				if ( $fav['team_name'] ) {
@@ -139,7 +132,7 @@ class SportsTeamsUserProfile {
 	public static function showLatestThought( $user_profile ) {
 		$out = $user_profile->getContext()->getOutput();
 
-		// It seems so, so, *so* counter-intuitive to have to initialize the UesrStatus class
+		// It seems so, so, *so* counter-intuitive to have to initialize the UserStatus class
 		// with the *viewing* user, not the profile owner, passed to it, yet it seems to be
 		// necessary to get the "do you agree?" links work as intended, i.e. if you pass
 		// $user_profile->profileOwner to the UserStatus constructor, the alreadyvoted crap in
