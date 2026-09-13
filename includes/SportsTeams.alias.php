@@ -29,5 +29,6 @@ $specialPageAliases['fi'] = [
 	'RemoveFan' => [ 'Poista fani' ],
 	'SimilarFans' => [ 'Samankaltaiset fanit', 'Samankaltaiset käyttäjät' ],
 	'TopNetworks' => [ 'Huippuverkostot' ],
+	'UpdateFavoriteTeams' => [ 'Päivitä suosikkijoukkueet' ],
 	'ViewFans' => [ 'Tarkastele faneja' ],
 ];
