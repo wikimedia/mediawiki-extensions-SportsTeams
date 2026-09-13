@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Title\Title;
 
 class ViewFans extends UnlistedSpecialPage {
@@ -136,6 +137,7 @@ class ViewFans extends UnlistedSpecialPage {
 
 		if ( $fans ) {
 			$x = 1;
+			$challengeIsInstalled = ExtensionRegistry::getInstance()->isLoaded( 'Challenge' );
 
 			foreach ( $fans as $fan ) {
 				$loopUser = Title::makeTitle( NS_USER, $fan['user_name'] );
@@ -181,8 +183,15 @@ class ViewFans extends UnlistedSpecialPage {
 						[],
 						[ 'user' => $fan['user_name'] ]
 					);
+					if ( $challengeIsInstalled ) {
+						$pipeList[] = $linkRenderer->makeLink(
+							SpecialPage::getTitleFor( 'ChallengeUser' ),
+							$this->msg( 'sportsteams-issue-challenge' )->text(),
+							[],
+							[ 'user' => $fan['user_name'] ]
+						);
+					}
 					$output .= $this->getLanguage()->pipeList( $pipeList );
-					// $output .= "<p class=\"relationship-link\"><a href=\"index.php?title=Special:ChallengeUser&user={$fan['user_name']}\"><img src=\"images/common/challengeIcon.png\" border=\"0\" alt=\"issue challenge\"/> issue challenge</a></p>";
 					$output .= $this->msg( 'word-separator' )->escaped();
 					$output .= '<div class="visualClear"></div>';
 				}
