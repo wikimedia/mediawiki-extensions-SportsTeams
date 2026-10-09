@@ -4,7 +4,7 @@
 			"Jack Phoenix"
 		]
 	},
-	"topnetworks": "Verkostojen tilastoja",
+	"topnetworks": "Verkostotilastot",
 	"similarfans": "Samankaltaiset fanit",
 	"user-profile-sports-sport": "Urheilu",
 	"user-profile-sports-title": "Muokkaa lempiurheilulajejasi ja joukkueita",
@@ -16,7 +16,7 @@
 	"sportsteamsmanager": "Hallinnoi urheilutiimejä",
 	"sportsteams-add-button": "lisää",
 	"sportsteams-articles-votes": "{{PLURAL:$1|ääni|ääntä}}",
-	"sportsteams-no-articles": "No articles.",
+	"sportsteams-no-articles": "Ei artikkeleja.",
 	"sportsteams-count-fans": "{{PLURAL:$1|'''Yksi''' fani|'''$1''' fania}}",
 	"sportsteams-similar-fans": "Samankaltaiset fanit",
 	"sportsteams-num-similar": "{{PLURAL:$1|Yksi fani on kanssasi samankaltainen.|$1 fania ovat kanssasi samankaltaisia.}}",
@@ -27,6 +27,7 @@
 	"sportsteams-add-as-foe": "Lisää viholliseksi",
 	"sportsteams-remove-as-foe": "Poista vihollisista",
 	"sportsteams-give-a-gift": "Anna lahja",
+	"sportsteams-issue-challenge": "Haasta",
 	"sportsteams-prev": "edell.",
 	"sportsteams-next": "seur.",
 	"sportsteams-woops": "Ups!",
