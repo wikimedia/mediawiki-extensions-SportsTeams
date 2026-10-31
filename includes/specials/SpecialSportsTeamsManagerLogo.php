@@ -3,7 +3,6 @@
 use MediaWiki\Html\Html;
 use MediaWiki\Request\WebRequestUpload;
 use MediaWiki\Shell\Shell;
-use Wikimedia\AtEase\AtEase;
 
 /**
  * A special page to upload images for sport teams.
@@ -74,7 +73,7 @@ class SportsTeamsManagerLogo extends UnlistedSpecialPage {
 		$this->mUploadCopyStatus  = $request->getText( 'wpUploadCopyStatus' );
 		$this->mUploadSource      = $request->getText( 'wpUploadSource' );
 
-		$this->mAction            = $request->getVal( 'action' );
+		$this->mAction = $request->getVal( 'action' );
 		/**
 		 * Check for a newly uploaded file.
 		 */

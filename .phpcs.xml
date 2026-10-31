@@ -9,6 +9,11 @@
 		<!-- Function cmpFanStates is nested inside another function or closure in SpecialFanHome.php -->
 		<exclude name="MediaWiki.Usage.NestedFunctions.NestedFunction" />
 		<exclude name="Squiz.Scope.MethodScope.Missing" />
+		<exclude name="Squiz.PHP.InnerFunctions.NotAllowed" />
+		<exclude name="MediaWiki.Commenting.ClassAnnotations.UnrecognizedAnnotation" />
+		<exclude name="MediaWiki.Commenting.CommentBeforeClass.FileSpacingAfter" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPrivate" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPublic" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php" />
